@@ -16,19 +16,19 @@ const app = express()
 
 connectDB()
 
-const allowedOrigins = ['https://your-render-site-url.com', 'https://www.your-render-site-url.com']
+const allowedOrigins = ['https://invoices-ga5s.onrender.com', 'https://www.invoices-ga5s.onrender.com'];
 
 const corsOptions: CorsOptions = {
     origin: (origin, callback) => {
         if (allowedOrigins.indexOf(origin!) !== -1 || !origin) {
-            callback(null, true)
+            callback(null, true);
         } else {
-            callback(new Error('Not allowed by CORS'))
+            callback(new Error('Not allowed by CORS'));
         }
     },
-}
+};
 
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
 
 app.use(cookieParser())
 
