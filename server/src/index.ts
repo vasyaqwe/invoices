@@ -9,12 +9,14 @@ import invoicesRoutes from './routes/invoices'
 import authRoutes from './routes/auth'
 import connectDB from './db'
 import { errorHandler } from './middleware'
-import { corsOptions } from './config'
+
 const PORT = process.env.PORT || 3000
+
 const app = express()
+
 connectDB()
 
-app.use(cors(corsOptions))
+app.use(cors())
 
 app.use(cookieParser())
 
