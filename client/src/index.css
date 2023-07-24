@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
+
+b {
+  font-weight: 700;
+}
+
+i {
+  font-style: italic;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+body {
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+a {
+  text-decoration-skip-ink: auto;
+  text-decoration: none;
+  color: currentColor;
+}
+
+img,
+picture,
+svg,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input {
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / .7);
+  z-index: 5;
+}
+
+.modal {
+  position: fixed;
+  z-index: 5;
+  border-radius: 1rem;
+}
+
+.modal--screen {
+  padding: 0;
+  border-radius: 0 1rem 1rem 0;
+  height: calc(100vh - 80px);
+  max-height: calc(100vh - 80px);
+}
+
+button {
+  letter-spacing: .5px;
+}
+
+.status-badge-text::before {
+  content: '';
+  display: inline-block;
+  margin-right: .5rem;
+  width: 8px;
+  height: 8px;
+  border-radius: 100vmax;
+  background-color: currentColor;
+}
+
+.chevron-button:hover svg path {
+  stroke: #fff;
+}
+
+.spinner {
+  animation: rotation 1s linear infinite;
+  transition: .25s ease;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
