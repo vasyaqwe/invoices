@@ -16,16 +16,10 @@ const app = express()
 
 connectDB()
 
-const allowedOrigins = ['https://your-render-site-url.com', 'https://www.your-render-site-url.com']
+// const allowedOrigins = ['https://your-render-site-url.com', 'https://www.your-render-site-url.com']
 
 const corsOptions: CorsOptions = {
-    origin: (origin, callback) => {
-        if (allowedOrigins.indexOf(origin!) !== -1 || !origin) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
-    },
+    origin: '*',
 }
 
 app.use(cors(corsOptions))
