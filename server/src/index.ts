@@ -16,19 +16,19 @@ const app = express()
 
 connectDB()
 
-const allowedOrigins = ['https://invoices-ga5s.onrender.com', 'https://www.invoices-ga5s.onrender.com'];
+const allowedOrigins = ['https://your-render-site-url.com', 'https://www.your-render-site-url.com']
 
 const corsOptions: CorsOptions = {
     origin: (origin, callback) => {
         if (allowedOrigins.indexOf(origin!) !== -1 || !origin) {
-            callback(null, true);
+            callback(null, true)
         } else {
-            callback(new Error('Not allowed by CORS'));
+            callback(new Error('Not allowed by CORS'))
         }
     },
-};
+}
 
-app.use(cors(corsOptions));
+app.use(cors(corsOptions))
 
 app.use(cookieParser())
 
@@ -39,6 +39,9 @@ app.use(errorHandler)
 app.use('/auth', authRoutes)
 app.use('/users', userRoutes)
 app.use('/invoices', invoicesRoutes)
+
+// Add CORS headers for the /auth/refresh endpoint
+app.options('*', cors(corsOptions))
 
 app.all('*', (req, res, next) => {
     res.status(404).json({ message: 'Page not found' })
