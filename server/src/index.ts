@@ -9,14 +9,10 @@ import invoicesRoutes from './routes/invoices'
 import authRoutes from './routes/auth'
 import connectDB from './db'
 import { errorHandler } from './middleware'
+import { corsOptions } from './config'
 const PORT = process.env.PORT || 3000
 const app = express()
 connectDB()
-
-const corsOptions = {
-    origin: ["http://localhost:5173", "https://invoices-ga5s.onrender.com"],
-    credentials: true,
-}
 
 app.use(cors(corsOptions))
 app.options('*', cors())
