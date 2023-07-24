@@ -13,10 +13,18 @@ const PORT = process.env.PORT || 3000
 const app = express()
 connectDB()
 
+const allowedOrigins = ['https://invoices-ga5s.onrender.com', 'http://localhost:3000']
+
 const corsOptions = {
-    origin: "https://invoices-ga5s.onrender.com",
-    credentials: true,
+    origin: function (origin: string | undefined, callback: (error: Error | null, allow?: boolean) => void) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    },
 }
+
 app.use(cors(corsOptions))
 app.use(cookieParser())
 
