@@ -28,7 +28,7 @@ export const Sidebar = () => {
                 <img className='md:w-[35px] md:h-[35px]' src={logo} alt="Invoices logo" />
             </div>
             {token && <button onClick={() => onLogout()} disabled={isLoading}
-                className='mr-4 md:mb-7 md:mr-0 hover:underline hover:text-accent-400 flex items-center gap-2'>
+                className='mr-4 md:mb-7 md:mr-0 hover:underline hover:text-accent-400 disabled:opacity-50 flex items-center gap-2'>
                 {isLoading && <Spinner />}
                 Log out</button>}
             {!token && <div className='flex flex-col gap-4 mr-4 md:mb-7 md:mr-0 '>

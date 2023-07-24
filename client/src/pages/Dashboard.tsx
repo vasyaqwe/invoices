@@ -7,7 +7,6 @@ import { ReactComponent as Plus } from '../assets/plus.svg'
 import { useEffect } from "react"
 import { useAuth } from "../hooks/useAuth"
 import { Spinner } from "../components/Spinner"
-import { useErrorToast } from "../hooks/useErrorToast"
 import { FilterSelect } from "../components/FilterSelect"
 import { useSearchParams } from "react-router-dom"
 import { ErrorMessage } from "../components/ErrorMessage"

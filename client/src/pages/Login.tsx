@@ -45,13 +45,14 @@ export const Login = () => {
         makeInputValid(name)
     }
 
-    if (isLoading) return <p>Loading...</p>
-
     return (
         <>
             <form ref={formRef}
                 className="form flex flex-col gap-5 max-w-md mx-auto"
-                onSubmit={() => onSubmit()}>
+                onSubmit={(e) => {
+                    e.preventDefault()
+                    onSubmit()
+                }}>
                 <h1 className="text-4xl font-semibold">Login</h1>
                 <FloatingLabel invalid={errors.includes('username')} htmlFor="username" text={'Username'}>
                     <Input invalid={errors.includes('username')} required value={formData.username}

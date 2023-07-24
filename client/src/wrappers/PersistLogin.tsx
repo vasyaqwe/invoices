@@ -36,7 +36,7 @@ export const PersistLogin = () => {
             {!persist
                 ? <Outlet />
                 : isLoading
-                    ? <Spinner />
+                    ? <Spinner className='absolute top-32 left-1/2 -translate-x-1/2' />
                     : <Outlet />
             }
         </>
