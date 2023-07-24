@@ -15,7 +15,7 @@ const app = express()
 connectDB()
 
 app.use(cors(corsOptions))
-app.options('*', cors())
+
 app.use(cookieParser())
 
 app.use(express.json())
