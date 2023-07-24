@@ -1,5 +1,5 @@
 import express from 'express'
-import cors from 'cors'
+import cors, { CorsOptions } from 'cors'
 import dotenv from 'dotenv'
 dotenv.config()
 import cookieParser from 'cookie-parser'
@@ -16,7 +16,21 @@ const app = express()
 
 connectDB()
 
-app.use(cors())
+const allowedOrigins = ['https://invoices-ga5s.onrender.com', 'https://www.invoices-ga5s.onrender.com']
+
+const corsOptions: CorsOptions = {
+    origin: (origin, callback) => {
+        if (allowedOrigins.indexOf(origin!) !== -1 || !origin) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    },
+    credentials: true,
+    optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions))
 
 app.use(cookieParser())
 
