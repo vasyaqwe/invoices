@@ -1,5 +1,5 @@
 import express from 'express'
-import cors from 'cors'
+import cors, { CorsOptions } from 'cors'
 import dotenv from 'dotenv'
 dotenv.config()
 import cookieParser from 'cookie-parser'
@@ -16,7 +16,19 @@ const app = express()
 
 connectDB()
 
-app.use(cors())
+const allowedOrigins = ['https://your-render-site-url.com', 'https://www.your-render-site-url.com']
+
+const corsOptions: CorsOptions = {
+    origin: (origin, callback) => {
+        if (allowedOrigins.indexOf(origin!) !== -1 || !origin) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    },
+}
+
+app.use(cors(corsOptions))
 
 app.use(cookieParser())
 
