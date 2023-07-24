@@ -13,22 +13,13 @@ const PORT = process.env.PORT || 3000
 const app = express()
 connectDB()
 
+const corsOptions = {
+    origin: ["http://localhost:5173", "https://invoices-ga5s.onrender.com"],
+    credentials: true,
+}
 
-app.use(function (req, res, next) {
-    // res.header("Access-Control-Allow-Origin", "*");
-    const allowedOrigins = ['https://invoices-ga5s.onrender.com', 'http://localhost:3000']
-
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin!)) {
-        res.setHeader('Access-Control-Allow-Origin', origin!);
-    }
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    res.header("Access-Control-Allow-credentials");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, UPDATE");
-    next();
-})
-
-// app.use(cors(corsOptions))
+app.use(cors(corsOptions))
+app.options('*', cors())
 app.use(cookieParser())
 
 app.use(express.json())
