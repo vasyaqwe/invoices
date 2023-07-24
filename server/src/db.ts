@@ -2,7 +2,7 @@ import mongoose, { ConnectOptions } from 'mongoose'
 
 const connectDB = async () => {
     try {
-        const dbUrl = 'mongodb://127.0.0.1:27017/invoices'
+        const dbUrl = process.env.MONGO_URL!
         const con = await mongoose.connect(dbUrl,
             {
                 useNewUrlParser: true,
