@@ -11,9 +11,10 @@ import { EditInvoiceModal } from "../components/Modals/EditInvoiceModal"
 import { Spinner } from "../components/Spinner"
 import { useErrorToast } from "../hooks/useErrorToast"
 import { Button } from "../components/Button"
+import { ConfirmDeletionModal } from "../components/Modals/ConfirmDeletionModal"
 
 export const Invoice = () => {
-    const { openModal, onCurrentInvoiceChange, modals } = useStore()
+    const { openModal, modals } = useStore()
     const { id } = useParams()
 
     const {
@@ -47,9 +48,14 @@ export const Invoice = () => {
         <Spinner />
     ) : (
         <>
+            <ModalWrapper open={modals.confirmDeletion}>
+                <ConfirmDeletionModal invoice={invoice} />
+            </ModalWrapper>
+
             <ModalWrapper open={modals.editInvoice}>
                 <EditInvoiceModal invoice={invoice} />
             </ModalWrapper>
+
             <Link
                 className="flex items-center gap-3"
                 to="/"
@@ -71,10 +77,7 @@ export const Invoice = () => {
 
                     <Button
                         className="bg-danger-400"
-                        onClick={() => {
-                            openModal("confirmDeletion")
-                            onCurrentInvoiceChange(invoice)
-                        }}
+                        onClick={() => openModal("confirmDeletion")}
                     >
                         Delete
                     </Button>
@@ -203,10 +206,7 @@ export const Invoice = () => {
 
                 <Button
                     className="bg-danger-400"
-                    onClick={() => {
-                        openModal("confirmDeletion")
-                        onCurrentInvoiceChange(invoice)
-                    }}
+                    onClick={() => openModal("confirmDeletion")}
                 >
                     Delete
                 </Button>

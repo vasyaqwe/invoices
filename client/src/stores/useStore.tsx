@@ -4,10 +4,8 @@ import { Invoice, Toast, ToastPayload } from "../types"
 
 interface StoreState {
     modals: Record<string, boolean>
-    currentInvoice: undefined | Invoice
     toast: Toast
     onBackdropClick: () => void
-    onCurrentInvoiceChange: (invoice: Invoice) => void
     openModal: (modal: string) => void
     closeModal: (modal: string) => void
     openToast: (payload: ToastPayload) => void
@@ -21,9 +19,6 @@ export const useStore = create<StoreState>()(
             confirmDeletion: false,
             editInvoice: false,
         },
-        currentInvoice: undefined,
-        onCurrentInvoiceChange: (currentInvoice) =>
-            set(() => ({ currentInvoice })),
         onBackdropClick: () => {
             const target = Object.keys(get().modals).find(
                 (v) => get().modals[v]

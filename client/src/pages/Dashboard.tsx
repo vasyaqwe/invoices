@@ -25,7 +25,6 @@ export const Dashboard = () => {
         data: invoices,
     } = useQuery(["invoices"], getInvoices, {
         refetchInterval: 150000,
-        retry: false,
     })
 
     useEffect(() => {

@@ -1,13 +1,14 @@
-import { motion } from 'framer-motion'
-import { useStore } from '../../stores/useStore'
-import { useMutation, useQueryClient } from 'react-query'
-import { deleteInvoice } from '../../api/invoices'
-import { useNavigate } from 'react-router-dom'
-import { useErrorToast } from '../../hooks/useErrorToast'
-import { Button } from '../Button'
+import { motion } from "framer-motion"
+import { useStore } from "../../stores/useStore"
+import { useMutation, useQueryClient } from "react-query"
+import { deleteInvoice } from "../../api/invoices"
+import { useNavigate } from "react-router-dom"
+import { useErrorToast } from "../../hooks/useErrorToast"
+import { Button } from "../Button"
+import { Invoice } from "../../types"
 
-export const ConfirmDeletionModal = () => {
-    const { currentInvoice, closeModal, openToast } = useStore()
+export const ConfirmDeletionModal = ({ invoice }: { invoice: Invoice }) => {
+    const { closeModal, openToast } = useStore()
 
     const navigate = useNavigate()
     const queryClient = useQueryClient()
@@ -16,15 +17,12 @@ export const ConfirmDeletionModal = () => {
         isLoading,
         error,
         mutate: onDelete,
-    } = useMutation(() => deleteInvoice(currentInvoice?.id ?? ''), {
+    } = useMutation(() => deleteInvoice(invoice.id), {
         onSuccess: () => {
-            queryClient.invalidateQueries([
-                'invoices',
-                { id: currentInvoice?.id },
-            ])
-            closeModal('confirmDeletion')
-            openToast({ text: 'Invoice deleted!' })
-            navigate('/')
+            queryClient.invalidateQueries(["invoices", { id: invoice.id }])
+            closeModal("confirmDeletion")
+            openToast({ text: "Invoice deleted!" })
+            navigate("/")
         },
     })
     useErrorToast(error)
@@ -32,23 +30,22 @@ export const ConfirmDeletionModal = () => {
     return (
         <motion.dialog
             open
-            className='bg-primary-700 inset-0 m-auto p-12 w-full max-w-lg modal'
+            className="bg-primary-700 inset-0 m-auto p-12 w-full max-w-lg modal"
             animate={{ opacity: 1 }}
             initial={{ opacity: 0 }}
             exit={{ opacity: 0 }}
         >
-            <h2 className='text-white text-4xl font-bold mb-4'>
+            <h2 className="text-white text-4xl font-bold mb-4">
                 Confirm deletion
             </h2>
-            <p className='text-neutral-400'>
+            <p className="text-neutral-400">
                 Are you sure you want to delete invoice #
-                {currentInvoice?.id.toUpperCase()}? This action cannot be
-                undone.
+                {invoice.id.toUpperCase()}? This action cannot be undone.
             </p>
-            <div className='flex items-center gap-2 mt-3 justify-end'>
+            <div className="flex items-center gap-2 mt-3 justify-end">
                 <Button
-                    className='bg-neutral-700'
-                    onClick={() => closeModal('confirmDeletion')}
+                    className="bg-neutral-700"
+                    onClick={() => closeModal("confirmDeletion")}
                 >
                     Cancel
                 </Button>

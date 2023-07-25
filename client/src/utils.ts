@@ -1,4 +1,3 @@
-import { MutateFunction } from "react-query"
 import { Item } from "./types"
 
 const CURRENCY_FORMATTER = new Intl.NumberFormat(undefined, {
