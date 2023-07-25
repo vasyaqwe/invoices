@@ -13,8 +13,8 @@ import { Input } from "../Input"
 import { emailPattern, labelClassName } from "../../utils"
 import { useInputValidation } from "../../hooks/useInputValidation"
 import { useErrorToast } from "../../hooks/useErrorToast"
-import { Spinner } from "../Spinner"
 import { useAuth } from "../../hooks/useAuth"
+import { Button } from "../Button"
 
 export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
     const { billFrom, billTo, items, date, status, paymentTerms, description } = invoice
@@ -36,6 +36,7 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
     const formContentRef = useRef<HTMLDivElement>(null)
     const formRef = useRef<HTMLFormElement>(null)
     const itemsRef = useRef<HTMLDivElement>(null)
+
     const {
         validateInputs,
         makeItemInputValid,
@@ -44,6 +45,7 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
     } = useInputValidation(formRef, itemsRef)
 
     const queryClient = useQueryClient()
+
     const { isLoading, error, mutate: onSave } = useMutation(
         () => updateInvoice(invoice.id, formData), {
         onSuccess: () => {
@@ -52,6 +54,7 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
             openToast({ text: 'Invoice updated!' })
         }
     })
+
     useErrorToast(error)
 
     const onAddItem = () => {
@@ -61,6 +64,7 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
             formContentRef.current && formContentRef.current.scrollTo({ top: 99999, behavior: 'smooth' })
         }, 100)
     }
+
     const onDeleteItem = (id: string) => {
         setFormData(prev => ({ ...prev, items: prev.items.filter(item => item.id !== id) }))
         const removedRow = formData.items.find(t => t.id === id)
@@ -114,7 +118,7 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
                 <h2 className="text-white text-4xl font-bold mb-4">Edit Invoice</h2>
                 <div ref={formContentRef} className="max-h-[100%] overflow-y-auto pr-3 grid gap-4 pb-28">
                     <legend className="text-accent-700 font-semibold">Bill from</legend>
-                    <fieldset className="grid gap-3 md:gap-5 mb-4">
+                    <fieldset className="grid gap-5 md:gap-6 mb-4">
                         <FloatingLabel invalid={errors.includes('billFrom:streetAddress')} htmlFor="billFrom:streetAddress" text={'Street Address'}>
                             <Input invalid={errors.includes('billFrom:streetAddress')} value={formData.billFrom.streetAddress} onChange={onChange} id="billFrom:streetAddress"
                                 name="billFrom:streetAddress" type="text" required={true} />
@@ -159,7 +163,7 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
                         </div>
                     </fieldset>
 
-                    <fieldset className="grid gap-3 md:gap-6">
+                    <fieldset className="grid gap-5 md:gap-6">
                         <div className="grid grid-cols-2  gap-3 md:gap-6">
                             <div>
                                 <label className={labelClassName} htmlFor="date">Invoice Date</label>
@@ -188,14 +192,20 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
                     </div>
                 </div>
                 <div className="py-6 flex items-center justify-between flex-wrap gap-3">
-                    <button type="button" onClick={() => closeModal('editInvoice')} className="rounded-full text-sm sm:text-base bg-primary-600 font-semibold text-white py-3 px-4">Cancel</button>
-                    <button onClick={validateInputs}
+                    <Button
+                        type="button"
+                        onClick={() => closeModal('editInvoice')}
+                        className=" bg-primary-600"
+                    >Cancel
+                    </Button>
+                    <Button
+                        onClick={validateInputs}
                         disabled={isLoading}
-                        className={`rounded-full text-sm sm:text-base bg-accent-700 
-                               flex items-center gap-2
-                        font-semibold ${isLoading ? 'opacity-80 cursor-default' : ""} text-white py-3 px-5`}>
-                        {isLoading && <Spinner />}
-                        Save Changes</button>
+                        isLoading={isLoading}
+                        className={`bg-accent-700`}
+                    >
+                        Save Changes
+                    </Button>
                 </div>
             </form >
         </motion.dialog>

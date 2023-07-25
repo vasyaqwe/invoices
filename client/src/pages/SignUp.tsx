@@ -10,6 +10,7 @@ import { useStore } from '../stores/useStore'
 import { usePasswordsValidation } from '../hooks/usePasswordsValidation'
 import { ErrorMessage } from '../components/ErrorMessage'
 import { Spinner } from '../components/Spinner'
+import { Button } from '../components/Button'
 
 export const SignUp = () => {
     const queryClient = useQueryClient()
@@ -65,8 +66,8 @@ export const SignUp = () => {
                 onSubmit={(e) => {
                     e.preventDefault()
                     if (passwordsMatch) onSubmit()
-
-                }}>
+                }}
+            >
                 <h1 className="text-4xl font-semibold">Sign Up</h1>
                 <FloatingLabel invalid={errors.includes('username')} htmlFor="username" text={'Username'}>
                     <Input invalid={errors.includes('username')} required value={formData.username}
@@ -89,16 +90,18 @@ export const SignUp = () => {
                 {passwordsDontMatch && <ErrorMessage message="Passwords don't match" />}
 
                 <div className="flex flex-wrap items-center justify-between">
-                    <button disabled={isLoading}
+                    <Button
+                        isLoading={isLoading}
+                        disabled={isLoading}
                         onClick={() => {
                             validateInputs()
                             validatePasswords()
                             setSubmitted(true)
                         }}
-                        className={`rounded-full ${isLoading ? 'opacity-80 cursor-default' : ""} flex items-center gap-3
-                        self-start py-2 px-7 bg-accent-700 font-semibold`}>
-                        {isLoading && <Spinner />}
-                        Sign Up</button>
+                        className={`self-start bg-accent-700`}
+                    >
+                        Sign Up
+                    </Button>
                 </div>
             </form>
         </>

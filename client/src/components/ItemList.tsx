@@ -3,6 +3,7 @@ import { ReactComponent as Delete } from '../assets/delete.svg'
 import { ItemListProps } from '../types'
 import { getTotalOfItem, inputClassName, labelClassName } from '../utils'
 import { AnimatePresence, motion } from 'framer-motion'
+import { Button } from './Button'
 
 export const ItemList = ({
     items,
@@ -81,10 +82,15 @@ export const ItemList = ({
                         ))}
                     </AnimatePresence>
                 </ul>}
-            <button type="button" onClick={onAddItem}
-                className="rounded-full text-sm sm:text-base flex items-center justify-center gap-2
-                        bg-primary-600 font-semibold text-white py-3 px-4 w-full">
-                <Plus /> Add New Item</button>
+            <Button
+                type="button"
+                onClick={onAddItem}
+                className="items-center justify-center
+                        bg-primary-600 w-full"
+            >
+                <Plus />
+                Add New Item
+            </Button>
         </>
     )
 }

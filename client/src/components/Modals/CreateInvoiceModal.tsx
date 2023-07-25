@@ -13,8 +13,8 @@ import { FloatingLabel } from "../FloatingLabel"
 import { Input } from "../Input"
 import { emailPattern, labelClassName } from "../../utils"
 import { useInputValidation } from "../../hooks/useInputValidation"
-import { Spinner } from "../Spinner"
 import { useAuth } from "../../hooks/useAuth"
+import { Button } from "../Button"
 
 export const CreateInvoiceModal = () => {
     const { closeModal, openToast } = useStore()
@@ -106,7 +106,7 @@ export const CreateInvoiceModal = () => {
     }
 
     const onItemChange = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
-        const { name, value, dataset } = e.target
+        const { name, value } = e.target
         setFormData((prev) => ({
             ...prev, items:
                 prev.items.map(item => item.id === id ? ({ ...item, [name]: value }) : item)
@@ -134,7 +134,7 @@ export const CreateInvoiceModal = () => {
                 <h2 className="text-white text-4xl font-bold mb-4">Create Invoice</h2>
                 <div ref={formContentRef} className="max-h-[100%] overflow-y-auto pr-3 grid gap-4 pb-28">
                     <legend className="text-accent-700 font-semibold">Bill from</legend>
-                    <fieldset className="grid gap-3 md:gap-5 mb-4">
+                    <fieldset className="grid gap-5 md:gap-6 mb-4">
                         <FloatingLabel invalid={errors.includes('billFrom:streetAddress')} htmlFor="billFrom:streetAddress" text={'Street Address'}>
                             <Input invalid={errors.includes('billFrom:streetAddress')} value={formData.billFrom.streetAddress} onChange={onChange} id="billFrom:streetAddress"
                                 name="billFrom:streetAddress" type="text" required={!draft} />
@@ -180,8 +180,8 @@ export const CreateInvoiceModal = () => {
                         </div>
                     </fieldset>
 
-                    <fieldset className="grid gap-3 md:gap-6">
-                        <div className="grid grid-cols-2  gap-3 md:gap-6">
+                    <fieldset className="grid gap-5 md:gap-6">
+                        <div className="grid grid-cols-2 gap-3 md:gap-6">
                             <div>
                                 <label className={labelClassName} htmlFor="date">Invoice Date</label>
                                 <DatePicker />
@@ -209,22 +209,33 @@ export const CreateInvoiceModal = () => {
                     </div>
                 </div>
                 <div className="py-6 flex items-center justify-between flex-wrap gap-3">
-                    <button type="button" onClick={() => closeModal('createInvoice')} className="rounded-full text-sm sm:text-base bg-primary-600 font-semibold text-white py-3 px-4">Discard</button>
+                    <Button
+                        type="button"
+                        onClick={() => closeModal('createInvoice')}
+                        className="bg-primary-600"
+                    >Discard
+                    </Button>
                     <div className="flex items-center gap-3">
-                        <button type="button" onClick={() => {
-                            setDraft(true)
-                            onSaveAsDraft()
-                            closeModal('createInvoice')
-                            openToast({ text: 'Draft saved!' })
-                        }}
-                            className="rounded-full text-sm sm:text-base bg-neutral-700 font-semibold text-white py-3 px-5">Save as Draft</button>
-                        <button onClick={validateInputs}
+                        <Button
+                            type="button"
+                            onClick={() => {
+                                setDraft(true)
+                                onSaveAsDraft()
+                                closeModal('createInvoice')
+                                openToast({ text: 'Draft saved!' })
+                            }}
+                            className=" bg-neutral-700"
+                        >Save as Draft
+                        </Button>
+
+                        <Button
+                            onClick={validateInputs}
                             disabled={isLoading}
-                            className={`rounded-full text-sm
-                            flex items-center gap-2
-                             sm:text-base ${isLoading ? 'opacity-80 cursor-default' : ""} bg-accent-700 font-semibold text-white py-3 px-5`}>
-                            {isLoading && <Spinner />}
-                            Save & Send</button>
+                            isLoading={isLoading}
+                            className={`bg-accent-700`}
+                        >
+                            Save & Send
+                        </Button>
                     </div>
                 </div>
             </form >

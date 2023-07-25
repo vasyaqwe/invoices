@@ -9,6 +9,7 @@ import { useErrorToast } from '../hooks/useErrorToast'
 import { Checkbox } from '../components/Checkbox'
 import { useInputValidation } from '../hooks/useInputValidation'
 import { Spinner } from '../components/Spinner'
+import { Button } from '../components/Button'
 
 export const Login = () => {
     const queryClient = useQueryClient()
@@ -71,13 +72,14 @@ export const Login = () => {
                         checked={persist}
                         label={'Remember me'}
                     />
-                    <button disabled={isLoading}
+                    <Button
+                        disabled={isLoading}
+                        isLoading={isLoading}
                         onClick={() => validateInputs()}
-                        className={`rounded-full ${isLoading ? 'opacity-80 cursor-default' : ""} flex items-center gap-3
-                         self-start py-2 px-7 bg-accent-700 font-semibold`}>
-                        {isLoading && <Spinner />}
-
-                        Login</button>
+                        className={`self-start bg-accent-700`}
+                    >
+                        Login
+                    </Button>
                 </div>
             </form>
         </>

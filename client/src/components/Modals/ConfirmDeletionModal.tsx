@@ -3,8 +3,8 @@ import { useStore } from '../../stores/useStore'
 import { useMutation, useQueryClient } from 'react-query'
 import { deleteInvoice } from '../../api/invoices'
 import { useNavigate } from 'react-router-dom'
-import { Spinner } from '../Spinner'
 import { useErrorToast } from '../../hooks/useErrorToast'
+import { Button } from '../Button'
 
 export const ConfirmDeletionModal = () => {
     const { currentInvoice, closeModal, openToast } = useStore()
@@ -32,17 +32,18 @@ export const ConfirmDeletionModal = () => {
             <h2 className="text-white text-4xl font-bold mb-4">Confirm deletion</h2>
             <p className='text-neutral-400'>Are you sure you want to delete invoice #{currentInvoice?.id.toUpperCase()}? This action cannot be undone.</p>
             <div className="flex items-center gap-2 mt-3 justify-end">
-                <button className='rounded-full bg-neutral-700 text-white py-3 px-6 font-semibold'
+                <Button
+                    className='bg-neutral-700'
                     onClick={() => closeModal('confirmDeletion')}
-                >Cancel</button>
-                <button
+                >Cancel
+                </Button>
+                <Button
                     disabled={isLoading}
-                    className={`rounded-full text-white
-                           flex items-center gap-2
-                 bg-danger-400 py-3 px-6 ${isLoading ? 'opacity-80 cursor-default' : ""}font-semibold`}
-                    onClick={() => onDelete()}>
-                    {isLoading && <Spinner />}
-                    Delete</button>
+                    isLoading={isLoading}
+                    className={`bg-danger-400`}
+                    onClick={() => onDelete()}
+                >
+                    Delete</Button>
             </div>
         </motion.dialog>
     )

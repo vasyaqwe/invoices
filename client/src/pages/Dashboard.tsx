@@ -10,6 +10,7 @@ import { Spinner } from "../components/Spinner"
 import { FilterSelect } from "../components/FilterSelect"
 import { useSearchParams } from "react-router-dom"
 import { ErrorMessage } from "../components/ErrorMessage"
+import { Button } from "../components/Button"
 
 export const Dashboard = () => {
     const { openModal, modals } = useStore()
@@ -35,21 +36,28 @@ export const Dashboard = () => {
     return (
         <>
             {error ? <ErrorMessage message={error && error instanceof Error ? `There was an error loading invoices. Reason: ${error.message}` : ''} /> : <>
-                <div className="flex items-center justify-between">
+                <div className="flex items-start justify-between gap-5">
                     <div>
                         <h1 className="text-4xl font-semibold">Invoices</h1>
                         <p className="text-neutral-400">There are {invoices ? invoices.filter(i => i.user === currentUser!.userId).length : ''} total invoices.
                         </p>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 flex-wrap sm:flex-nowrap">
                         <FilterSelect filterKey="status"
                             setSearchParams={setSearchParams}
                             options={['Paid', 'Pending', 'Draft']}
                             selectedOptions={statusFilter}
                         />
-                        <button onClick={() => openModal('createInvoice')} className="
-                flex items-center gap-2 rounded-full py-2 pr-3 pl-2 bg-accent-700 font-semibold">
-                            <span className="bg-white p-3 min-w-[35px] rounded-full inline-block"><Plus /></span> New <span className="hidden sm:inline">Invoice</span></button>
+                        <Button
+                            onClick={() => openModal('createInvoice')}
+                            className="pb-2 pt-2 pr-3 pl-2 bg-accent-700 "
+                        >
+                            <span className="bg-white p-3 min-w-[35px] rounded-full inline-block">
+                                <Plus />
+                            </span>
+                            New
+                            <span className="hidden sm:inline">Invoice</span>
+                        </Button>
                     </div>
                 </div>
                 <ul className="mt-8 md:mt-12 grid gap-3">

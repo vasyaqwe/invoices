@@ -10,6 +10,7 @@ import { ModalWrapper } from '../wrappers/ModalWrapper'
 import { EditInvoiceModal } from '../components/Modals/EditInvoiceModal'
 import { Spinner } from '../components/Spinner'
 import { useErrorToast } from '../hooks/useErrorToast'
+import { Button } from '../components/Button'
 
 export const Invoice = () => {
     const { openModal, onCurrentInvoiceChange, modals } = useStore()
@@ -17,7 +18,7 @@ export const Invoice = () => {
 
     const { isLoading, error, data: invoice } = useQuery(
         ['invoices', id],
-        () => getInvoice(id || ''),
+        () => getInvoice(id!),
         { retry: false }
     )
 
@@ -48,11 +49,22 @@ export const Invoice = () => {
                         <StatusBadge status={invoice.status} />
                     </div>
                     <div className="hidden sm:flex items-center gap-3">
-                        <button onClick={() => openModal('editInvoice')} className='rounded-full bg-neutral-700 py-3 px-6 font-semibold'>Edit</button>
-                        <button className='rounded-full bg-danger-400 py-3 px-6 font-semibold' onClick={() => {
-                            openModal('confirmDeletion')
-                            onCurrentInvoiceChange(invoice)
-                        }}>Delete</button>
+                        <Button
+                            onClick={() => openModal('editInvoice')}
+                            className='bg-neutral-700'
+                        >
+                            Edit
+                        </Button>
+
+                        <Button
+                            className='bg-danger-400'
+                            onClick={() => {
+                                openModal('confirmDeletion')
+                                onCurrentInvoiceChange(invoice)
+                            }}
+                        >
+                            Delete
+                        </Button>
                     </div>
                 </div>
                 <section className='mt-4 bg-primary-800 rounded-md p-6 text-neutral-400 font-thin grid gap-12 mb-32'>
@@ -137,13 +149,22 @@ export const Invoice = () => {
                     </table>
                 </section>
                 <div className='bg-primary-800 p-6 flex items-center justify-end gap-3 fixed bottom-0 left-0 w-full sm:hidden'>
-                    <button onClick={() => openModal('editInvoice')}
-                        className='rounded-full bg-neutral-700 py-3 px-6 font-semibold'>Edit</button>
-                    <button className='rounded-full bg-danger-400 py-3 px-6 font-semibold'
+                    <Button
+                        onClick={() => openModal('editInvoice')}
+                        className='bg-neutral-700'
+                    >
+                        Edit
+                    </Button>
+
+                    <Button
+                        className='bg-danger-400'
                         onClick={() => {
                             openModal('confirmDeletion')
                             onCurrentInvoiceChange(invoice)
-                        }}>Delete</button>
+                        }}
+                    >
+                        Delete
+                    </Button>
                 </div>
             </>
 

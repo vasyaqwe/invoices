@@ -80,6 +80,24 @@ input {
   }
 }
 
+html {
+  scrollbar-color: #7e88c3 #252945;
+}
+
+::-webkit-scrollbar {
+  width: .4rem;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 100vmax;
+  background-color: #252945;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 100vmax;
+  background-color:#7e88c3;
+}
+
 .modal-backdrop {
   position: fixed;
   inset: 0;
