@@ -7,6 +7,9 @@ import { DecodedToken } from "../interfaces"
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET as Secret
 const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET as Secret
 
+const accessTokenExpiresIn = "15m"
+const refreshTokenExpiresIn = "7d"
+
 export const login = async (req: Request, res: Response) => {
     const { username, password } = req.body
     const foundUser = await User.findOne({ username })
@@ -27,7 +30,7 @@ export const login = async (req: Request, res: Response) => {
             username: foundUser.username,
         },
         accessTokenSecret,
-        { expiresIn: "15m" }
+        { expiresIn: accessTokenExpiresIn }
     )
 
     const refreshToken = jwt.sign(
@@ -36,7 +39,7 @@ export const login = async (req: Request, res: Response) => {
             username: foundUser.username,
         },
         refreshTokenSecret,
-        { expiresIn: "7d" }
+        { expiresIn: refreshTokenExpiresIn }
     )
 
     res.cookie("jwt", refreshToken, {
@@ -49,43 +52,32 @@ export const login = async (req: Request, res: Response) => {
     res.json({ accessToken })
 }
 
-export const refresh = (req: Request, res: Response) => {
+export const refresh = async (req: Request, res: Response) => {
     const cookies = req.cookies
+
     if (!cookies?.jwt) return res.status(401).json({ message: "Unauthorized" })
+
     const refreshToken = cookies.jwt
 
-    jwt.verify(
-        refreshToken,
-        refreshTokenSecret,
-        (err: unknown, decoded: any) => {
-            if (err) {
-                res.status(403).json({ message: err })
-                return
-            }
-            const { username } = decoded as DecodedToken
+    const decoded = jwt.verify(refreshToken, refreshTokenSecret) as DecodedToken
+    const foundUser = await User.findOne({
+        username: decoded.username,
+    }).exec()
 
-            User.findOne({ username: username })
-                .then((foundUser) => {
-                    if (!foundUser) {
-                        res.status(401).json({ message: "Unauthorized" })
-                        return
-                    }
+    if (!foundUser) {
+        return res.status(401).json({ message: "Unauthorized" })
+    }
 
-                    const accessToken = jwt.sign(
-                        {
-                            userId: foundUser._id,
-                            username: foundUser.username,
-                        },
-                        accessTokenSecret,
-                        { expiresIn: "15m" }
-                    )
-                    res.json({ accessToken })
-                })
-                .catch((err) => {
-                    res.status(500).json({ message: "Internal Server Error" })
-                })
-        }
+    const accessToken = jwt.sign(
+        {
+            userId: foundUser._id,
+            username: foundUser.username,
+        },
+        accessTokenSecret,
+        { expiresIn: accessTokenExpiresIn }
     )
+
+    res.json({ accessToken })
 }
 
 export const logout = (req: Request, res: Response) => {
