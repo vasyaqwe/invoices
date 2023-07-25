@@ -17,7 +17,7 @@ const app = express()
 connectDB()
 
 const corsOptions = {
-    origin: "https://invoices-vasyaqwe.onrender.com",
+    origin: ["http://localhost:5173", "https://invoices-vasyaqwe.onrender.com"],
     credentials: true,
 }
 app.use(cors(corsOptions))
