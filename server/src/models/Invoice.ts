@@ -1,11 +1,11 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model } from "mongoose"
 import { customAlphabet } from "nanoid"
 
 enum PaymentTerms {
-    OneDay = 'Net 1 day',
-    SevenDays = 'Net 7 days',
-    FourteenDays = 'Net 14 days',
-    ThirtyDays = 'Net 30 days'
+    OneDay = "Net 1 day",
+    SevenDays = "Net 7 days",
+    FourteenDays = "Net 14 days",
+    ThirtyDays = "Net 30 days",
 }
 interface Item {
     id: string
@@ -14,9 +14,9 @@ interface Item {
     price: number
 }
 enum Status {
-    Paid = 'Paid',
-    Pending = 'Pending',
-    Draft = 'Draft',
+    Paid = "Paid",
+    Pending = "Pending",
+    Draft = "Draft",
 }
 
 interface Invoice {
@@ -27,7 +27,7 @@ interface Invoice {
         city: string
         postCode: string
         country: string
-    },
+    }
     billTo: {
         clientName: string
         clientEmail: string
@@ -35,7 +35,7 @@ interface Invoice {
         city: string
         postCode: string
         country: string
-    },
+    }
     status: Status
     date: Date
     description: string
@@ -47,10 +47,10 @@ const ItemSchema = new Schema<Item>({
     id: String,
     name: String,
     quantity: Number,
-    price: Number
+    price: Number,
 })
 
-const alphabet: string = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+const alphabet: string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 const generator = customAlphabet(alphabet, 6)
 const today = Date.now()
 
@@ -60,18 +60,18 @@ const InvoiceSchema = new Schema<Invoice>({
         default: () => generator(),
         unique: true,
         index: true,
-        required: true
+        required: true,
     },
     user: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref: 'User'
+        ref: "User",
     },
     billFrom: {
         streetAddress: String,
         city: String,
         postCode: String,
-        country: String
+        country: String,
     },
     billTo: {
         clientName: String,
@@ -84,13 +84,13 @@ const InvoiceSchema = new Schema<Invoice>({
     status: String,
     date: {
         type: Date,
-        default: new Date(today)
+        default: new Date(today),
     },
     paymentTerms: String,
     description: String,
-    items: [ItemSchema]
+    items: [ItemSchema],
 })
 
-const Invoice = model<Invoice>('Invoice', InvoiceSchema)
+const Invoice = model<Invoice>("Invoice", InvoiceSchema)
 
 export default Invoice

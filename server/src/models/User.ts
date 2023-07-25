@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model } from "mongoose"
 
 interface IUser {
     username: string
@@ -16,6 +16,6 @@ const UserSchema = new Schema<IUser>({
     },
 })
 
-const User = model<IUser>('User', UserSchema)
+const User = model<IUser>("User", UserSchema)
 
 export default User
