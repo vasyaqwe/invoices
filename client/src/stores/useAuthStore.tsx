@@ -1,5 +1,5 @@
-import { create } from 'zustand'
-import { devtools, persist, createJSONStorage } from 'zustand/middleware'
+import { create } from "zustand"
+import { persist, createJSONStorage } from "zustand/middleware"
 
 interface StoreState {
     token: string | null
@@ -9,19 +9,17 @@ interface StoreState {
 }
 
 export const useAuthStore = create<StoreState>()(
-    devtools(
-        persist(
-            (set) => ({
-                token: null,
-                setToken: (token) => set(() => ({ token })),
-                persist: true,
-                setPersist: (persist) => set(() => ({ persist }))
-            }),
-            {
-                name: 'auth',
-                storage: createJSONStorage(() => localStorage),
-                partialize: (state) => ({ persist: state.persist })
-            }
-        )
+    persist(
+        (set) => ({
+            token: null,
+            setToken: (token) => set(() => ({ token })),
+            persist: true,
+            setPersist: (persist) => set(() => ({ persist })),
+        }),
+        {
+            name: "auth",
+            storage: createJSONStorage(() => localStorage),
+            partialize: (state) => ({ persist: state.persist }),
+        }
     )
 )

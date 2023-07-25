@@ -12,30 +12,45 @@ export const ConfirmDeletionModal = () => {
     const navigate = useNavigate()
     const queryClient = useQueryClient()
 
-    const { isLoading, error, mutate: onDelete } = useMutation(
-        () => deleteInvoice(currentInvoice?.id ?? ''), {
+    const {
+        isLoading,
+        error,
+        mutate: onDelete,
+    } = useMutation(() => deleteInvoice(currentInvoice?.id ?? ''), {
         onSuccess: () => {
-            queryClient.invalidateQueries(['invoices', { id: currentInvoice?.id }])
+            queryClient.invalidateQueries([
+                'invoices',
+                { id: currentInvoice?.id },
+            ])
             closeModal('confirmDeletion')
             openToast({ text: 'Invoice deleted!' })
             navigate('/')
-        }
+        },
     })
     useErrorToast(error)
 
     return (
-        <motion.dialog open className='bg-primary-700 inset-0 m-auto p-12 w-full max-w-lg modal'
+        <motion.dialog
+            open
+            className='bg-primary-700 inset-0 m-auto p-12 w-full max-w-lg modal'
             animate={{ opacity: 1 }}
             initial={{ opacity: 0 }}
             exit={{ opacity: 0 }}
         >
-            <h2 className="text-white text-4xl font-bold mb-4">Confirm deletion</h2>
-            <p className='text-neutral-400'>Are you sure you want to delete invoice #{currentInvoice?.id.toUpperCase()}? This action cannot be undone.</p>
-            <div className="flex items-center gap-2 mt-3 justify-end">
+            <h2 className='text-white text-4xl font-bold mb-4'>
+                Confirm deletion
+            </h2>
+            <p className='text-neutral-400'>
+                Are you sure you want to delete invoice #
+                {currentInvoice?.id.toUpperCase()}? This action cannot be
+                undone.
+            </p>
+            <div className='flex items-center gap-2 mt-3 justify-end'>
                 <Button
                     className='bg-neutral-700'
                     onClick={() => closeModal('confirmDeletion')}
-                >Cancel
+                >
+                    Cancel
                 </Button>
                 <Button
                     disabled={isLoading}
@@ -43,7 +58,8 @@ export const ConfirmDeletionModal = () => {
                     className={`bg-danger-400`}
                     onClick={() => onDelete()}
                 >
-                    Delete</Button>
+                    Delete
+                </Button>
             </div>
         </motion.dialog>
     )

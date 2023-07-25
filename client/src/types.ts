@@ -6,16 +6,16 @@ export type userCredentials = {
 }
 
 export enum PaymentTerms {
-    OneDay = 'Net 1 day',
-    SevenDays = 'Net 7 days',
-    FourteenDays = 'Net 14 days',
-    ThirtyDays = 'Net 30 days',
+    OneDay = "Net 1 day",
+    SevenDays = "Net 7 days",
+    FourteenDays = "Net 14 days",
+    ThirtyDays = "Net 30 days",
 }
 
 export enum Status {
-    Paid = 'Paid',
-    Pending = 'Pending',
-    Draft = 'Draft',
+    Paid = "Paid",
+    Pending = "Pending",
+    Draft = "Draft",
 }
 
 export interface Item {
@@ -74,7 +74,7 @@ export interface InvoiceFormData {
 
 export type ItemListProps = {
     items: Item[]
-    errors: string[],
+    errors: string[]
     onAddItem: () => void
     onDeleteItem: (id: string) => void
     draft: boolean
@@ -100,13 +100,13 @@ export type FloatingLabelProps = {
     text: string
 }
 export interface ToastPayload {
-    text: string,
-    error?: boolean,
+    text: string
+    error?: boolean
     alert?: boolean
 }
 export interface Toast extends ToastPayload {
     open: boolean
-    text: string,
-    error?: boolean,
+    text: string
+    error?: boolean
     alert?: boolean
 }

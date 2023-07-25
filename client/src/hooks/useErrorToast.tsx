@@ -8,6 +8,4 @@ export const useErrorToast = (error: unknown) => {
         if (error instanceof Error)
             openToast({ text: error.message, error: true })
     }, [error])
-
-    return null
 }

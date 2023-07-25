@@ -8,10 +8,14 @@ export const RequireAuth = () => {
 
     const allowed = token !== null
 
-    const content = (
-        allowed
-            ? <Outlet />
-            : <Navigate to="/login" state={{ from: location }} replace={true} />
+    const content = allowed ? (
+        <Outlet />
+    ) : (
+        <Navigate
+            to="/login"
+            state={{ from: location }}
+            replace={true}
+        />
     )
 
     return content

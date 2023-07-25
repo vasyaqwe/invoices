@@ -10,7 +10,7 @@ export const getInvoices = async (): Promise<Invoice[]> => {
         if (axios.isAxiosError(e)) {
             throw new Error(e.response?.data.message)
         } else {
-            throw new Error('Unknown Error')
+            throw new Error("Unknown Error")
         }
     }
 }
@@ -22,7 +22,7 @@ export const getInvoice = async (id: string) => {
         if (axios.isAxiosError(e)) {
             throw new Error(e.response?.data.message)
         } else {
-            throw new Error('Unknown Error')
+            throw new Error("Unknown Error")
         }
     }
 }
@@ -34,7 +34,7 @@ export const createInvoice = async (data: InvoiceFormData) => {
         if (axios.isAxiosError(e)) {
             throw new Error(e.response?.data.message)
         } else {
-            throw new Error('Unknown Error')
+            throw new Error("Unknown Error")
         }
     }
 }
@@ -46,7 +46,7 @@ export const createInvoiceDraft = async (data: InvoiceFormData) => {
         if (axios.isAxiosError(e)) {
             throw new Error(e.response?.data.message)
         } else {
-            throw new Error('Unknown Error')
+            throw new Error("Unknown Error")
         }
     }
 }
@@ -58,7 +58,7 @@ export const updateInvoice = async (id: string, data: InvoiceFormData) => {
         if (axios.isAxiosError(e)) {
             throw new Error(e.response?.data.message)
         } else {
-            throw new Error('Unknown Error')
+            throw new Error("Unknown Error")
         }
     }
 }
@@ -71,7 +71,7 @@ export const deleteInvoice = async (id: string) => {
         if (axios.isAxiosError(e)) {
             throw new Error(e.response?.data.message)
         } else {
-            throw new Error('Unknown Error')
+            throw new Error("Unknown Error")
         }
     }
 }

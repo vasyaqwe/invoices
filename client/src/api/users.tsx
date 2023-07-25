@@ -10,7 +10,7 @@ export const getUsers = async () => {
         if (axios.isAxiosError(e)) {
             throw new Error(e.response?.data.message)
         } else {
-            throw new Error('Unknown Error')
+            throw new Error("Unknown Error")
         }
     }
 }
@@ -22,7 +22,7 @@ export const getUser = async (id: string) => {
         if (axios.isAxiosError(e)) {
             throw new Error(e.response?.data.message)
         } else {
-            throw new Error('Unknown Error')
+            throw new Error("Unknown Error")
         }
     }
 }
@@ -34,7 +34,7 @@ export const createUser = async (data: userCredentials) => {
         if (axios.isAxiosError(e)) {
             throw new Error(e.response?.data.message)
         } else {
-            throw new Error('Unknown Error')
+            throw new Error("Unknown Error")
         }
     }
 }
@@ -46,7 +46,7 @@ export const updateUser = async (id: string, data: userCredentials) => {
         if (axios.isAxiosError(e)) {
             throw new Error(e.response?.data.message)
         } else {
-            throw new Error('Unknown Error')
+            throw new Error("Unknown Error")
         }
     }
 }
@@ -59,7 +59,7 @@ export const deleteUser = async (id: string) => {
         if (axios.isAxiosError(e)) {
             throw new Error(e.response?.data.message)
         } else {
-            throw new Error('Unknown Error')
+            throw new Error("Unknown Error")
         }
     }
 }
