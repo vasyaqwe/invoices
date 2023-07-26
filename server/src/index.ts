@@ -1,16 +1,15 @@
 import express from "express"
 import cors from "cors"
 import dotenv from "dotenv"
-dotenv.config()
 import cookieParser from "cookie-parser"
-
 import userRoutes from "./routes/users"
 import invoicesRoutes from "./routes/invoices"
 import authRoutes from "./routes/auth"
 import connectDB from "./db"
+
 import { errorHandler } from "./middleware"
 
-const PORT = process.env.PORT || 3000
+dotenv.config()
 
 const app = express()
 
@@ -36,4 +35,4 @@ app.all("*", (req, res, next) => {
     res.status(404).json({ message: "Page not found" })
 })
 
-app.listen(PORT, () => console.log(`LISTENING ON PORT ${PORT} !`))
+app.listen(3000, () => console.log(`LISTENING ON PORT 3000!`))

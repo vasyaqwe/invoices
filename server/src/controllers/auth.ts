@@ -12,13 +12,16 @@ const refreshTokenExpiresIn = "7d"
 
 export const login = async (req: Request, res: Response) => {
     const { username, password } = req.body
+
     const foundUser = await User.findOne({ username })
+
     if (!foundUser) {
         res.status(401).json({ message: "This username is not registered" })
         return
     }
 
     const match = await bcrypt.compare(password, foundUser.password)
+
     if (!match) {
         res.status(401).json({ message: "Invalid Credentials" })
         return
@@ -56,9 +59,11 @@ export const refresh = async (req: Request, res: Response) => {
     const cookies = req.cookies
 
     if (!cookies?.jwt) return res.status(401).json({ message: "Unauthorized" })
+
     const refreshToken = cookies.jwt
 
     const decoded = jwt.verify(refreshToken, refreshTokenSecret) as DecodedToken
+
     const foundUser = await User.findOne({
         username: decoded.username,
     }).exec()

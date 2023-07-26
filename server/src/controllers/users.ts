@@ -16,13 +16,18 @@ export const getUsers = async (_req: Request, res: Response) => {
 
 export const createUser = async (req: Request, res: Response) => {
     const { username, password } = req.body
+
     const duplicate = await User.findOne({ username }).lean().exec()
+
     if (duplicate) {
         res.status(409).json({ message: "User already exists!" })
+        return
     }
+
     const hashedPwd = await bcrypt.hash(password, 10)
 
     const userData = { username, password: hashedPwd }
+
     const user = await User.create(userData)
 
     if (user) {
