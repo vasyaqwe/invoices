@@ -3,6 +3,8 @@ import { Request, Response } from "express"
 import jwt, { Secret } from "jsonwebtoken"
 import { DecodedToken } from "../interfaces"
 
+const LIMIT = 2
+
 const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET as Secret
 
 export const getInvoices = async (req: Request, res: Response) => {
@@ -10,10 +12,23 @@ export const getInvoices = async (req: Request, res: Response) => {
 
     const { userId } = decoded as DecodedToken
 
-    const invoices = await Invoice.find({ user: userId })
+    const page = req.query.page || 1
 
-    res.json(invoices)
+    const invoices = await Invoice.find({ user: userId })
+        .limit(LIMIT * 1)
+        .skip((+page - 1) * LIMIT)
+        .sort({ createdAt: -1 })
+
+    // Getting the numbers of products stored in database
+    const count = await Invoice.countDocuments()
+
+    res.json({
+        invoices,
+        totalPages: Math.ceil(count / LIMIT),
+        currentPage: page,
+    })
 }
+
 export const getInvoice = async (req: Request, res: Response) => {
     const { id } = req.params
     const invoice = await Invoice.findOne({ id })
@@ -22,6 +37,7 @@ export const getInvoice = async (req: Request, res: Response) => {
         res.status(400).json({ message: "No invoice found!" })
         return
     }
+
     res.json(invoice)
 }
 
@@ -62,8 +78,10 @@ export const updateInvoice = async (req: Request, res: Response) => {
 export const deleteInvoice = async (req: Request, res: Response) => {
     const { id } = req.params
 
-    if (!id) {
-        res.status(400).json({ message: "Invoice with that id was not found" })
+    const invoice = await Invoice.findById(id)
+
+    if (!invoice) {
+        res.status(400).json({ message: "No invoice found!" })
         return
     }
 
