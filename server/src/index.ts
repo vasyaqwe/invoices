@@ -1,6 +1,8 @@
 import express from "express"
 import cors from "cors"
 import dotenv from "dotenv"
+dotenv.config()
+
 import cookieParser from "cookie-parser"
 import userRoutes from "./routes/users"
 import invoicesRoutes from "./routes/invoices"
@@ -8,9 +10,6 @@ import authRoutes from "./routes/auth"
 import connectDB from "./db"
 
 import { errorHandler } from "./middleware"
-
-dotenv.config()
-
 const app = express()
 
 connectDB()

@@ -17,11 +17,11 @@ export const getInvoices = async (req: Request, res: Response) => {
     const skipCount = (+page - 1) * LIMIT
 
     const invoices = await Invoice.find({ user: userId })
+        .sort({ date: -1, _id: -1 })
         .skip(skipCount)
         .limit(LIMIT)
         .exec()
 
-    // Getting the numbers of products stored in database
     const count = await Invoice.countDocuments()
 
     res.json({
@@ -68,7 +68,7 @@ export const updateInvoice = async (req: Request, res: Response) => {
         { id: req.params.id },
         { ...req.body }
     )
-
+    console.log(req.body)
     if (!invoice) {
         res.status(400).json({ message: "Invoice not found" })
         return
@@ -80,13 +80,13 @@ export const updateInvoice = async (req: Request, res: Response) => {
 export const deleteInvoice = async (req: Request, res: Response) => {
     const { id } = req.params
 
-    const invoice = await Invoice.findById(id)
+    const invoice = await Invoice.findOne({ id })
 
     if (!invoice) {
         res.status(400).json({ message: "No invoice found!" })
         return
     }
-    console.log(id)
+
     const deleted = await Invoice.findOneAndDelete({ id })
 
     res.json({ message: `Invoice ${deleted!.id} was deleted!` })
