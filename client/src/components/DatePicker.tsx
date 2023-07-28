@@ -25,18 +25,29 @@ const colStartClasses = [
     "col-start-7",
 ]
 
-export const DatePicker = () => {
-    const [open, setOpen] = useState(false)
-    const today = startOfToday()
-    const [hoveredDay, setHoveredDay] = useState<undefined | Date>(undefined)
-    const [selectedDay, setSelectedDay] = useState(today)
-    const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"))
-    const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date())
+type DatePickerProps = {
+    selectedDay: Date
+    onSelectedDayChange: (day: Date) => void
+}
 
+export const DatePicker = ({
+    selectedDay,
+    onSelectedDayChange,
+}: DatePickerProps) => {
+    const [open, setOpen] = useState(false)
+
+    const today = startOfToday()
+
+    const [hoveredDay, setHoveredDay] = useState<undefined | Date>(undefined)
+    const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"))
+
+    const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date())
+    console.log(selectedDay)
     const days = eachDayOfInterval({
         start: firstDayCurrentMonth,
         end: endOfMonth(firstDayCurrentMonth),
     })
+
     const previousMonth = () => {
         const firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 })
         setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"))
@@ -121,7 +132,7 @@ export const DatePicker = () => {
                                 type="button"
                                 onClick={(e) => {
                                     e.stopPropagation()
-                                    setSelectedDay(day)
+                                    onSelectedDayChange(day)
                                 }}
                                 onMouseOver={() => setHoveredDay(day)}
                                 onMouseOut={() => setHoveredDay(undefined)}

@@ -116,10 +116,10 @@ export const Invoice = () => {
                             <b>{invoice.billTo.clientName}</b>
                         </p>
                         <address className="leading-5">
-                            <p>{invoice.billFrom.streetAddress}</p>
-                            <p>{invoice.billFrom.city}</p>
-                            <p>{invoice.billFrom.postCode}</p>
-                            <p>{invoice.billFrom.country}</p>
+                            <p>{invoice.billTo.streetAddress}</p>
+                            <p>{invoice.billTo.city}</p>
+                            <p>{invoice.billTo.postCode}</p>
+                            <p>{invoice.billTo.country}</p>
                         </address>
                     </div>
                     <div>

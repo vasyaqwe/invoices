@@ -39,6 +39,10 @@ export const useInvoiceForm = ({
         }, 100)
     }
 
+    const onSelectedDayChange = (day: Date) => {
+        setFormData((prev) => ({ ...prev, date: day }))
+    }
+
     const onDeleteItem = (id: string) => {
         setFormData((prev) => ({
             ...prev,
@@ -93,6 +97,7 @@ export const useInvoiceForm = ({
         onChange,
         onItemChange,
         onSelectChange,
+        onSelectedDayChange,
         validateInputs,
         errors,
     }

@@ -15,6 +15,7 @@ type InvoiceFormProps = {
     formData: InvoiceFormData
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
     errors: string[]
+    onSelectedDayChange: (day: Date) => void
     onSelectChange: (name: string, option: SelectOption) => void
     onChange: (e: OnChangeEvent) => void
     onItemChange: (e: React.ChangeEvent<HTMLInputElement>, id: string) => void
@@ -34,6 +35,7 @@ export const InvoiceForm = ({
     onItemChange,
     onDeleteItem,
     onAddItem,
+    onSelectedDayChange,
     itemsRef,
     formRef,
     draft = false,
@@ -219,7 +221,10 @@ export const InvoiceForm = ({
                         >
                             Invoice Date
                         </label>
-                        <DatePicker />
+                        <DatePicker
+                            selectedDay={formData.date.setHours(0, 0, 0, 0)}
+                            onSelectedDayChange={onSelectedDayChange}
+                        />
                     </div>
                     <div className="w-full">
                         <label

@@ -1,5 +1,6 @@
 import axios from "axios"
-export const API_URL = "https://invoices-ga5s.onrender.com"
+export const API_URL = "http://localhost:3000"
+// export const API_URL = "https://invoices-ga5s.onrender.com"
 import { useAuthStore } from "../stores/useAuthStore"
 import { refresh } from "./auth"
 

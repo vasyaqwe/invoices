@@ -1,45 +1,68 @@
-import { useQuery } from "react-query"
+import { useInfiniteQuery } from "react-query"
 import { useStore } from "../stores/useStore"
 import { getInvoices } from "../api/invoices"
 import { Invoice } from "../types"
 import { InvoiceItem } from "../components/InvoiceItem"
 import { ReactComponent as Plus } from "../assets/plus.svg"
-import { useEffect } from "react"
-import { useAuth } from "../hooks/useAuth"
+import { useEffect, useRef } from "react"
 import { Spinner } from "../components/Spinner"
 import { FilterSelect } from "../components/FilterSelect"
 import { useSearchParams } from "react-router-dom"
 import { ErrorMessage } from "../components/ErrorMessage"
 import { Button } from "../components/Button"
+import { useIntersection } from "@mantine/hooks"
 
 export const Dashboard = () => {
-    const { openModal, modals } = useStore()
+    const { openModal } = useStore()
+
     const [searchParams, setSearchParams] = useSearchParams()
+
     const statusFilter = searchParams.get("status")?.split(",") ?? []
 
-    const currentUser = useAuth()
+    const lastInvoiceRef = useRef<HTMLLIElement>(null)
+
+    const { ref, entry } = useIntersection({
+        root: lastInvoiceRef.current,
+        threshold: 1,
+    })
 
     const {
         isLoading,
         error,
-        data: invoices,
-    } = useQuery(["invoices"], getInvoices, {
-        refetchInterval: 150000,
-    })
+        data,
+        hasNextPage,
+        isFetchingNextPage,
+        fetchNextPage,
+    } = useInfiniteQuery(
+        ["invoices"],
+        ({ pageParam = 1 }) => getInvoices(pageParam),
+        {
+            staleTime: Infinity,
+            refetchOnWindowFocus: false,
+            getNextPageParam: (res, pages) => {
+                if (pages.length < res.totalPages) {
+                    return pages.length + 1
+                } else {
+                    return undefined
+                }
+            },
+            refetchInterval: 50000,
+        }
+    )
 
     useEffect(() => {
-        if (Object.values(modals).some((v) => v)) {
-            document.body.style.overflow = "hidden"
-        } else {
-            document.body.style.overflow = "auto"
-        }
-    }, [modals])
+        if (entry?.isIntersecting && hasNextPage) fetchNextPage()
+    }, [entry, hasNextPage])
+
+    const invoices = data?.pages.flatMap((page) => page.invoices)
 
     const filteredInvoices =
         statusFilter.length > 0
-            ? invoices?.filter((invoice) =>
-                  statusFilter.includes(invoice.status.toLowerCase())
-              ) ?? invoices
+            ? invoices
+                  ?.filter((invoice: Invoice) =>
+                      statusFilter.includes(invoice.status.toLowerCase())
+                  )
+                  .flat()
             : invoices
 
     return (
@@ -53,18 +76,13 @@ export const Dashboard = () => {
                     }
                 />
             ) : (
-                <>
+                <div className="pb-16">
                     <div className="flex items-start justify-between gap-5">
                         <div>
                             <h1 className="text-4xl font-semibold">Invoices</h1>
                             <p className="text-neutral-400">
-                                There are{" "}
-                                {invoices
-                                    ? invoices.filter(
-                                          (i) => i.user === currentUser!.userId
-                                      ).length
-                                    : ""}{" "}
-                                total invoices.
+                                There are {filteredInvoices?.length} total
+                                invoices.
                             </p>
                         </div>
                         <div className="flex items-center gap-3 flex-wrap sm:flex-nowrap">
@@ -88,19 +106,33 @@ export const Dashboard = () => {
                             </Button>
                         </div>
                     </div>
-                    <ul className="mt-8 md:mt-12 grid gap-3">
+                    <ul className="mt-8 md:mt-12 pb-8 grid gap-3">
                         {isLoading ? (
                             <Spinner />
                         ) : (
-                            filteredInvoices?.map((invoice: Invoice) => (
-                                <InvoiceItem
-                                    key={invoice.id}
-                                    {...invoice}
-                                />
-                            ))
+                            filteredInvoices?.map((invoice: Invoice, idx) => {
+                                if (filteredInvoices.length === idx + 1) {
+                                    return (
+                                        <li
+                                            key={invoice.id}
+                                            ref={ref}
+                                        >
+                                            <InvoiceItem {...invoice} />
+                                        </li>
+                                    )
+                                }
+                                return (
+                                    <li key={invoice.id}>
+                                        <InvoiceItem {...invoice} />
+                                    </li>
+                                )
+                            })
                         )}
                     </ul>
-                </>
+                    {isFetchingNextPage && (
+                        <Spinner className="absolute left-1/2 -translate-x-1/2" />
+                    )}
+                </div>
             )}
         </>
     )

@@ -52,6 +52,7 @@ export const CreateInvoiceModal = () => {
         onChange,
         onItemChange,
         onSelectChange,
+        onSelectedDayChange,
         errors,
         validateInputs,
     } = useInvoiceForm({ setFormData, formData, itemsRef, formRef })
@@ -109,6 +110,7 @@ export const CreateInvoiceModal = () => {
                     errors={errors}
                     formRef={formRef}
                     itemsRef={itemsRef}
+                    onSelectedDayChange={onSelectedDayChange}
                     onSelectChange={onSelectChange}
                     onChange={onChange}
                     onItemChange={onItemChange}

@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactNode } from "react"
+import { ChangeEvent, LegacyRef, ReactNode, RefObject } from "react"
 
 export type userCredentials = {
     username: string

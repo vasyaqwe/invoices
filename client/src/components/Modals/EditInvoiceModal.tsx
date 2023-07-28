@@ -21,7 +21,7 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
         user: currentUser!.userId,
         billFrom: billFrom,
         billTo: billTo,
-        date,
+        date: new Date(date),
         status,
         paymentTerms,
         description,
@@ -54,6 +54,7 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
         onItemChange,
         onSelectChange,
         errors,
+        onSelectedDayChange,
         validateInputs,
     } = useInvoiceForm({ setFormData, formData, itemsRef, formRef })
 
@@ -85,6 +86,7 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
                     formRef={formRef}
                     itemsRef={itemsRef}
                     onSelectChange={onSelectChange}
+                    onSelectedDayChange={onSelectedDayChange}
                     onChange={onChange}
                     onItemChange={onItemChange}
                     onAddItem={onAddItem}
