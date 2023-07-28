@@ -40,6 +40,8 @@ export const InvoiceForm = ({
     formRef,
     draft = false,
 }: InvoiceFormProps) => {
+    const selectedDay = new Date(formData.date)
+
     return (
         <form
             id="invoice-form"
@@ -222,7 +224,9 @@ export const InvoiceForm = ({
                             Invoice Date
                         </label>
                         <DatePicker
-                            selectedDay={formData.date.setHours(0, 0, 0, 0)}
+                            selectedDay={
+                                new Date(selectedDay.setHours(0, 0, 0, 0))
+                            }
                             onSelectedDayChange={onSelectedDayChange}
                         />
                     </div>
