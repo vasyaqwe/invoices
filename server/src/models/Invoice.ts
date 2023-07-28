@@ -44,10 +44,22 @@ interface Invoice {
 }
 
 const ItemSchema = new Schema<Item>({
-    id: String,
-    name: String,
-    quantity: Number,
-    price: Number,
+    id: {
+        type: String,
+        required: true,
+    },
+    name: {
+        type: String,
+        required: true,
+    },
+    quantity: {
+        type: Number,
+        required: true,
+    },
+    price: {
+        type: Number,
+        required: true,
+    },
 })
 
 const alphabet: string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -68,27 +80,75 @@ const InvoiceSchema = new Schema<Invoice>({
         ref: "User",
     },
     billFrom: {
-        streetAddress: String,
-        city: String,
-        postCode: String,
-        country: String,
+        streetAddress: {
+            type: String,
+            required: true,
+        },
+        city: {
+            type: String,
+            required: true,
+        },
+        postCode: {
+            type: String,
+            required: true,
+        },
+        country: {
+            type: String,
+            required: true,
+        },
     },
     billTo: {
-        clientName: String,
-        clientEmail: String,
-        streetAddress: String,
-        city: String,
-        postCode: String,
-        country: String,
+        clientName: {
+            type: String,
+            required: true,
+        },
+        clientEmail: {
+            type: String,
+            required: true,
+        },
+        streetAddress: {
+            type: String,
+            required: true,
+        },
+        city: {
+            type: String,
+            required: true,
+        },
+        postCode: {
+            type: String,
+            required: true,
+        },
+        country: {
+            type: String,
+            required: true,
+        },
     },
-    status: String,
+    status: {
+        type: String,
+        required: true,
+    },
     date: {
         type: Date,
         default: new Date(today),
     },
-    paymentTerms: String,
-    description: String,
-    items: [ItemSchema],
+    paymentTerms: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+    items: {
+        type: [ItemSchema],
+        validate: {
+            validator: function (items: Item[]) {
+                return items && items.length > 0
+            },
+            message: "At least one item must be provided.",
+        },
+        required: true,
+    },
 })
 
 const Invoice = model<Invoice>("Invoice", InvoiceSchema)
