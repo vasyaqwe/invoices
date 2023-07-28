@@ -3,7 +3,7 @@ import { Request, Response } from "express"
 import jwt, { Secret } from "jsonwebtoken"
 import { DecodedToken } from "../interfaces"
 
-const LIMIT = 2
+const LIMIT = 10
 
 const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET as Secret
 
@@ -86,7 +86,7 @@ export const deleteInvoice = async (req: Request, res: Response) => {
         res.status(400).json({ message: "No invoice found!" })
         return
     }
-
+    console.log(id)
     const deleted = await Invoice.findOneAndDelete({ id })
 
     res.json({ message: `Invoice ${deleted!.id} was deleted!` })
