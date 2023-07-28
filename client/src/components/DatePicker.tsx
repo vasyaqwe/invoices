@@ -42,7 +42,7 @@ export const DatePicker = ({
     const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"))
 
     const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date())
-    console.log(selectedDay)
+
     const days = eachDayOfInterval({
         start: firstDayCurrentMonth,
         end: endOfMonth(firstDayCurrentMonth),
