@@ -14,10 +14,12 @@ export const getInvoices = async (req: Request, res: Response) => {
 
     const page = req.query.page || 1
 
+    const skipCount = (+page - 1) * LIMIT
+
     const invoices = await Invoice.find({ user: userId })
-        .limit(LIMIT * 1)
-        .skip((+page - 1) * LIMIT)
-        .sort({ createdAt: -1 })
+        .skip(skipCount)
+        .limit(LIMIT)
+        .exec()
 
     // Getting the numbers of products stored in database
     const count = await Invoice.countDocuments()
