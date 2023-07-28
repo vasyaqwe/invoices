@@ -29,3 +29,6 @@ export const inputClassName = `border bg-primary-800
 export const labelClassName = `inline-block text-neutral-500`
 
 export const emailPattern = "^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$"
+
+export const pageSpinnerClassName =
+    "absolute left-[47%] -translate-x-1/2 top-[30%] -translate-y-1/2 w-[40px] h-[40px]"

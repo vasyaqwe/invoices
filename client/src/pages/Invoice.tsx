@@ -2,7 +2,7 @@ import { useParams, Link, Navigate } from "react-router-dom"
 import { StatusBadge } from "../components/StatusBadge"
 import { useQuery } from "react-query"
 import { getInvoice } from "../api/invoices"
-import { formatCurrency, formatDate } from "../utils"
+import { formatCurrency, formatDate, pageSpinnerClassName } from "../utils"
 import { ReactComponent as Chevron } from "../assets/chevron.svg"
 import { Item } from "../types"
 import { useStore } from "../stores/useStore"
@@ -44,8 +44,8 @@ export const Invoice = () => {
 
     if (error && error instanceof Error) return <Navigate to={".."} />
 
-    return isLoading || !id ? (
-        <Spinner />
+    return isLoading ? (
+        <Spinner className={pageSpinnerClassName} />
     ) : (
         <>
             <ModalWrapper open={modals.confirmDeletion}>

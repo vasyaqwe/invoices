@@ -5,7 +5,6 @@ import axios from "axios"
 export const getInvoices = async (page: number) => {
     try {
         const res = await axiosPrivate.get(`/invoices?page=${page}`)
-        console.log(res.data)
         return res.data
     } catch (e) {
         if (axios.isAxiosError(e)) {

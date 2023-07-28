@@ -11,6 +11,7 @@ import { useSearchParams } from "react-router-dom"
 import { ErrorMessage } from "../components/ErrorMessage"
 import { Button } from "../components/Button"
 import { useIntersection } from "@mantine/hooks"
+import { pageSpinnerClassName } from "../utils"
 
 export const Dashboard = () => {
     const { openModal } = useStore()
@@ -108,7 +109,7 @@ export const Dashboard = () => {
                     </div>
                     <ul className="mt-8 md:mt-12 pb-8 grid gap-3">
                         {isLoading ? (
-                            <Spinner />
+                            <Spinner className={pageSpinnerClassName} />
                         ) : (
                             filteredInvoices?.map((invoice: Invoice, idx) => {
                                 if (filteredInvoices.length === idx + 1) {
@@ -130,7 +131,7 @@ export const Dashboard = () => {
                         )}
                     </ul>
                     {isFetchingNextPage && (
-                        <Spinner className="absolute left-1/2 -translate-x-1/2" />
+                        <Spinner className="absolute left-1/2 -translate-x-1/2 w-[30px] h-[30px]" />
                     )}
                 </div>
             )}
