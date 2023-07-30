@@ -9,3 +9,8 @@ export type PaginatedInvoiceReturnType = Promise<{
 }>
 
 export type InvoiceReturnType = Promise<Invoice>
+
+export type UserCredentials = {
+    username: string
+    password: string
+}

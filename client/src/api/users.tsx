@@ -1,4 +1,4 @@
-import { userCredentials } from "../types"
+import { UserCredentials } from "../types"
 import { axiosPrivate } from "./config"
 import axios from "axios"
 
@@ -26,9 +26,9 @@ export const getUser = async (id: string) => {
         }
     }
 }
-export const createUser = async (data: userCredentials) => {
+export const createUser = async (data: UserCredentials) => {
     try {
-        const res = await axiosPrivate.post(`/users`, { ...data })
+        const res = await axiosPrivate.post(`/users`, data)
         return res.data
     } catch (e) {
         if (axios.isAxiosError(e)) {
@@ -38,9 +38,9 @@ export const createUser = async (data: userCredentials) => {
         }
     }
 }
-export const updateUser = async (id: string, data: userCredentials) => {
+export const updateUser = async (id: string, data: UserCredentials) => {
     try {
-        const res = await axiosPrivate.patch(`/users/${id}`, { ...data })
+        const res = await axiosPrivate.patch(`/users/${id}`, data)
         return res.data
     } catch (e) {
         if (axios.isAxiosError(e)) {

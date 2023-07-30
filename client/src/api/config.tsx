@@ -39,11 +39,13 @@ axiosPrivate.interceptors.response.use(
         const prevReq = error?.config
         if (error?.response?.status === 403 && !prevReq?.sent) {
             prevReq.sent = true
+
             const refreshedRes = await refresh()
+
             prevReq.headers[
                 "Authorization"
             ] = `Bearer ${refreshedRes.data.accessToken}`
-            console.log(refreshedRes.data.accessToken)
+
             return axiosPrivate(prevReq)
         }
         return Promise.reject(error)

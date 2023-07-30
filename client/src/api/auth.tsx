@@ -1,4 +1,4 @@
-import { userCredentials } from "../types"
+import { UserCredentials } from "../types"
 import myAxios, { axiosPrivate } from "./config"
 import axios from "axios"
 
@@ -9,13 +9,11 @@ export const refresh = async () => {
     return res.data
 }
 
-export const login = async (credentials: userCredentials) => {
+export const login = async (credentials: UserCredentials) => {
     try {
-        const res = await myAxios.post(
-            `/auth`,
-            { ...credentials },
-            { withCredentials: true }
-        )
+        const res = await myAxios.post(`/auth`, credentials, {
+            withCredentials: true,
+        })
         return res.data
     } catch (e) {
         if (axios.isAxiosError(e)) {
@@ -31,19 +29,6 @@ export const logout = async () => {
         return await axiosPrivate.post(`/auth/logout`, {
             withCredentials: true,
         })
-    } catch (e) {
-        if (axios.isAxiosError(e)) {
-            throw new Error(e.response?.data.message)
-        } else {
-            throw new Error("Unknown Error")
-        }
-    }
-}
-
-export const verifyEmail = async (token: string) => {
-    try {
-        const res = await myAxios.post(`/auth/verify/:${token}`)
-        return res.data
     } catch (e) {
         if (axios.isAxiosError(e)) {
             throw new Error(e.response?.data.message)

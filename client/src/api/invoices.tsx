@@ -32,7 +32,7 @@ export const getInvoice = async (id: string): InvoiceReturnType => {
 }
 export const createInvoice = async (data: InvoiceFormData) => {
     try {
-        const res = await axiosPrivate.post(`/invoices/`, { ...data })
+        const res = await axiosPrivate.post(`/invoices/`, data)
         return res.data
     } catch (e) {
         if (axios.isAxiosError(e)) {
@@ -44,7 +44,7 @@ export const createInvoice = async (data: InvoiceFormData) => {
 }
 export const createInvoiceDraft = async (data: InvoiceFormData) => {
     try {
-        const res = await axiosPrivate.post(`/invoices/draft`, { ...data })
+        const res = await axiosPrivate.post(`/invoices/draft`, data)
         return res.data
     } catch (e) {
         if (axios.isAxiosError(e)) {
@@ -56,7 +56,7 @@ export const createInvoiceDraft = async (data: InvoiceFormData) => {
 }
 export const updateInvoice = async (id: string, data: InvoiceFormData) => {
     try {
-        const res = await axiosPrivate.patch(`/invoices/${id}`, { ...data })
+        const res = await axiosPrivate.patch(`/invoices/${id}`, data)
         return res.data
     } catch (e) {
         if (axios.isAxiosError(e)) {
