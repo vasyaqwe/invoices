@@ -15,14 +15,11 @@ import { PaymentTerms, Status } from "../../../../common/types"
 export const CreateInvoiceModal = () => {
     const { closeModal, openToast } = useStore()
 
-    const currentUser = useAuth()
-
     const [draft, setDraft] = useState(false)
 
     const today = Date.now()
 
     const [formData, setFormData] = useState<InvoiceFormData>({
-        user: currentUser!.userId,
         billFrom: {
             streetAddress: "",
             city: "",

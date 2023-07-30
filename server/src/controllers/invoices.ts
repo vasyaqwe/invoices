@@ -46,7 +46,11 @@ export const getInvoice = async (req: Request, res: Response) => {
 }
 
 export const createInvoice = async (req: Request, res: Response) => {
-    const invoice = await Invoice.create({ ...req.body })
+    const decoded = jwt.verify(req.cookies.jwt, refreshTokenSecret)
+
+    const { userId } = decoded as DecodedToken
+
+    const invoice = await Invoice.create({ ...req.body, user: userId })
 
     if (invoice) {
         res.status(201).json({ message: `New invoice ${invoice.id} created` })
@@ -66,9 +70,13 @@ export const createInvoiceDraft = async (req: Request, res: Response) => {
 }
 
 export const updateInvoice = async (req: Request, res: Response) => {
+    const decoded = jwt.verify(req.cookies.jwt, refreshTokenSecret)
+
+    const { userId } = decoded as DecodedToken
+
     const invoice = await Invoice.findOneAndUpdate(
         { id: req.params.id },
-        { ...req.body }
+        { ...req.body, user: userId }
     )
 
     if (!invoice) {

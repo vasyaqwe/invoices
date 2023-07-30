@@ -5,7 +5,6 @@ import { useMutation, useQueryClient } from "react-query"
 import { motion } from "framer-motion"
 import { useStore } from "../../stores/useStore"
 import { useErrorToast } from "../../hooks/useErrorToast"
-import { useAuth } from "../../hooks/useAuth"
 import { Button } from "../Button"
 import { InvoiceForm } from "../InvoiceForm"
 import { useInvoiceForm } from "../../hooks/useInvoiceForm"
@@ -17,10 +16,7 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
 
     const { closeModal, openToast } = useStore()
 
-    const currentUser = useAuth()
-
     const [formData, setFormData] = useState<InvoiceFormData>({
-        user: currentUser!.userId,
         billFrom: billFrom,
         billTo: billTo,
         date: new Date(date),

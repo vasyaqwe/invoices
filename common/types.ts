@@ -1,8 +1,5 @@
-import { Types } from "mongoose"
-
 export type Invoice = {
     id: string
-    user: Types.ObjectId
     billFrom: {
         streetAddress: string
         city: string
