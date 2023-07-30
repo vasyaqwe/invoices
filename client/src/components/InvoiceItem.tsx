@@ -20,7 +20,7 @@ export const InvoiceItem = ({
         )
     )
     const itemsTotal = items.reduce(
-        (a: number, b: InvoiceItemType) => a + b.price,
+        (a: number, b: InvoiceItemType) => a + b.price * b.quantity,
         0
     )
 
