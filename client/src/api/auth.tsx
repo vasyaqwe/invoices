@@ -1,4 +1,4 @@
-import { UserCredentials } from "../types"
+import { User } from "../../../common/types"
 import myAxios, { axiosPrivate } from "./config"
 import axios from "axios"
 
@@ -9,7 +9,7 @@ export const refresh = async () => {
     return res.data
 }
 
-export const login = async (credentials: UserCredentials) => {
+export const login = async (credentials: User) => {
     try {
         const res = await myAxios.post(`/auth`, credentials, {
             withCredentials: true,

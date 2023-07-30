@@ -1,49 +1,8 @@
 import { Schema, model } from "mongoose"
 import { customAlphabet } from "nanoid"
+import { Invoice, InvoiceItem } from "../../../common/types"
 
-enum PaymentTerms {
-    OneDay = "Net 1 day",
-    SevenDays = "Net 7 days",
-    FourteenDays = "Net 14 days",
-    ThirtyDays = "Net 30 days",
-}
-interface Item {
-    id: string
-    name: string
-    quantity: number
-    price: number
-}
-enum Status {
-    Paid = "Paid",
-    Pending = "Pending",
-    Draft = "Draft",
-}
-
-interface Invoice {
-    id: string
-    user: Schema.Types.ObjectId
-    billFrom: {
-        streetAddress: string
-        city: string
-        postCode: string
-        country: string
-    }
-    billTo: {
-        clientName: string
-        clientEmail: string
-        streetAddress: string
-        city: string
-        postCode: string
-        country: string
-    }
-    status: Status
-    date: Date
-    description: string
-    paymentTerms: PaymentTerms
-    items: Item[]
-}
-
-const ItemSchema = new Schema<Item>({
+const ItemSchema = new Schema<InvoiceItem>({
     id: String,
     name: String,
     quantity: Number,

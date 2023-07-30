@@ -1,6 +1,8 @@
+import { Schema } from "mongoose"
+
 export type Invoice = {
     id: string
-    user: string
+    user: Schema.Types.ObjectId
     billFrom: {
         streetAddress: string
         city: string
@@ -40,4 +42,9 @@ export type InvoiceItem = {
     name: string
     quantity: number
     price: number
+}
+
+export type User = {
+    username: string
+    password: string
 }
