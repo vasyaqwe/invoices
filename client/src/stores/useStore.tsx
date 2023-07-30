@@ -1,6 +1,16 @@
 import { create } from "zustand"
 import { devtools } from "zustand/middleware"
-import { Invoice, Toast, ToastPayload } from "../types"
+interface ToastPayload {
+    text: string
+    error?: boolean
+    alert?: boolean
+}
+interface Toast extends ToastPayload {
+    open: boolean
+    text: string
+    error?: boolean
+    alert?: boolean
+}
 
 interface StoreState {
     modals: Record<string, boolean>

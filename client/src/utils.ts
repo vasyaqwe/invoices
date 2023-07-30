@@ -1,4 +1,4 @@
-import { Item } from "./types"
+import { InvoiceItem } from "../../common/types"
 
 const CURRENCY_FORMATTER = new Intl.NumberFormat(undefined, {
     currency: "USD",
@@ -21,7 +21,7 @@ export const classNames = (...classes: string[]): string => {
     return classes.filter(Boolean).join(" ")
 }
 
-export const getTotalOfItem = (item: Item) => item.price * item.quantity
+export const getTotalOfItem = (item: InvoiceItem) => item.price * item.quantity
 
 export const inputClassName = `border bg-primary-800 
     rounded-md py-2 px-3 text-white focus:outline-none`

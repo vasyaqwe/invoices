@@ -1,4 +1,14 @@
-import { InputProps } from "../types"
+type InputProps = {
+    id: string
+    type: string
+    placeholder?: string
+    name: string
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    required?: boolean
+    value: string | number
+    pattern?: string
+    invalid?: boolean
+}
 
 export const Input = ({
     invalid = false,

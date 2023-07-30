@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { Invoice, InvoiceFormData } from "../../types"
+import { InvoiceFormData } from "../../types"
 import { updateInvoice } from "../../api/invoices"
 import { useMutation, useQueryClient } from "react-query"
 import { motion } from "framer-motion"
@@ -9,10 +9,12 @@ import { useAuth } from "../../hooks/useAuth"
 import { Button } from "../Button"
 import { InvoiceForm } from "../InvoiceForm"
 import { useInvoiceForm } from "../../hooks/useInvoiceForm"
+import { Invoice } from "../../../../common/types"
 
 export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
     const { billFrom, billTo, items, date, status, paymentTerms, description } =
         invoice
+
     const { closeModal, openToast } = useStore()
 
     const currentUser = useAuth()

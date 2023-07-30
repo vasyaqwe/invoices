@@ -5,7 +5,7 @@ import { deleteInvoice } from "../../api/invoices"
 import { useNavigate } from "react-router-dom"
 import { useErrorToast } from "../../hooks/useErrorToast"
 import { Button } from "../Button"
-import { Invoice } from "../../types"
+import { Invoice } from "../../../../common/types"
 
 export const ConfirmDeletionModal = ({ invoice }: { invoice: Invoice }) => {
     const { closeModal, openToast } = useStore()

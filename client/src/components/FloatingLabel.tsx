@@ -1,4 +1,11 @@
-import { FloatingLabelProps } from '../types'
+import { ReactNode } from "react"
+
+type FloatingLabelProps = {
+    invalid?: boolean
+    htmlFor: string
+    children: ReactNode
+    text: string
+}
 
 export const FloatingLabel = ({
     invalid,
@@ -7,11 +14,11 @@ export const FloatingLabel = ({
     text,
 }: FloatingLabelProps) => {
     const invalidStyle = invalid
-        ? 'text-danger-400'
-        : 'text-accent-400 peer-focus:text-accent-400  peer-placeholder-shown:text-neutral-500 '
+        ? "text-danger-400"
+        : "text-accent-400 peer-focus:text-accent-400  peer-placeholder-shown:text-neutral-500 "
 
     return (
-        <div className='relative'>
+        <div className="relative">
             {children}
             <label
                 htmlFor={htmlFor}

@@ -1,9 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from "react-query"
+import { useQuery, useQueryClient } from "react-query"
 import { refresh } from "../api/auth"
 import { useAuthStore } from "../stores/useAuthStore"
 import { Outlet } from "react-router-dom"
 import { Spinner } from "../components/Spinner"
 import { useEffect, useRef } from "react"
+import { pageSpinnerClassName } from "../utils"
 
 export const PersistLogin = () => {
     const queryClient = useQueryClient()
@@ -34,7 +35,7 @@ export const PersistLogin = () => {
             {!persist ? (
                 <Outlet />
             ) : isLoading ? (
-                <Spinner className="absolute top-32 left-1/2 -translate-x-1/2" />
+                <Spinner className={pageSpinnerClassName} />
             ) : (
                 <Outlet />
             )}

@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { InvoiceFormData, PaymentTerms, Status } from "../../types"
+import { InvoiceFormData } from "../../types"
 import { createInvoice, createInvoiceDraft } from "../../api/invoices"
 import { useMutation, useQueryClient } from "react-query"
 import { motion } from "framer-motion"
@@ -10,6 +10,7 @@ import { useAuth } from "../../hooks/useAuth"
 import { Button } from "../Button"
 import { InvoiceForm } from "../InvoiceForm"
 import { useInvoiceForm } from "../../hooks/useInvoiceForm"
+import { PaymentTerms, Status } from "../../../../common/types"
 
 export const CreateInvoiceModal = () => {
     const { closeModal, openToast } = useStore()

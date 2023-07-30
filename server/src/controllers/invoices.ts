@@ -24,11 +24,13 @@ export const getInvoices = async (req: Request, res: Response) => {
 
     const count = await Invoice.countDocuments()
 
-    res.json({
+    const result = {
         invoices,
         totalPages: Math.ceil(count / LIMIT),
         currentPage: page,
-    })
+    }
+
+    res.json(result)
 }
 
 export const getInvoice = async (req: Request, res: Response) => {
@@ -68,7 +70,7 @@ export const updateInvoice = async (req: Request, res: Response) => {
         { id: req.params.id },
         { ...req.body }
     )
-    console.log(req.body)
+
     if (!invoice) {
         res.status(400).json({ message: "Invoice not found" })
         return

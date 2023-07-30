@@ -1,9 +1,10 @@
-import { InvoiceFormData, Item } from "../types"
+import { InvoiceFormData } from "../types"
 import { nanoid } from "nanoid"
 import { useInputValidation } from "./useInputValidation"
 import { OnChangeEvent } from "../components/InvoiceForm"
 import { SelectOption } from "../components/Select"
 import { RefObject, SetStateAction } from "react"
+import { InvoiceItem } from "../../../common/types"
 
 type useInvoiceFormProps = {
     formData: InvoiceFormData
@@ -19,8 +20,9 @@ export const useInvoiceForm = ({
 }: useInvoiceFormProps) => {
     const { validateInputs, makeItemInputValid, makeInputValid, errors } =
         useInputValidation(formRef, itemsRef)
+
     const onAddItem = () => {
-        const newItem: Item = {
+        const newItem: InvoiceItem = {
             name: "",
             quantity: 0,
             price: 0,
@@ -65,7 +67,10 @@ export const useInvoiceForm = ({
             const secondName = newName[1]
             setFormData((prev) => ({
                 ...prev,
-                [firstName]: { ...prev[firstName], [secondName]: value },
+                [firstName]: {
+                    ...prev[firstName],
+                    [secondName]: value,
+                },
             }))
         } else {
             setFormData((prev) => ({ ...prev, [name]: value }))

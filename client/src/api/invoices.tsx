@@ -1,8 +1,12 @@
-import { InvoiceFormData } from "../types"
+import {
+    InvoiceFormData,
+    InvoiceReturnType,
+    PaginatedInvoiceReturnType,
+} from "../types"
 import { axiosPrivate } from "./config"
 import axios from "axios"
 
-export const getInvoices = async (page: number) => {
+export const getInvoices = async (page: number): PaginatedInvoiceReturnType => {
     try {
         const res = await axiosPrivate.get(`/invoices?page=${page}`)
         return res.data
@@ -14,7 +18,7 @@ export const getInvoices = async (page: number) => {
         }
     }
 }
-export const getInvoice = async (id: string) => {
+export const getInvoice = async (id: string): InvoiceReturnType => {
     try {
         const res = await axiosPrivate.get(`/invoices/${id}`)
         return res.data

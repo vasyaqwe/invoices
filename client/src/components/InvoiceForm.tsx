@@ -1,11 +1,12 @@
-import { ElementRef, RefObject, useRef } from "react"
+import { RefObject } from "react"
 import { FloatingLabel } from "./FloatingLabel"
-import { InvoiceFormData, PaymentTerms } from "../types"
+import { InvoiceFormData } from "../types"
 import { Input } from "./Input"
 import { emailPattern, labelClassName } from "../utils"
 import { DatePicker } from "./DatePicker"
 import { Select, SelectOption } from "./Select"
 import { ItemList } from "./ItemList"
+import { PaymentTerms } from "../../../common/types"
 
 export type OnChangeEvent = React.ChangeEvent<
     HTMLInputElement | HTMLSelectElement

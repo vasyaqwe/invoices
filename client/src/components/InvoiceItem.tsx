@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom"
-import { Invoice, Item } from "../types"
 import { StatusBadge } from "./StatusBadge"
 import { ReactComponent as Chevron } from "../assets/chevron.svg"
 import { formatCurrency, formatDate } from "../utils"
+import { Invoice, InvoiceItem as InvoiceItemType } from "../../../common/types"
 
 export const InvoiceItem = ({
     id,
@@ -19,7 +19,10 @@ export const InvoiceItem = ({
             invoiceDate.getDate() + +paymentTerms.match(/\d+/)![0]
         )
     )
-    const itemsTotal = items.reduce((a: number, b: Item) => a + b.price, 0)
+    const itemsTotal = items.reduce(
+        (a: number, b: InvoiceItemType) => a + b.price,
+        0
+    )
 
     return (
         <>

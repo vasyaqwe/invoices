@@ -4,7 +4,6 @@ import { useQuery } from "react-query"
 import { getInvoice } from "../api/invoices"
 import { formatCurrency, formatDate, pageSpinnerClassName } from "../utils"
 import { ReactComponent as Chevron } from "../assets/chevron.svg"
-import { Item } from "../types"
 import { useStore } from "../stores/useStore"
 import { ModalWrapper } from "../wrappers/ModalWrapper"
 import { EditInvoiceModal } from "../components/Modals/EditInvoiceModal"
@@ -12,41 +11,43 @@ import { Spinner } from "../components/Spinner"
 import { useErrorToast } from "../hooks/useErrorToast"
 import { Button } from "../components/Button"
 import { ConfirmDeletionModal } from "../components/Modals/ConfirmDeletionModal"
+import { InvoiceItem } from "../../../common/types"
 
 export const Invoice = () => {
     const { openModal, modals } = useStore()
     const { id } = useParams()
 
-    const {
-        isLoading,
-        error,
-        data: invoice,
-    } = useQuery(["invoices", id], () => getInvoice(id!), { retry: false })
-
-    const date = new Date(invoice?.date)
-    const paymentTermsDate = new Date(invoice?.date)
-    const paymentTerms = new Date(
-        paymentTermsDate.setDate(
-            date.getDate() + +invoice?.paymentTerms.match(/\d+/)![0]
-        )
+    const { isLoading, error, data } = useQuery(
+        ["invoices", id],
+        () => getInvoice(id!),
+        { retry: false }
     )
-
-    const allItemsTotal = invoice?.items.reduce(
-        (a: number, b: Item) => a + b.price * b.quantity,
-        0
-    )
-
-    const itemsTotal = (item: Item) => {
-        return item.price * item.quantity
-    }
 
     useErrorToast(error)
 
     if (error && error instanceof Error) return <Navigate to={".."} />
+    if (isLoading) return <Spinner className={pageSpinnerClassName} />
 
-    return isLoading ? (
-        <Spinner className={pageSpinnerClassName} />
-    ) : (
+    const invoice = data!
+
+    const allItemsTotal = invoice?.items.reduce(
+        (a: number, b: InvoiceItem) => a + b.price * b.quantity,
+        0
+    )
+
+    const itemsTotal = (item: InvoiceItem) => {
+        return item.price * item.quantity
+    }
+
+    const date = new Date(invoice.date)
+    const paymentTermsDate = new Date(invoice.date)
+    const paymentTerms = new Date(
+        paymentTermsDate.setDate(
+            date.getDate() + +invoice.paymentTerms.match(/\d+/)![0]
+        )
+    )
+
+    return (
         <>
             <ModalWrapper open={modals.confirmDeletion}>
                 <ConfirmDeletionModal invoice={invoice} />
@@ -147,7 +148,7 @@ export const Invoice = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {invoice.items.map((item: Item) => (
+                        {invoice.items.map((item: InvoiceItem) => (
                             <tr
                                 key={item.id}
                                 className="font-semibold text-white"

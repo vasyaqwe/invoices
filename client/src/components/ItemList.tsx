@@ -1,9 +1,19 @@
 import { ReactComponent as Plus } from "../assets/plusNeutral.svg"
 import { ReactComponent as Delete } from "../assets/delete.svg"
-import { ItemListProps } from "../types"
 import { getTotalOfItem, inputClassName, labelClassName } from "../utils"
 import { AnimatePresence, motion } from "framer-motion"
 import { Button } from "./Button"
+import { InvoiceItem } from "../../../common/types"
+import { ChangeEvent } from "react"
+
+type ItemListProps = {
+    items: InvoiceItem[]
+    errors: string[]
+    onAddItem: () => void
+    onDeleteItem: (id: string) => void
+    draft: boolean
+    onChange: (e: ChangeEvent<HTMLInputElement>, id: string) => void
+}
 
 export const ItemList = ({
     items,

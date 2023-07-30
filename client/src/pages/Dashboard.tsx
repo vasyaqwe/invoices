@@ -1,7 +1,6 @@
 import { useInfiniteQuery } from "react-query"
 import { useStore } from "../stores/useStore"
 import { getInvoices } from "../api/invoices"
-import { Invoice } from "../types"
 import { InvoiceItem } from "../components/InvoiceItem"
 import { ReactComponent as Plus } from "../assets/plus.svg"
 import { useEffect, useRef } from "react"
@@ -12,6 +11,7 @@ import { ErrorMessage } from "../components/ErrorMessage"
 import { Button } from "../components/Button"
 import { useIntersection } from "@mantine/hooks"
 import { pageSpinnerClassName } from "../utils"
+import { Invoice } from "../../../common/types"
 
 export const Dashboard = () => {
     const { openModal } = useStore()
