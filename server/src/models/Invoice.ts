@@ -44,112 +44,55 @@ interface Invoice {
 }
 
 const ItemSchema = new Schema<Item>({
-    id: {
-        type: String,
-        required: true,
-    },
-    name: {
-        type: String,
-        required: true,
-    },
-    quantity: {
-        type: Number,
-        required: true,
-    },
-    price: {
-        type: Number,
-        required: true,
-    },
+    id: String,
+    name: String,
+    quantity: Number,
+    price: Number,
 })
 
 const alphabet: string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 const generator = customAlphabet(alphabet, 6)
 const today = Date.now()
 
-const InvoiceSchema = new Schema<Invoice>({
-    id: {
-        type: String,
-        default: () => generator(),
-        unique: true,
-        index: true,
-        required: true,
+const InvoiceSchema = new Schema<Invoice>(
+    {
+        id: {
+            type: String,
+            default: () => generator(),
+            unique: true,
+            index: true,
+            required: true,
+        },
+        user: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: "User",
+        },
+        billFrom: {
+            streetAddress: String,
+            city: String,
+            postCode: String,
+            country: String,
+        },
+        billTo: {
+            clientName: String,
+            clientEmail: String,
+            streetAddress: String,
+            city: String,
+            postCode: String,
+            country: String,
+        },
+        status: String,
+        date: {
+            type: Date,
+            default: new Date(today),
+        },
+        paymentTerms: String,
+        description: String,
+        items: [ItemSchema],
     },
-    user: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: "User",
-    },
-    billFrom: {
-        streetAddress: {
-            type: String,
-            required: true,
-        },
-        city: {
-            type: String,
-            required: true,
-        },
-        postCode: {
-            type: String,
-            required: true,
-        },
-        country: {
-            type: String,
-            required: true,
-        },
-    },
-    billTo: {
-        clientName: {
-            type: String,
-            required: true,
-        },
-        clientEmail: {
-            type: String,
-            required: true,
-        },
-        streetAddress: {
-            type: String,
-            required: true,
-        },
-        city: {
-            type: String,
-            required: true,
-        },
-        postCode: {
-            type: String,
-            required: true,
-        },
-        country: {
-            type: String,
-            required: true,
-        },
-    },
-    status: {
-        type: String,
-        required: true,
-    },
-    date: {
-        type: Date,
-        default: new Date(today),
-    },
-    paymentTerms: {
-        type: String,
-        required: true,
-    },
-    description: {
-        type: String,
-        required: true,
-    },
-    items: {
-        type: [ItemSchema],
-        validate: {
-            validator: function (items: Item[]) {
-                return items && items.length > 0
-            },
-            message: "At least one item must be provided.",
-        },
-        required: true,
-    },
-})
+    { timestamps: true }
+)
 
 const Invoice = model<Invoice>("Invoice", InvoiceSchema)
 

@@ -17,7 +17,7 @@ export const getInvoices = async (req: Request, res: Response) => {
     const skipCount = (+page - 1) * LIMIT
 
     const invoices = await Invoice.find({ user: userId })
-        .sort({ date: -1, _id: -1 })
+        .sort({ createdAt: -1, _id: -1 })
         .skip(skipCount)
         .limit(LIMIT)
         .exec()

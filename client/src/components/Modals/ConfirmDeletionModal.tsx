@@ -19,12 +19,14 @@ export const ConfirmDeletionModal = ({ invoice }: { invoice: Invoice }) => {
         mutate: onDelete,
     } = useMutation(() => deleteInvoice(invoice.id), {
         onSuccess: () => {
-            queryClient.invalidateQueries(["invoices", { id: invoice.id }])
+            queryClient.invalidateQueries(["invoices"])
+            queryClient.invalidateQueries(["invoices", invoice.id])
             closeModal("confirmDeletion")
             openToast({ text: "Invoice deleted!" })
             navigate("/")
         },
     })
+
     useErrorToast(error)
 
     return (
