@@ -1,22 +1,14 @@
 import Invoice from "../models/Invoice"
 import { Request, Response } from "express"
-import jwt, { Secret } from "jsonwebtoken"
-import { DecodedToken } from "../interfaces"
 
 const LIMIT = 10
 
-const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET as Secret
-
 export const getInvoices = async (req: Request, res: Response) => {
-    const decoded = jwt.verify(req.cookies.jwt, refreshTokenSecret)
-
-    const { userId } = decoded as DecodedToken
-
     const page = req.query.page || 1
 
     const skipCount = (+page - 1) * LIMIT
 
-    const invoices = await Invoice.find({ user: userId })
+    const invoices = await Invoice.find({ user: req.user })
         .sort({ createdAt: -1, _id: -1 })
         .skip(skipCount)
         .limit(LIMIT)
@@ -46,11 +38,7 @@ export const getInvoice = async (req: Request, res: Response) => {
 }
 
 export const createInvoice = async (req: Request, res: Response) => {
-    const decoded = jwt.verify(req.cookies.jwt, refreshTokenSecret)
-
-    const { userId } = decoded as DecodedToken
-
-    const invoice = await Invoice.create({ ...req.body, user: userId })
+    const invoice = await Invoice.create({ ...req.body, user: req.user })
 
     if (invoice) {
         res.status(201).json({ message: `New invoice ${invoice.id} created` })
@@ -70,13 +58,9 @@ export const createInvoiceDraft = async (req: Request, res: Response) => {
 }
 
 export const updateInvoice = async (req: Request, res: Response) => {
-    const decoded = jwt.verify(req.cookies.jwt, refreshTokenSecret)
-
-    const { userId } = decoded as DecodedToken
-
     const invoice = await Invoice.findOneAndUpdate(
         { id: req.params.id },
-        { ...req.body, user: userId }
+        { ...req.body, user: req.user }
     )
 
     if (!invoice) {

@@ -2,6 +2,7 @@ import { userSchema, authSchema, invoiceSchema } from "./joiSchemas"
 import rateLimit from "express-rate-limit"
 import jwt, { Secret } from "jsonwebtoken"
 import { Request, Response, NextFunction } from "express"
+import { DecodedToken } from "./types"
 
 export const loginLimiter = rateLimit({
     windowMs: 60 * 1000, // 1 minute
@@ -46,9 +47,11 @@ export const validateAuth = (
 }
 
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET as Secret
+const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET as Secret
 
 export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization || req.headers.Authorization
+
     if (
         !authHeader ||
         (Array.isArray(authHeader) && !authHeader[0].startsWith("Bearer "))
@@ -63,7 +66,11 @@ export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
         if (err) {
             return res.status(403).json({ message: "Forbidden" })
         }
-        // req.user = decoded.username
+
+        const decoded = jwt.verify(req.cookies.jwt, refreshTokenSecret)
+        const { userId } = decoded as DecodedToken
+        req.user = userId
+
         next()
     })
 }

@@ -15,7 +15,7 @@ router.use(isLoggedIn)
 
 router
     .route("/")
-    .get(asyncHandler(getInvoices))
+    .get(getInvoices)
     .post(validateInvoice, asyncHandler(createInvoice))
 
 router.route("/draft").post(asyncHandler(createInvoiceDraft))

@@ -2,7 +2,7 @@ import User from "../models/User"
 import bcrypt from "bcrypt"
 import jwt, { Secret } from "jsonwebtoken"
 import { Request, Response } from "express"
-import { DecodedToken } from "../interfaces"
+import { DecodedToken } from "../types"
 
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET as Secret
 const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET as Secret
