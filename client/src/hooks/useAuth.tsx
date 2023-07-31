@@ -8,7 +8,6 @@ export const useAuth = () => {
         const decoded: {
             userId: string
             email: string
-            verificationToken: string
         } = jwtDecode(token)
         return decoded
     }
