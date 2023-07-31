@@ -9,7 +9,6 @@ export const userSchema = Joi.object({
     password: Joi.string().required(),
 })
 export const invoiceSchema = Joi.object({
-    user: Joi.string().required(),
     billFrom: Joi.object({
         streetAddress: Joi.string().required(),
         city: Joi.string().required(),
