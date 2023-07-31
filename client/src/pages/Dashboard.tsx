@@ -68,7 +68,6 @@ export const Dashboard = () => {
 
     return (
         <>
-            <ErrorMessage message={"There was an error loading invoices."} />
             {error ? (
                 <ErrorMessage
                     message={
