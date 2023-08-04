@@ -38,8 +38,6 @@ export const Dashboard = () => {
         ["invoices"],
         ({ pageParam = 1 }) => getInvoices(pageParam),
         {
-            staleTime: Infinity,
-            refetchOnWindowFocus: false,
             getNextPageParam: (res, pages) => {
                 if (pages.length < res.totalPages) {
                     return pages.length + 1

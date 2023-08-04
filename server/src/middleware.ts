@@ -62,6 +62,7 @@ export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
     const token = (
         Array.isArray(authHeader) ? authHeader[0] : authHeader
     ).split(" ")[1]
+
     jwt.verify(token, accessTokenSecret, (err: jwt.VerifyErrors | null) => {
         if (err) {
             return res.status(403).json({ message: "Forbidden" })
@@ -69,6 +70,7 @@ export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
 
         const decoded = jwt.verify(req.cookies.jwt, refreshTokenSecret)
         const { userId } = decoded as DecodedToken
+
         req.user = userId
 
         next()

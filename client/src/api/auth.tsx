@@ -9,6 +9,25 @@ export const refresh = async () => {
     return res.data
 }
 
+export const googleLogin = async (code: string) => {
+    try {
+        const res = await myAxios.post(
+            `/auth/google-login`,
+            { code },
+            {
+                withCredentials: true,
+            }
+        )
+        return res.data
+    } catch (e) {
+        if (axios.isAxiosError(e)) {
+            throw new Error(e.response?.data.message)
+        } else {
+            throw new Error("Unknown Error")
+        }
+    }
+}
+
 export const login = async (credentials: User) => {
     try {
         const res = await myAxios.post(`/auth`, credentials, {

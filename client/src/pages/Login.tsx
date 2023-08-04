@@ -9,6 +9,7 @@ import { useErrorToast } from "../hooks/useErrorToast"
 import { Checkbox } from "../components/Checkbox"
 import { useInputValidation } from "../hooks/useInputValidation"
 import { Button } from "../components/Button"
+import { GoogleLoginButton } from "../components/GoogleLoginButton"
 
 export const Login = () => {
     const queryClient = useQueryClient()
@@ -103,6 +104,8 @@ export const Login = () => {
                         Login
                     </Button>
                 </div>
+                <p className="text-center font-semibold">OR</p>
+                <GoogleLoginButton />
             </form>
         </>
     )

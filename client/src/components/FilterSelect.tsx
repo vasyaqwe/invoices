@@ -23,7 +23,7 @@ export const FilterSelect = ({
 
     const ref = useRef<HTMLDivElement>(null)
 
-    function onChange(newFilter: string) {
+    const onChange = (newFilter: string) => {
         setSearchParams((prevParams: URLSearchParams) => {
             const lowerCasedNewFilter = newFilter.toLowerCase()
             const filter = prevParams.get(filterKey)

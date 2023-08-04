@@ -10,6 +10,7 @@ import { useStore } from "../stores/useStore"
 import { usePasswordsValidation } from "../hooks/usePasswordsValidation"
 import { ErrorMessage } from "../components/ErrorMessage"
 import { Button } from "../components/Button"
+import { GoogleLoginButton } from "../components/GoogleLoginButton"
 
 export const SignUp = () => {
     const queryClient = useQueryClient()
@@ -132,7 +133,7 @@ export const SignUp = () => {
                     <ErrorMessage message="Passwords don't match" />
                 )}
 
-                <div className="flex flex-wrap items-center justify-between">
+                <div className="flex flex-wrap items-center justify-center">
                     <Button
                         isLoading={isLoading}
                         disabled={isLoading}
@@ -146,6 +147,8 @@ export const SignUp = () => {
                         Sign Up
                     </Button>
                 </div>
+                <p className="text-center font-semibold">OR</p>
+                <GoogleLoginButton />
             </form>
         </>
     )
