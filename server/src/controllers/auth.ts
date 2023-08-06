@@ -162,7 +162,10 @@ export const googleLogin = async (req: Request, res: Response) => {
 export const refresh = async (req: Request, res: Response) => {
     const cookies = req.cookies
 
-    if (!cookies?.jwt) return res.status(401).json({ message: "Unauthorized" })
+    if (!cookies?.jwt) {
+        res.status(401).json({ message: "Unauthorized" })
+        return
+    }
 
     const refreshToken = cookies.jwt
 
@@ -191,7 +194,10 @@ export const refresh = async (req: Request, res: Response) => {
 
 export const logout = (req: Request, res: Response) => {
     const { cookies } = req
-    if (!cookies?.jwt) return res.status(404).json({ message: "No cookies" })
+    if (!cookies?.jwt) {
+        res.status(404).json({ message: "No cookies" })
+        return
+    }
     res.clearCookie("jwt", { httpOnly: true, sameSite: "none", secure: true })
 
     res.json({ message: "Cookie cleared" })
