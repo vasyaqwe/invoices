@@ -4,7 +4,7 @@ import { useStore } from "../stores/useStore"
 import { ModalWrapper } from "../wrappers/ModalWrapper"
 import { Toast } from "../components/ui/Toast"
 import { useEffect } from "react"
-import { CreateInvoiceModal } from "../components/modals/CreateInvoiceModal"
+import { CreateInvoiceModal } from "../components/123/CreateInvoiceModal"
 
 export const Layout = () => {
     const { modals } = useStore()
