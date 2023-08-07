@@ -10,8 +10,8 @@ import { Spinner } from "../components/ui/Spinner"
 import { useErrorToast } from "../hooks/useErrorToast"
 import { Button } from "../components/ui/Button"
 import { InvoiceItem } from "../types"
-import { ConfirmDeletionModal } from "../components/123/ConfirmDeletionModal"
-import { EditInvoiceModal } from "../components/123/EditInvoiceModal"
+import { ConfirmDeletionModal } from "../components/modals/ConfirmDeletionModal"
+import { EditInvoiceModal } from "../components/modals/EditInvoiceModal"
 
 export const Invoice = () => {
     const { openModal, modals } = useStore()
