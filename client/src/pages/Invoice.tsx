@@ -6,12 +6,12 @@ import { formatCurrency, formatDate, pageSpinnerClassName } from "../utils"
 import { ReactComponent as Chevron } from "../assets/chevron.svg"
 import { useStore } from "../stores/useStore"
 import { ModalWrapper } from "../wrappers/ModalWrapper"
-import { EditInvoiceModal } from "../components/modals/EditInvoiceModal"
 import { Spinner } from "../components/ui/Spinner"
 import { useErrorToast } from "../hooks/useErrorToast"
 import { Button } from "../components/ui/Button"
-import { ConfirmDeletionModal } from "../components/modals/ConfirmDeletionModal"
 import { InvoiceItem } from "../types"
+import { ConfirmDeletionModal } from "../components/modals/ConfirmDeletionModal"
+import { EditInvoiceModal } from "../components/modals/EditInvoiceModal"
 
 export const Invoice = () => {
     const { openModal, modals } = useStore()
