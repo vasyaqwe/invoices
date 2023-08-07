@@ -1,12 +1,8 @@
-import {
-    InvoiceFormData,
-    InvoiceReturnType,
-    PaginatedInvoiceReturnType,
-} from "../types"
+import { Invoice, InvoiceReturn, PaginatedInvoiceReturn } from "../types"
 import { axiosPrivate } from "./config"
 import axios from "axios"
 
-export const getInvoices = async (page: number): PaginatedInvoiceReturnType => {
+export const getInvoices = async (page: number): PaginatedInvoiceReturn => {
     try {
         const res = await axiosPrivate.get(`/invoices?page=${page}`)
         return res.data
@@ -18,7 +14,7 @@ export const getInvoices = async (page: number): PaginatedInvoiceReturnType => {
         }
     }
 }
-export const getInvoice = async (id: string): InvoiceReturnType => {
+export const getInvoice = async (id: string): InvoiceReturn => {
     try {
         const res = await axiosPrivate.get(`/invoices/${id}`)
         return res.data
@@ -30,7 +26,8 @@ export const getInvoice = async (id: string): InvoiceReturnType => {
         }
     }
 }
-export const createInvoice = async (data: InvoiceFormData) => {
+
+export const createInvoice = async (data: Invoice) => {
     try {
         const res = await axiosPrivate.post(`/invoices/`, data)
         return res.data
@@ -42,7 +39,8 @@ export const createInvoice = async (data: InvoiceFormData) => {
         }
     }
 }
-export const createInvoiceDraft = async (data: InvoiceFormData) => {
+
+export const createInvoiceDraft = async (data: Invoice) => {
     try {
         const res = await axiosPrivate.post(`/invoices/draft`, data)
         return res.data
@@ -54,7 +52,8 @@ export const createInvoiceDraft = async (data: InvoiceFormData) => {
         }
     }
 }
-export const updateInvoice = async (id: string, data: InvoiceFormData) => {
+
+export const updateInvoice = async (id: string, data: Invoice) => {
     try {
         const res = await axiosPrivate.patch(`/invoices/${id}`, data)
         return res.data

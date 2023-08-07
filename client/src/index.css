@@ -11,15 +11,7 @@
 * {
     margin: 0;
     padding: 0;
-    font: inherit;
-}
-
-b {
-    font-weight: 700;
-}
-
-i {
-    font-style: italic;
+    font-family: inherit;
 }
 
 ul {
@@ -27,7 +19,7 @@ ul {
     padding: 0;
 }
 
-html:focus-within {
+html {
     scroll-behavior: smooth;
 }
 
@@ -50,6 +42,10 @@ video {
     display: block;
 }
 
+input {
+    width: 100%;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -59,25 +55,6 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
     -moz-appearance: textfield;
     appearance: textfield;
-}
-
-input {
-    width: 100%;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    html:focus-within {
-        scroll-behavior: auto;
-    }
-
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
 }
 
 html {
@@ -148,5 +125,15 @@ button {
 
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@layer components {
+    .link {
+        @apply hover:underline hover:text-accent-400 flex items-center gap-2 disabled:opacity-50;
+    }
+
+    .sheet {
+        @apply bg-primary-900 min-h-screen p-6 top-[80px] w-full max-w-2xl md:left-[100px] md:top-0;
     }
 }

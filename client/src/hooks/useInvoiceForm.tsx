@@ -1,14 +1,13 @@
-import { InvoiceFormData } from "../types"
+import { Invoice, InvoiceItem } from "../types"
 import { nanoid } from "nanoid"
 import { useInputValidation } from "./useInputValidation"
-import { OnChangeEvent } from "../components/InvoiceForm"
-import { SelectOption } from "../components/Select"
+import { OnChangeEvent } from "../components/forms/InvoiceForm"
+import { SelectOption } from "../components/ui/Select"
 import { RefObject, SetStateAction } from "react"
-import { InvoiceItem } from "../../../common/types"
 
 type useInvoiceFormProps = {
-    formData: InvoiceFormData
-    setFormData: (func: SetStateAction<InvoiceFormData>) => void
+    formData: Invoice
+    setFormData: (func: SetStateAction<Invoice>) => void
     itemsRef: RefObject<HTMLDivElement>
     formRef: RefObject<HTMLFormElement>
 }

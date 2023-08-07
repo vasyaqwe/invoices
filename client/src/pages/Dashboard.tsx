@@ -4,14 +4,13 @@ import { getInvoices } from "../api/invoices"
 import { InvoiceItem } from "../components/InvoiceItem"
 import { ReactComponent as Plus } from "../assets/plus.svg"
 import { useEffect, useRef } from "react"
-import { Spinner } from "../components/Spinner"
-import { FilterSelect } from "../components/FilterSelect"
+import { Spinner } from "../components/ui/Spinner"
+import { FilterSelect } from "../components/ui/FilterSelect"
 import { useSearchParams } from "react-router-dom"
-import { ErrorMessage } from "../components/ErrorMessage"
-import { Button } from "../components/Button"
+import { ErrorMessage } from "../components/ui/ErrorMessage"
+import { Button } from "../components/ui/Button"
 import { useIntersection } from "@mantine/hooks"
 import { pageSpinnerClassName } from "../utils"
-import { Invoice } from "../../../common/types"
 
 export const Dashboard = () => {
     const { openModal } = useStore()
@@ -58,7 +57,7 @@ export const Dashboard = () => {
     const filteredInvoices =
         statusFilter.length > 0
             ? invoices
-                  ?.filter((invoice: Invoice) =>
+                  ?.filter((invoice) =>
                       statusFilter.includes(invoice.status.toLowerCase())
                   )
                   .flat()
@@ -109,7 +108,7 @@ export const Dashboard = () => {
                         {isLoading ? (
                             <Spinner className={pageSpinnerClassName} />
                         ) : (
-                            filteredInvoices?.map((invoice: Invoice, idx) => {
+                            filteredInvoices?.map((invoice, idx) => {
                                 if (filteredInvoices.length === idx + 1) {
                                     return (
                                         <li

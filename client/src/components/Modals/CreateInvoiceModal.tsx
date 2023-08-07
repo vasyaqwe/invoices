@@ -1,15 +1,14 @@
 import { useRef, useState } from "react"
-import { InvoiceFormData } from "../../types"
+import { Invoice, PaymentTerms, Status } from "../../types"
 import { createInvoice, createInvoiceDraft } from "../../api/invoices"
 import { useMutation, useQueryClient } from "react-query"
 import { motion } from "framer-motion"
 import { useErrorToast } from "../../hooks/useErrorToast"
 import { useStore } from "../../stores/useStore"
 import { nanoid } from "nanoid"
-import { Button } from "../Button"
-import { InvoiceForm } from "../InvoiceForm"
+import { Button } from "../ui/Button"
+import { InvoiceForm } from "../forms/InvoiceForm"
 import { useInvoiceForm } from "../../hooks/useInvoiceForm"
-import { PaymentTerms, Status } from "../../../../common/types"
 
 export const CreateInvoiceModal = () => {
     const { closeModal, openToast } = useStore()
@@ -18,7 +17,7 @@ export const CreateInvoiceModal = () => {
 
     const today = Date.now()
 
-    const [formData, setFormData] = useState<InvoiceFormData>({
+    const [formData, setFormData] = useState<Invoice>({
         billFrom: {
             streetAddress: "",
             city: "",
@@ -88,7 +87,7 @@ export const CreateInvoiceModal = () => {
     return (
         <motion.dialog
             open
-            className="bg-primary-900 min-h-screen p-6 top-[80px] w-full max-w-2xl md:left-[100px] md:top-0 modal modal--screen"
+            className="sheet modal modal--screen"
             animate={{ opacity: 1 }}
             initial={{ opacity: 0 }}
             exit={{ opacity: 0 }}
@@ -119,7 +118,7 @@ export const CreateInvoiceModal = () => {
                     <Button
                         type="button"
                         onClick={() => closeModal("createInvoice")}
-                        className="bg-primary-600"
+                        variant="faded"
                     >
                         Discard
                     </Button>
@@ -132,7 +131,7 @@ export const CreateInvoiceModal = () => {
                                 closeModal("createInvoice")
                                 openToast({ text: "Draft saved!" })
                             }}
-                            className=" bg-neutral-700"
+                            variant="neutral"
                         >
                             Save as Draft
                         </Button>
@@ -142,7 +141,6 @@ export const CreateInvoiceModal = () => {
                             onClick={validateInputs}
                             disabled={isLoading}
                             isLoading={isLoading}
-                            className={`bg-accent-700`}
                         >
                             Save & Send
                         </Button>

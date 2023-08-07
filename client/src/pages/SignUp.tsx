@@ -1,16 +1,16 @@
 import { useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useQueryClient, useMutation } from "react-query"
-import { FloatingLabel } from "../components/FloatingLabel"
-import { Input } from "../components/Input"
+import { FloatingLabel } from "../components/ui/FloatingLabel"
+import { Input } from "../components/ui/Input"
 import { useErrorToast } from "../hooks/useErrorToast"
 import { useInputValidation } from "../hooks/useInputValidation"
 import { createUser } from "../api/users"
 import { useStore } from "../stores/useStore"
 import { usePasswordsValidation } from "../hooks/usePasswordsValidation"
-import { ErrorMessage } from "../components/ErrorMessage"
-import { Button } from "../components/Button"
-import { GoogleLoginButton } from "../components/GoogleLoginButton"
+import { ErrorMessage } from "../components/ui/ErrorMessage"
+import { Button } from "../components/ui/Button"
+import { GoogleLoginButton } from "../components/ui/GoogleLoginButton"
 
 export const SignUp = () => {
     const queryClient = useQueryClient()

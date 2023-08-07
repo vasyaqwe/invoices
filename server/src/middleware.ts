@@ -2,7 +2,7 @@ import { userSchema, authSchema, invoiceSchema } from "./joiSchemas"
 import rateLimit from "express-rate-limit"
 import jwt, { Secret } from "jsonwebtoken"
 import { Request, Response, NextFunction } from "express"
-import { DecodedToken } from "./types"
+import { DecodedToken } from "./types/types"
 
 export const loginLimiter = rateLimit({
     windowMs: 60 * 1000, // 1 minute

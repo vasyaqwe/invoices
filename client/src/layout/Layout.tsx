@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom"
-import { Sidebar } from "../components/Sidebar"
-import { CreateInvoiceModal } from "../components/Modals/CreateInvoiceModal"
+import { Sidebar } from "./Sidebar"
+import { CreateInvoiceModal } from "../components/modals/CreateInvoiceModal"
 import { useStore } from "../stores/useStore"
 import { ModalWrapper } from "../wrappers/ModalWrapper"
-import { Toast } from "../components/Toast"
+import { Toast } from "../components/ui/Toast"
 import { useEffect } from "react"
 
 export const Layout = () => {

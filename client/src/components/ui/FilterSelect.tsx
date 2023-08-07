@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { ReactComponent as Chevron } from "../assets/chevron.svg"
+import { ReactComponent as Chevron } from "../../assets/chevron.svg"
 
 export type SelectOption = string
 
@@ -88,7 +88,7 @@ export const FilterSelect = ({
         <div
             tabIndex={0}
             className="cursor-pointer w-full flex items-center gap-2 justify-between border text-white border-primary-600
-         focus:outline-none focus:border-accent-400 bg-primary-800 relative
+         focus:outline-none focus-visible:outline-white bg-primary-800 relative
     rounded-md py-2 px-3"
             aria-expanded={false}
             ref={ref}

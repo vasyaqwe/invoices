@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom"
 import { useQueryClient, useMutation } from "react-query"
 import { login } from "../api/auth"
 import { useAuthStore } from "../stores/useAuthStore"
-import { FloatingLabel } from "../components/FloatingLabel"
-import { Input } from "../components/Input"
+import { FloatingLabel } from "../components/ui/FloatingLabel"
+import { Input } from "../components/ui/Input"
 import { useErrorToast } from "../hooks/useErrorToast"
-import { Checkbox } from "../components/Checkbox"
+import { Checkbox } from "../components/ui/Checkbox"
 import { useInputValidation } from "../hooks/useInputValidation"
-import { Button } from "../components/Button"
-import { GoogleLoginButton } from "../components/GoogleLoginButton"
+import { Button } from "../components/ui/Button"
+import { GoogleLoginButton } from "../components/ui/GoogleLoginButton"
 
 export const Login = () => {
     const queryClient = useQueryClient()

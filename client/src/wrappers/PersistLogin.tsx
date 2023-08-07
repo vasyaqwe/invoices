@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from "react-query"
 import { refresh } from "../api/auth"
 import { useAuthStore } from "../stores/useAuthStore"
 import { Outlet } from "react-router-dom"
-import { Spinner } from "../components/Spinner"
+import { Spinner } from "../components/ui/Spinner"
 import { useEffect, useRef } from "react"
 import { pageSpinnerClassName } from "../utils"
 
@@ -23,6 +23,7 @@ export const PersistLogin = () => {
         retry: false,
         enabled: !effectRan.current,
     })
+    console.log(token)
 
     useEffect(() => {
         if (!effectRan.current && !isLoading) {

@@ -1,14 +1,13 @@
 import { useRef, useState } from "react"
-import { InvoiceFormData } from "../../types"
+import { Invoice } from "../../types"
 import { updateInvoice } from "../../api/invoices"
 import { useMutation, useQueryClient } from "react-query"
 import { motion } from "framer-motion"
 import { useStore } from "../../stores/useStore"
 import { useErrorToast } from "../../hooks/useErrorToast"
-import { Button } from "../Button"
-import { InvoiceForm } from "../InvoiceForm"
+import { Button } from "../ui/Button"
+import { InvoiceForm } from "../forms/InvoiceForm"
 import { useInvoiceForm } from "../../hooks/useInvoiceForm"
-import { Invoice } from "../../../../common/types"
 
 export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
     const { billFrom, billTo, items, date, status, paymentTerms, description } =
@@ -16,7 +15,7 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
 
     const { closeModal, openToast } = useStore()
 
-    const [formData, setFormData] = useState<InvoiceFormData>({
+    const [formData, setFormData] = useState<Invoice>({
         billFrom: billFrom,
         billTo: billTo,
         date: new Date(date),
@@ -95,7 +94,7 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
                     <Button
                         type="button"
                         onClick={() => closeModal("editInvoice")}
-                        className=" bg-primary-600"
+                        variant="faded"
                     >
                         Cancel
                     </Button>
@@ -104,7 +103,6 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
                         onClick={validateInputs}
                         disabled={isLoading}
                         isLoading={isLoading}
-                        className={`bg-accent-700`}
                     >
                         Save Changes
                     </Button>

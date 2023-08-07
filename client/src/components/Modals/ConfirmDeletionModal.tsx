@@ -4,8 +4,8 @@ import { useMutation, useQueryClient } from "react-query"
 import { deleteInvoice } from "../../api/invoices"
 import { useNavigate } from "react-router-dom"
 import { useErrorToast } from "../../hooks/useErrorToast"
-import { Button } from "../Button"
-import { Invoice } from "../../../../common/types"
+import { Button } from "../ui/Button"
+import { Invoice } from "../../types"
 
 export const ConfirmDeletionModal = ({ invoice }: { invoice: Invoice }) => {
     const { closeModal, openToast } = useStore()
@@ -46,7 +46,7 @@ export const ConfirmDeletionModal = ({ invoice }: { invoice: Invoice }) => {
             </p>
             <div className="flex items-center gap-2 mt-3 justify-end">
                 <Button
-                    className="bg-neutral-700"
+                    variant="neutral"
                     onClick={() => closeModal("confirmDeletion")}
                 >
                     Cancel
@@ -54,7 +54,7 @@ export const ConfirmDeletionModal = ({ invoice }: { invoice: Invoice }) => {
                 <Button
                     disabled={isLoading}
                     isLoading={isLoading}
-                    className={`bg-danger-400`}
+                    variant={`danger`}
                     onClick={() => onDelete()}
                 >
                     Delete

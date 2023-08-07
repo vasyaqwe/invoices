@@ -1,11 +1,11 @@
-import { useGoogleLogin, GoogleLogin } from "@react-oauth/google"
+import { useGoogleLogin } from "@react-oauth/google"
 import { useLocation, useNavigate } from "react-router-dom"
-import { googleLogin } from "../api/auth"
+import { googleLogin } from "../../api/auth"
 import { useMutation, useQueryClient } from "react-query"
-import { useAuthStore } from "../stores/useAuthStore"
-import { useErrorToast } from "../hooks/useErrorToast"
+import { useAuthStore } from "../../stores/useAuthStore"
+import { useErrorToast } from "../../hooks/useErrorToast"
 import { Button } from "./Button"
-import google from "../assets/google.png"
+import google from "../../assets/google.png"
 
 export const GoogleLoginButton = () => {
     const { setToken } = useAuthStore()
@@ -35,8 +35,9 @@ export const GoogleLoginButton = () => {
 
     return (
         <Button
+            variant="outline"
             type="button"
-            className="rounded-full border border-accent-700 justify-center"
+            className="rounded-full justify-center"
             onClick={() => login()}
         >
             <img

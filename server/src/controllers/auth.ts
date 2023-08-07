@@ -2,7 +2,7 @@ import User from "../models/User"
 import bcrypt from "bcrypt"
 import jwt, { Secret } from "jsonwebtoken"
 import { Request, Response } from "express"
-import { DecodedToken } from "../types"
+import { DecodedToken } from "../types/types"
 import { OAuth2Client } from "google-auth-library"
 import crypto from "crypto"
 
@@ -28,7 +28,7 @@ export const login = async (req: Request, res: Response) => {
         return
     }
 
-    const match = await bcrypt.compare(password, foundUser.password)
+    const match = await bcrypt.compare(password, foundUser.password!)
 
     if (!match) {
         res.status(401).json({ message: "Invalid Credentials" })

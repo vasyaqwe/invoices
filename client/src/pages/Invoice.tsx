@@ -1,17 +1,17 @@
 import { useParams, Link, Navigate } from "react-router-dom"
-import { StatusBadge } from "../components/StatusBadge"
+import { StatusBadge } from "../components/ui/StatusBadge"
 import { useQuery } from "react-query"
 import { getInvoice } from "../api/invoices"
 import { formatCurrency, formatDate, pageSpinnerClassName } from "../utils"
 import { ReactComponent as Chevron } from "../assets/chevron.svg"
 import { useStore } from "../stores/useStore"
 import { ModalWrapper } from "../wrappers/ModalWrapper"
-import { EditInvoiceModal } from "../components/Modals/EditInvoiceModal"
-import { Spinner } from "../components/Spinner"
+import { EditInvoiceModal } from "../components/modals/EditInvoiceModal"
+import { Spinner } from "../components/ui/Spinner"
 import { useErrorToast } from "../hooks/useErrorToast"
-import { Button } from "../components/Button"
-import { ConfirmDeletionModal } from "../components/Modals/ConfirmDeletionModal"
-import { InvoiceItem } from "../../../common/types"
+import { Button } from "../components/ui/Button"
+import { ConfirmDeletionModal } from "../components/modals/ConfirmDeletionModal"
+import { InvoiceItem } from "../types"
 
 export const Invoice = () => {
     const { openModal, modals } = useStore()
@@ -71,13 +71,13 @@ export const Invoice = () => {
                 <div className="hidden sm:flex items-center gap-3">
                     <Button
                         onClick={() => openModal("editInvoice")}
-                        className="bg-neutral-700"
+                        variant="neutral"
                     >
                         Edit
                     </Button>
 
                     <Button
-                        className="bg-danger-400"
+                        variant="danger"
                         onClick={() => openModal("confirmDeletion")}
                     >
                         Delete

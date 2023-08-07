@@ -1,19 +1,18 @@
 import { RefObject } from "react"
-import { FloatingLabel } from "./FloatingLabel"
-import { InvoiceFormData } from "../types"
-import { Input } from "./Input"
-import { emailPattern, labelClassName } from "../utils"
-import { DatePicker } from "./DatePicker"
-import { Select, SelectOption } from "./Select"
-import { ItemList } from "./ItemList"
-import { PaymentTerms } from "../../../common/types"
+import { FloatingLabel } from "../ui/FloatingLabel"
+import { Input } from "../ui/Input"
+import { emailPattern, labelClassName } from "../../utils"
+import { DatePicker } from "../ui/DatePicker"
+import { Select, SelectOption } from "../ui/Select"
+import { ItemList } from "../ItemList"
+import { Invoice, PaymentTerms } from "../../types"
 
 export type OnChangeEvent = React.ChangeEvent<
     HTMLInputElement | HTMLSelectElement
 >
 
 type InvoiceFormProps = {
-    formData: InvoiceFormData
+    formData: Invoice
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
     errors: string[]
     onSelectedDayChange: (day: Date) => void

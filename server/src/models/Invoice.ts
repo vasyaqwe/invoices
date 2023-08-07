@@ -1,8 +1,7 @@
 import { Schema, Types, model } from "mongoose"
 import { customAlphabet } from "nanoid"
-import { Invoice as RawInvoice, InvoiceItem } from "../../../common/types"
 
-const ItemSchema = new Schema<InvoiceItem>({
+const ItemSchema = new Schema({
     id: String,
     name: String,
     quantity: Number,
@@ -13,9 +12,7 @@ const alphabet: string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 const generator = customAlphabet(alphabet, 6)
 const today = Date.now()
 
-type Invoice = RawInvoice & { user: Types.ObjectId }
-
-const InvoiceSchema = new Schema<Invoice>(
+const InvoiceSchema = new Schema(
     {
         id: {
             type: String,
@@ -55,6 +52,6 @@ const InvoiceSchema = new Schema<Invoice>(
     { timestamps: true }
 )
 
-const Invoice = model<Invoice>("Invoice", InvoiceSchema)
+const Invoice = model("Invoice", InvoiceSchema)
 
 export default Invoice

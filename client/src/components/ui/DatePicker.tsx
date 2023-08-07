@@ -10,10 +10,10 @@ import {
     parse,
     startOfToday,
 } from "date-fns"
-import { classNames, formatDate } from "../utils"
+import { classNames, formatDate } from "../../utils"
 import { useState, FocusEvent } from "react"
-import { ReactComponent as Chevron } from "../assets/chevron.svg"
-import { ReactComponent as CalendarIcon } from "../assets/calendar.svg"
+import { ReactComponent as Chevron } from "../../assets/chevron.svg"
+import { ReactComponent as CalendarIcon } from "../../assets/calendar.svg"
 
 const colStartClasses = [
     "",
@@ -64,17 +64,16 @@ export const DatePicker = ({
         <div
             tabIndex={0}
             onBlur={onBlur}
-            className="bg-primary-800 relative"
+            className="bg-primary-800 rounded-md relative focus:outline-none border  border-primary-600 focus:border-accent-400"
         >
-            <button
-                type="button"
-                className=" rounded-md py-2 px-3 cursor-pointer border text-white border-primary-600
-         focus:outline-none focus:border-accent-400 w-full flex justify-between items-center"
+            <span
+                className=" rounded-md min-h-[42px] py-2 px-3 cursor-pointer text-white
+         w-full flex justify-between items-center"
                 onClick={() => setOpen((open) => !open)}
             >
                 <span>{formatDate(selectedDay)}</span>
                 <CalendarIcon />
-            </button>
+            </span>
             <div
                 className={`absolute bottom-[110%] left-0 w-[calc(200%+1rem)] h-[382px] max-w-sm ${
                     open ? "block" : "hidden"

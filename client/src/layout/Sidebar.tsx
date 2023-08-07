@@ -3,7 +3,7 @@ import logo from "../assets/logo.svg"
 import { useErrorToast } from "../hooks/useErrorToast"
 import { useMutation, useQueryClient } from "react-query"
 import { logout } from "../api/auth"
-import { Spinner } from "./Spinner"
+import { Spinner } from "../components/ui/Spinner"
 import { useAuthStore } from "../stores/useAuthStore"
 
 export const Sidebar = () => {
@@ -39,7 +39,7 @@ export const Sidebar = () => {
                     <button
                         onClick={() => onLogout()}
                         disabled={isLoading}
-                        className="mr-4 md:mb-7 md:mr-0 hover:underline hover:text-accent-400 disabled:opacity-50 flex items-center gap-2"
+                        className="mr-4 md:mb-7 md:mr-0 link"
                     >
                         {isLoading && <Spinner />}
                         Log out
@@ -49,13 +49,13 @@ export const Sidebar = () => {
                     <div className="flex flex-col gap-4 mr-4 md:mb-7 md:mr-0 ">
                         <Link
                             to={"/signup"}
-                            className="hover:underline hover:text-accent-400 flex items-center gap-2"
+                            className="link"
                         >
                             Sign up
                         </Link>
                         <Link
                             to={"/login"}
-                            className="hover:underline hover:text-accent-400 flex items-center gap-2"
+                            className="link"
                         >
                             Login
                         </Link>

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom"
-import { StatusBadge } from "./StatusBadge"
+import { StatusBadge } from "./ui/StatusBadge"
 import { ReactComponent as Chevron } from "../assets/chevron.svg"
 import { formatCurrency, formatDate } from "../utils"
-import { Invoice, InvoiceItem as InvoiceItemType } from "../../../common/types"
+import { Invoice, InvoiceItem as InvoiceItemType } from "../types"
 
 export const InvoiceItem = ({
     id,
@@ -28,7 +28,8 @@ export const InvoiceItem = ({
         <>
             <Link
                 className="bg-primary-800 rounded-md flex text-sm sm:text-base flex-col py-6 px-7 gap-6 sm:grid 
-            sm:grid-cols-[100px,160px,1fr,1fr,130px,20px] border border-transparent hover:border-accent-700
+            sm:grid-cols-[100px,160px,1fr,1fr,130px,20px] border border-transparent hover:border-accent-700 
+            focus:outline-none focus:border-accent-700
              sm:items-center sm:gap-0"
                 to={`/invoices/${id}`}
             >
