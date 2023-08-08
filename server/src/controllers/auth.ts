@@ -176,6 +176,8 @@ export const refresh = async (req: Request, res: Response) => {
         username: decoded.username,
     }).exec()
 
+    console.log(`REFRESH TOKEN : ${refreshToken}`)
+
     if (!foundUser) {
         res.status(401).json({ message: "Unauthorized" })
         return
@@ -189,6 +191,8 @@ export const refresh = async (req: Request, res: Response) => {
         accessTokenSecret,
         { expiresIn: accessTokenExpiresIn }
     )
+
+    console.log(`ACCESS TOKEN : ${accessToken}`)
 
     res.json({ accessToken })
 }
