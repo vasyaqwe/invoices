@@ -17,6 +17,7 @@ const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET as Secret
 
 const accessTokenExpiresIn = "15m"
 const refreshTokenExpiresIn = "7d"
+const cookieMaxAge = 7 * 24 * 60 * 60 * 1000
 
 export const login = async (req: Request, res: Response) => {
     const { username, password } = req.body
@@ -57,7 +58,7 @@ export const login = async (req: Request, res: Response) => {
         httpOnly: true,
         secure: true,
         sameSite: "none",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        maxAge: cookieMaxAge,
     })
 
     res.json({ accessToken })
@@ -121,7 +122,7 @@ export const googleLogin = async (req: Request, res: Response) => {
                 httpOnly: true,
                 secure: true,
                 sameSite: "none",
-                maxAge: 7 * 24 * 60 * 60 * 1000,
+                maxAge: cookieMaxAge,
             })
 
             res.status(201).json({ accessToken })

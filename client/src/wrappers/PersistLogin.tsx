@@ -23,7 +23,6 @@ export const PersistLogin = () => {
         retry: false,
         enabled: !effectRan.current,
     })
-    console.log(token)
 
     useEffect(() => {
         if (!effectRan.current && !isLoading) {

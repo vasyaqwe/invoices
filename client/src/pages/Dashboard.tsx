@@ -69,8 +69,8 @@ export const Dashboard = () => {
                 <ErrorMessage
                     message={
                         error && error instanceof Error
-                            ? `There was an error loading invoices. Reason: ${error.message}`
-                            : ""
+                            ? error.message
+                            : "Unknown error occured"
                     }
                 />
             ) : (

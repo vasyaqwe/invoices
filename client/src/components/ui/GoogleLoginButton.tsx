@@ -45,7 +45,7 @@ export const GoogleLoginButton = () => {
                 src={google}
                 alt="Google"
             />
-            {pathname.includes("signup") ? "Sign up" : "Log in"} in with Google
+            {pathname.includes("signup") ? "Sign up" : "Log in"} with Google
         </Button>
     )
 }
