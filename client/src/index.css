@@ -130,7 +130,7 @@ button {
 
 @layer components {
     .link {
-        @apply hover:underline hover:text-accent-400 flex items-center gap-2 disabled:opacity-50;
+        @apply hover:underline hover:text-accent-400 inline-flex items-center gap-2 disabled:opacity-50;
     }
 
     .sheet {

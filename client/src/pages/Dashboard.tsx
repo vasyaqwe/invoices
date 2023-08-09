@@ -44,7 +44,8 @@ export const Dashboard = () => {
                     return undefined
                 }
             },
-            refetchInterval: 50000,
+            retry: false,
+            refetchInterval: 5000,
         }
     )
 
@@ -65,6 +66,9 @@ export const Dashboard = () => {
 
     return (
         <>
+            <ErrorMessage
+                message={"This is a test error message, <a>login here</a>"}
+            />
             {error ? (
                 <ErrorMessage
                     message={

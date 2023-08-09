@@ -1,12 +1,10 @@
 import axios from "axios"
-// export const API_URL = "http://localhost:3000"
-export const API_URL = "https://invoices-ga5s.onrender.com"
+export const API_URL = "http://localhost:3000"
+// export const API_URL = "https://invoices-ga5s.onrender.com"
 import { useAuthStore } from "../stores/useAuthStore"
 import { refresh } from "./auth"
 
-function getCurrentAccessToken() {
-    return useAuthStore.getState().token
-}
+const getCurrentAccessToken = () => useAuthStore.getState().token
 
 export default axios.create({ baseURL: API_URL })
 
@@ -23,6 +21,7 @@ axiosPrivate.interceptors.request.use(
                 "Authorization"
             ] = `Bearer ${getCurrentAccessToken()}`
         }
+
         return config
     },
     (error) => Promise.reject(error)
@@ -32,17 +31,25 @@ axiosPrivate.interceptors.response.use(
     (response) => response,
     async (error) => {
         const prevReq = error?.config
+
         if (error?.response?.status === 403 && !prevReq?.sent) {
             prevReq.sent = true
 
-            const refreshedRes = await refresh()
+            try {
+                const refreshedRes = await refresh()
 
-            prevReq.headers[
-                "Authorization"
-            ] = `Bearer ${refreshedRes.data.accessToken}`
+                prevReq.headers[
+                    "Authorization"
+                ] = `Bearer ${refreshedRes.accessToken}`
 
-            return axiosPrivate(prevReq)
+                return axiosPrivate(prevReq)
+            } catch (e) {
+                const errorMessage =
+                    "Your session has expired. Please <a href='/login' class='link underline'>login</a> again."
+                error.response.data = { message: errorMessage }
+            }
         }
+
         return Promise.reject(error)
     }
 )
