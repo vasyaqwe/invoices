@@ -27,7 +27,7 @@ export const InvoiceItem = ({
     return (
         <>
             <Link
-                className="bg-primary-800 rounded-md flex text-sm sm:text-base flex-col py-6 px-7 gap-6 sm:grid 
+                className="bg-primary-800 rounded-md flex text-base flex-col py-6 px-7 gap-6 sm:grid 
             sm:grid-cols-[100px,160px,1fr,1fr,130px,20px] border border-transparent hover:border-accent-700 
             focus:outline-none focus:border-accent-700
              sm:items-center sm:gap-0"
