@@ -8,22 +8,18 @@ import {
     deleteInvoice,
     createInvoiceDraft,
 } from "../controllers/invoices"
-import asyncHandler from "express-async-handler"
 import { validateInvoice, isLoggedIn } from "../middleware"
 
 router.use(isLoggedIn)
 
-router
-    .route("/")
-    .get(asyncHandler(getInvoices))
-    .post(validateInvoice, asyncHandler(createInvoice))
+router.route("/").get(getInvoices).post(validateInvoice, createInvoice)
 
-router.route("/draft").post(asyncHandler(createInvoiceDraft))
+router.route("/draft").post(createInvoiceDraft)
 
 router
     .route("/:id")
-    .get(asyncHandler(getInvoice))
-    .patch(validateInvoice, asyncHandler(updateInvoice))
-    .delete(asyncHandler(deleteInvoice))
+    .get(getInvoice)
+    .patch(validateInvoice, updateInvoice)
+    .delete(deleteInvoice)
 
 export default router

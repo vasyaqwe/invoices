@@ -1,23 +1,24 @@
 import User from "../models/User"
 import bcrypt from "bcrypt"
-import jwt, { Secret } from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 import { Request, Response } from "express"
 import { DecodedToken } from "../types/types"
 import { OAuth2Client } from "google-auth-library"
-import crypto from "crypto"
+import {
+    accessTokenExpiresIn,
+    accessTokenSecret,
+    cookieConfig,
+    generateRandPassword,
+    rawCookieConfig,
+    refreshTokenExpiresIn,
+    refreshTokenSecret,
+} from "../utils"
 
 const oAuth2Client = new OAuth2Client(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
     "postmessage"
 )
-
-const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET as Secret
-const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET as Secret
-
-const accessTokenExpiresIn = "15m"
-const refreshTokenExpiresIn = "7d"
-const cookieMaxAge = 7 * 24 * 60 * 60 * 1000
 
 export const login = async (req: Request, res: Response) => {
     const { username, password } = req.body
@@ -54,12 +55,7 @@ export const login = async (req: Request, res: Response) => {
         { expiresIn: refreshTokenExpiresIn }
     )
 
-    res.cookie("jwt", refreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        maxAge: cookieMaxAge,
-    })
+    res.cookie("jwt", refreshToken, cookieConfig)
 
     res.json({ accessToken })
 }
@@ -97,8 +93,7 @@ export const googleLogin = async (req: Request, res: Response) => {
             return
         }
 
-        //generate random password for created user
-        const password = crypto.randomBytes(64).toString("hex")
+        const password = generateRandPassword()
         const hashedPwd = await bcrypt.hash(password, 10)
 
         const user = await User.create({ username, password: hashedPwd })
@@ -118,12 +113,7 @@ export const googleLogin = async (req: Request, res: Response) => {
                 { expiresIn: refreshTokenExpiresIn }
             )
 
-            res.cookie("jwt", refreshToken, {
-                httpOnly: true,
-                secure: true,
-                sameSite: "none",
-                maxAge: cookieMaxAge,
-            })
+            res.cookie("jwt", refreshToken, cookieConfig)
 
             res.status(201).json({ accessToken })
         } else {
@@ -150,12 +140,7 @@ export const googleLogin = async (req: Request, res: Response) => {
         { expiresIn: refreshTokenExpiresIn }
     )
 
-    res.cookie("jwt", refreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-    })
+    res.cookie("jwt", refreshToken, cookieConfig)
 
     res.json({ accessToken })
 }
@@ -195,11 +180,13 @@ export const refresh = async (req: Request, res: Response) => {
 
 export const logout = (req: Request, res: Response) => {
     const { cookies } = req
+
     if (!cookies?.jwt) {
         res.status(404).json({ message: "No cookies" })
         return
     }
-    res.clearCookie("jwt", { httpOnly: true, sameSite: "none", secure: true })
+
+    res.clearCookie("jwt", rawCookieConfig)
 
     res.json({ message: "Cookie cleared" })
 }

@@ -133,7 +133,7 @@ export const SignUp = () => {
                     <ErrorMessage message="Passwords don't match" />
                 )}
 
-                <div className="flex flex-wrap items-center justify-center">
+                <div className="flex flex-col gap-6 items-center justify-center">
                     <Button
                         isLoading={isLoading}
                         disabled={isLoading}
@@ -142,13 +142,12 @@ export const SignUp = () => {
                             validatePasswords()
                             setSubmitted(true)
                         }}
-                        className={`self-start bg-accent-700`}
+                        className={` bg-accent-700`}
                     >
                         Sign Up
                     </Button>
+                    <GoogleLoginButton />
                 </div>
-                <p className="text-center font-semibold">OR</p>
-                <GoogleLoginButton />
             </form>
         </>
     )

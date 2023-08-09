@@ -2,6 +2,7 @@ import User from "../models/User"
 import bcrypt from "bcrypt"
 import { Request, Response } from "express"
 import jwt, { Secret } from "jsonwebtoken"
+import { cookieConfig } from "../utils"
 
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET as Secret
 
@@ -36,12 +37,7 @@ export const createUser = async (req: Request, res: Response) => {
             accessTokenSecret
         )
 
-        res.cookie("jwt", accessToken, {
-            httpOnly: true,
-            secure: true,
-            sameSite: "none",
-            maxAge: 7 * 24 * 60 * 60 * 1000,
-        })
+        res.cookie("jwt", accessToken, cookieConfig)
 
         res.status(201).json({ message: `New user ${username} created` })
     } else {

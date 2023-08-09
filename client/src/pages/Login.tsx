@@ -104,7 +104,6 @@ export const Login = () => {
                         Login
                     </Button>
                 </div>
-                <p className="text-center font-semibold">OR</p>
                 <GoogleLoginButton />
             </form>
         </>
