@@ -7,7 +7,7 @@ import { FloatingLabel } from "../components/ui/FloatingLabel"
 import { Input } from "../components/ui/Input"
 import { useErrorToast } from "../hooks/useErrorToast"
 import { Checkbox } from "../components/ui/Checkbox"
-import { useInputValidation } from "../hooks/useInputValidation"
+import { useFormValidation } from "../hooks/useFormValidation"
 import { Button } from "../components/ui/Button"
 import { GoogleLoginButton } from "../components/ui/GoogleLoginButton"
 
@@ -21,8 +21,7 @@ export const Login = () => {
     })
 
     const formRef = useRef<HTMLFormElement>(null)
-    const { validateInputs, makeInputValid, errors } =
-        useInputValidation(formRef)
+    const { validateInputs, errors } = useFormValidation(formRef)
 
     const navigate = useNavigate()
 
@@ -43,7 +42,6 @@ export const Login = () => {
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
         setFormData((prev) => ({ ...prev, [name]: value }))
-        makeInputValid(name)
     }
 
     return (

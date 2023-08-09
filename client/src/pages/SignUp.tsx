@@ -4,7 +4,7 @@ import { useQueryClient, useMutation } from "react-query"
 import { FloatingLabel } from "../components/ui/FloatingLabel"
 import { Input } from "../components/ui/Input"
 import { useErrorToast } from "../hooks/useErrorToast"
-import { useInputValidation } from "../hooks/useInputValidation"
+import { useFormValidation } from "../hooks/useFormValidation"
 import { createUser } from "../api/users"
 import { useStore } from "../stores/useStore"
 import { usePasswordsValidation } from "../hooks/usePasswordsValidation"
@@ -24,8 +24,7 @@ export const SignUp = () => {
     })
 
     const formRef = useRef<HTMLFormElement>(null)
-    const { validateInputs, makeInputValid, errors } =
-        useInputValidation(formRef)
+    const { validateInputs, errors } = useFormValidation(formRef)
 
     const {
         passwordsMatch,
@@ -60,7 +59,6 @@ export const SignUp = () => {
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
         setFormData((prev) => ({ ...prev, [name]: value }))
-        makeInputValid(name)
         onPasswordChange(e)
     }
 

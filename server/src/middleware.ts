@@ -1,8 +1,9 @@
 import { userSchema, authSchema, invoiceSchema } from "./joiSchemas"
 import rateLimit from "express-rate-limit"
-import jwt, { Secret } from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 import { Request, Response, NextFunction } from "express"
 import { DecodedToken } from "./types/types"
+import { accessTokenSecret, refreshTokenSecret } from "./utils"
 
 export const loginLimiter = rateLimit({
     windowMs: 60 * 1000, // 1 minute
@@ -45,9 +46,6 @@ export const validateAuth = (
         next()
     }
 }
-
-const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET as Secret
-const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET as Secret
 
 export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization || req.headers.Authorization

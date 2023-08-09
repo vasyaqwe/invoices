@@ -45,7 +45,7 @@ export const Dashboard = () => {
                 }
             },
             retry: false,
-            refetchInterval: 5000,
+            refetchInterval: 50000,
         }
     )
 

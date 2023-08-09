@@ -1,23 +1,13 @@
-import { RefObject, useState } from "react"
+import { RefObject, useEffect, useState } from "react"
 
-export const useInputValidation = (
+export const useFormValidation = (
     formRef: RefObject<HTMLFormElement>,
     itemsRef?: RefObject<HTMLDivElement>
 ) => {
     const [errors, setErrors] = useState<string[]>([])
 
-    const makeInputValid = (name: string) => {
+    const makeValidOnDeleteItem = (name: string) =>
         setErrors((prev) => prev.filter((errName) => errName !== name))
-    }
-
-    const makeItemInputValid = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-    ) => {
-        const { name, dataset } = e.target
-        setErrors((prev) =>
-            prev.filter((errName) => errName !== name + dataset.idx)
-        )
-    }
 
     const validateInputs = () => {
         if (formRef.current) {
@@ -60,10 +50,56 @@ export const useInputValidation = (
             })
         }
     }
+
+    useEffect(() => {
+        const makeInputValid = (e: Event) => {
+            const target = e.target as HTMLInputElement
+            setErrors((prev) =>
+                prev.filter((errName) => errName !== target.name)
+            )
+        }
+
+        const makeItemInputValid = (e: Event) => {
+            const { name, dataset } = e.target as HTMLInputElement
+            setErrors((prev) =>
+                prev.filter((errName) => errName !== name + dataset.idx)
+            )
+        }
+
+        const inputs =
+            formRef?.current?.querySelectorAll<HTMLInputElement>(".input")
+
+        if (inputs) {
+            inputs.forEach((input: HTMLInputElement) =>
+                input.addEventListener("input", makeInputValid)
+            )
+        }
+        const itemsInputs =
+            itemsRef?.current?.querySelectorAll<HTMLInputElement>(".item-input")
+
+        if (itemsInputs) {
+            itemsInputs.forEach((input: HTMLInputElement) =>
+                input.addEventListener("input", makeItemInputValid)
+            )
+        }
+
+        return () => {
+            if (inputs) {
+                inputs.forEach((input: HTMLInputElement) =>
+                    input.removeEventListener("input", makeInputValid)
+                )
+            }
+            if (itemsInputs) {
+                itemsInputs.forEach((input: HTMLInputElement) =>
+                    input.removeEventListener("input", makeItemInputValid)
+                )
+            }
+        }
+    }, [formRef])
+
     return {
         errors,
-        makeInputValid,
-        makeItemInputValid,
         validateInputs,
+        makeValidOnDeleteItem,
     }
 }

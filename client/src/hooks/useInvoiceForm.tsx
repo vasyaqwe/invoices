@@ -1,6 +1,6 @@
 import { Invoice, InvoiceItem } from "../types"
 import { nanoid } from "nanoid"
-import { useInputValidation } from "./useInputValidation"
+import { useFormValidation } from "./useFormValidation"
 import { OnChangeEvent } from "../components/forms/InvoiceForm"
 import { SelectOption } from "../components/ui/Select"
 import { RefObject, SetStateAction } from "react"
@@ -17,8 +17,10 @@ export const useInvoiceForm = ({
     formData,
     setFormData,
 }: useInvoiceFormProps) => {
-    const { validateInputs, makeItemInputValid, makeInputValid, errors } =
-        useInputValidation(formRef, itemsRef)
+    const { validateInputs, makeValidOnDeleteItem, errors } = useFormValidation(
+        formRef,
+        itemsRef
+    )
 
     const onAddItem = () => {
         const newItem: InvoiceItem = {
@@ -52,9 +54,9 @@ export const useInvoiceForm = ({
         const removedRow = formData.items.find((t) => t.id === id)
         if (removedRow) {
             const removedRowIdx = formData.items.indexOf(removedRow)
-            makeInputValid("name" + removedRowIdx)
-            makeInputValid("quantity" + removedRowIdx)
-            makeInputValid("price" + removedRowIdx)
+            makeValidOnDeleteItem("name" + removedRowIdx)
+            makeValidOnDeleteItem("quantity" + removedRowIdx)
+            makeValidOnDeleteItem("price" + removedRowIdx)
         }
     }
 
@@ -74,7 +76,6 @@ export const useInvoiceForm = ({
         } else {
             setFormData((prev) => ({ ...prev, [name]: value }))
         }
-        makeInputValid(e.target.name)
     }
 
     const onItemChange = (
@@ -88,7 +89,6 @@ export const useInvoiceForm = ({
                 item.id === id ? { ...item, [name]: value } : item
             ),
         }))
-        makeItemInputValid(e)
     }
 
     const onSelectChange = (name: string, option: SelectOption) => {
