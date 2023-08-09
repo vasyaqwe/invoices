@@ -66,9 +66,6 @@ export const Dashboard = () => {
 
     return (
         <>
-            <ErrorMessage
-                message={"This is a test error message, <a>login here</a>"}
-            />
             {error ? (
                 <ErrorMessage
                     message={
