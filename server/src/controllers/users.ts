@@ -2,7 +2,11 @@ import User from "../models/User"
 import bcrypt from "bcrypt"
 import { Request, Response } from "express"
 import jwt, { Secret } from "jsonwebtoken"
-import { cookieConfig } from "../utils"
+import {
+    cookieConfig,
+    refreshTokenExpiresIn,
+    refreshTokenSecret,
+} from "../utils"
 
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET as Secret
 
@@ -37,9 +41,18 @@ export const createUser = async (req: Request, res: Response) => {
             accessTokenSecret
         )
 
-        res.cookie("jwt", accessToken, cookieConfig)
+        const refreshToken = jwt.sign(
+            {
+                userId: user._id,
+                username: user.username,
+            },
+            refreshTokenSecret,
+            { expiresIn: refreshTokenExpiresIn }
+        )
 
-        res.status(201).json({ message: `New user ${username} created` })
+        res.cookie("jwt", refreshToken, cookieConfig)
+
+        res.status(201).json({ accessToken })
     } else {
         res.status(400).json({ message: `Invalid user data received!` })
     }
