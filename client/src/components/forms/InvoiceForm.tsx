@@ -21,7 +21,6 @@ type InvoiceFormProps = {
     onItemChange: (e: React.ChangeEvent<HTMLInputElement>, id: string) => void
     onDeleteItem: (id: string) => void
     onAddItem: () => void
-    itemsRef: RefObject<HTMLDivElement>
     formRef: RefObject<HTMLFormElement>
     draft?: boolean
 }
@@ -36,7 +35,6 @@ export const InvoiceForm = ({
     onDeleteItem,
     onAddItem,
     onSelectedDayChange,
-    itemsRef,
     formRef,
     draft = false,
 }: InvoiceFormProps) => {
@@ -261,10 +259,7 @@ export const InvoiceForm = ({
                 </FloatingLabel>
             </fieldset>
 
-            <div
-                className="flex flex-col gap-3 md:gap-4"
-                ref={itemsRef}
-            >
+            <div className="flex flex-col gap-3 md:gap-4">
                 <ItemList
                     items={formData.items}
                     errors={errors}

@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from "react-query"
 import { useAuthStore } from "../../stores/useAuthStore"
 import { useErrorToast } from "../../hooks/useErrorToast"
 import { Button } from "./Button"
-import google from "../../assets/google.png"
+import google from "../../assets/google.svg"
 
 export const GoogleLoginButton = () => {
     const { setToken } = useAuthStore()
@@ -35,9 +35,8 @@ export const GoogleLoginButton = () => {
 
     return (
         <Button
-            variant="outline"
             type="button"
-            className="rounded-full justify-center"
+            className="h-[40px] bg-white text-primary-900 py-0 gap-[24px] px-[8px] rounded-full self-center"
             onClick={() => login()}
         >
             <img
@@ -45,7 +44,7 @@ export const GoogleLoginButton = () => {
                 src={google}
                 alt="Google"
             />
-            {pathname.includes("signup") ? "Sign up" : "Log in"} with Google
+            {pathname.includes("signup") ? "Sign up" : "Sign in"} with Google
         </Button>
     )
 }

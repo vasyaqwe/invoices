@@ -53,7 +53,7 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
         errors,
         onSelectedDayChange,
         validateInputs,
-    } = useInvoiceForm({ setFormData, formData, itemsRef, formRef })
+    } = useInvoiceForm({ setFormData, formData, formRef })
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -81,7 +81,6 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
                     onSubmit={onSubmit}
                     errors={errors}
                     formRef={formRef}
-                    itemsRef={itemsRef}
                     onSelectChange={onSelectChange}
                     onSelectedDayChange={onSelectedDayChange}
                     onChange={onChange}

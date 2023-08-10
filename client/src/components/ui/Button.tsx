@@ -24,7 +24,7 @@ export const Button = ({
     return (
         <button
             {...rest}
-            className={`py-2 rounded-full focus:outline-none  text-white px-6 font-semibold hover:opacity-60 
+            className={`py-2 rounded-full focus:outline-none  text-white px-6 font-semibold hover:opacity-75 
             ${variantLookup[variant]}
             ${
                 isLoading ? "opacity-80 cursor-default" : ""

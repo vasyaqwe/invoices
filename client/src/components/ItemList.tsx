@@ -75,7 +75,6 @@ export const ItemList = ({
                                         Item Name
                                     </label>
                                     <input
-                                        data-idx={idx}
                                         value={item.name}
                                         onChange={(e) => onChange(e, item.id)}
                                         className={`${inputClassName} 
@@ -83,7 +82,7 @@ export const ItemList = ({
                                             errors.includes("name" + idx)
                                                 ? "border-danger-400"
                                                 : "focus-within:border-accent-400 border-primary-600 "
-                                        } item-input`}
+                                        } input`}
                                         name="name"
                                         id={"name" + idx}
                                         type="text"
@@ -102,7 +101,6 @@ export const ItemList = ({
                                         Qty.
                                     </label>
                                     <input
-                                        data-idx={idx}
                                         value={item.quantity}
                                         onChange={(e) => onChange(e, item.id)}
                                         className={`${inputClassName} 
@@ -110,7 +108,7 @@ export const ItemList = ({
                                             errors.includes("quantity" + idx)
                                                 ? "border-danger-400"
                                                 : "focus-within:border-accent-400 border-primary-600 "
-                                        } item-input`}
+                                        } input`}
                                         name="quantity"
                                         min={1}
                                         id={"quantity" + idx}
@@ -130,7 +128,6 @@ export const ItemList = ({
                                         Price
                                     </label>
                                     <input
-                                        data-idx={idx}
                                         value={item.price}
                                         onChange={(e) => onChange(e, item.id)}
                                         className={`${inputClassName} 
@@ -138,7 +135,7 @@ export const ItemList = ({
                                             errors.includes("price" + idx)
                                                 ? "border-danger-400"
                                                 : "focus-within:border-accent-400 border-primary-600 "
-                                        } item-input`}
+                                        } input`}
                                         name="price"
                                         id={"price" + idx}
                                         min={1}

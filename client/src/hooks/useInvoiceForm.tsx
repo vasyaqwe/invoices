@@ -8,19 +8,15 @@ import { RefObject, SetStateAction } from "react"
 type useInvoiceFormProps = {
     formData: Invoice
     setFormData: (func: SetStateAction<Invoice>) => void
-    itemsRef: RefObject<HTMLDivElement>
     formRef: RefObject<HTMLFormElement>
 }
 export const useInvoiceForm = ({
     formRef,
-    itemsRef,
     formData,
     setFormData,
 }: useInvoiceFormProps) => {
-    const { validateInputs, makeValidOnDeleteItem, errors } = useFormValidation(
-        formRef,
-        itemsRef
-    )
+    const { validateInputs, makeValidOnDeleteItem, errors } =
+        useFormValidation(formRef)
 
     const onAddItem = () => {
         const newItem: InvoiceItem = {

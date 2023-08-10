@@ -40,7 +40,6 @@ export const CreateInvoiceModal = () => {
     })
 
     const formRef = useRef<HTMLFormElement>(null)
-    const itemsRef = useRef<HTMLDivElement>(null)
 
     const {
         onAddItem,
@@ -51,7 +50,7 @@ export const CreateInvoiceModal = () => {
         onSelectedDayChange,
         errors,
         validateInputs,
-    } = useInvoiceForm({ setFormData, formData, itemsRef, formRef })
+    } = useInvoiceForm({ setFormData, formData, formRef })
 
     const queryClient = useQueryClient()
 
@@ -105,7 +104,6 @@ export const CreateInvoiceModal = () => {
                     onSubmit={onSubmit}
                     errors={errors}
                     formRef={formRef}
-                    itemsRef={itemsRef}
                     onSelectedDayChange={onSelectedDayChange}
                     onSelectChange={onSelectChange}
                     onChange={onChange}
