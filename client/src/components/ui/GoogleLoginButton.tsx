@@ -34,9 +34,9 @@ export const GoogleLoginButton = () => {
     })
 
     return (
-        <Button
+        <button
             type="button"
-            className="h-[40px] bg-white text-primary-900 py-0 gap-[24px] px-[8px] rounded-full self-center"
+            className="h-[40px] bg-white flex items-center text-primary-900 py-0 gap-[24px] px-[8px] rounded-full self-center"
             onClick={() => login()}
         >
             <img
@@ -45,6 +45,6 @@ export const GoogleLoginButton = () => {
                 alt="Google"
             />
             {pathname.includes("signup") ? "Sign up" : "Sign in"} with Google
-        </Button>
+        </button>
     )
 }

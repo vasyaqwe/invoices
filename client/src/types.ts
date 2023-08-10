@@ -52,3 +52,4 @@ export type User = {
     username: string
     password: string
 }
+export type UserFormData = User & { confirmPassword: string }
