@@ -1,11 +1,11 @@
 import { motion } from "framer-motion"
-import { useStore } from "../../stores/useStore"
+import { useStore } from "@/stores/useStore"
 import { useMutation, useQueryClient } from "react-query"
-import { deleteInvoice } from "../../api/invoices"
+import { deleteInvoice } from "@/api/invoices"
 import { useNavigate } from "react-router-dom"
-import { useErrorToast } from "../../hooks/useErrorToast"
+import { useErrorToast } from "@/hooks/useErrorToast"
 import { Button } from "../ui/Button"
-import { Invoice } from "../../types"
+import { Invoice } from "@/types"
 
 export const ConfirmDeletionModal = ({ invoice }: { invoice: Invoice }) => {
     const { closeModal, openToast } = useStore()

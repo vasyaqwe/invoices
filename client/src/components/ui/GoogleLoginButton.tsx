@@ -1,11 +1,10 @@
 import { useGoogleLogin } from "@react-oauth/google"
 import { useLocation, useNavigate } from "react-router-dom"
-import { googleLogin } from "../../api/auth"
+import { googleLogin } from "@/api/auth"
 import { useMutation, useQueryClient } from "react-query"
-import { useAuthStore } from "../../stores/useAuthStore"
-import { useErrorToast } from "../../hooks/useErrorToast"
-import { Button } from "./Button"
-import google from "../../assets/google.svg"
+import { useAuthStore } from "@/stores/useAuthStore"
+import { useErrorToast } from "@/hooks/useErrorToast"
+import google from "@/assets/google.svg"
 
 export const GoogleLoginButton = () => {
     const { setToken } = useAuthStore()

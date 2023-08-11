@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { ReactComponent as Chevron } from "../../assets/chevron.svg"
+import { ReactComponent as Chevron } from "@/assets/chevron.svg"
 
 export type SelectOption = string
 
@@ -54,7 +54,7 @@ export const FilterSelect = ({
                 case "Enter":
                 case "Space":
                     setOpen(true)
-                    if (open) onChange(options[highlightedIdx])
+                    if (open) onChange(options[highlightedIdx]!)
                     break
                 case "ArrowUp":
                 case "ArrowDown": {

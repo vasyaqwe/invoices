@@ -1,4 +1,4 @@
-import { Invoice, InvoiceReturn, PaginatedInvoiceReturn } from "../types"
+import { Invoice, InvoiceReturn, PaginatedInvoiceReturn } from "@/types"
 import { axiosPrivate } from "./config"
 import axios from "axios"
 

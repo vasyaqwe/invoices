@@ -1,4 +1,4 @@
-import { useStore } from "../../stores/useStore"
+import { useStore } from "@/stores/useStore"
 import { useEffect } from "react"
 
 export const Toast = () => {

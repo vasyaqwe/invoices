@@ -1,10 +1,10 @@
-import { ReactComponent as Plus } from "../assets/plusNeutral.svg"
-import { ReactComponent as Delete } from "../assets/delete.svg"
-import { getTotalOfItem, inputClassName, labelClassName } from "../utils"
+import { ReactComponent as Plus } from "@/assets/plusNeutral.svg"
+import { ReactComponent as Delete } from "@/assets/delete.svg"
+import { getTotalOfItem, inputClassName, labelClassName } from "@/utils"
 import { AnimatePresence, motion } from "framer-motion"
 import { Button } from "./ui/Button"
 import { ChangeEvent } from "react"
-import { InvoiceItem } from "../types"
+import { InvoiceItem } from "@/types"
 
 type ItemListProps = {
     items: InvoiceItem[]

@@ -1,4 +1,4 @@
-import { useAuthStore } from "../stores/useAuthStore"
+import { useAuthStore } from "@/stores/useAuthStore"
 import jwtDecode from "jwt-decode"
 
 export const useAuth = () => {

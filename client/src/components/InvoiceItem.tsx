@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom"
 import { StatusBadge } from "./ui/StatusBadge"
-import { ReactComponent as Chevron } from "../assets/chevron.svg"
-import { formatCurrency, formatDate } from "../utils"
-import { Invoice, InvoiceItem as InvoiceItemType } from "../types"
+import { ReactComponent as Chevron } from "@/assets/chevron.svg"
+import { formatCurrency, formatDate } from "@/utils"
+import { Invoice, InvoiceItem as InvoiceItemType } from "@/types"
 
 export const InvoiceItem = ({
     id,
@@ -36,7 +36,7 @@ export const InvoiceItem = ({
                 <span className="flex items-center justify-between flex-1 sm:flex-initial">
                     <span className="font-semibold">
                         <span className="text-neutral-500">#</span>
-                        {id.toUpperCase()}
+                        {id?.toUpperCase()}
                     </span>
                     <span className="sm:hidden">{billTo.clientName}</span>
                 </span>

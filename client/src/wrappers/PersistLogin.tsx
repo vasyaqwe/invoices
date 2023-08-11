@@ -1,10 +1,10 @@
 import { useQuery, useQueryClient } from "react-query"
-import { refresh } from "../api/auth"
-import { useAuthStore } from "../stores/useAuthStore"
+import { refresh } from "@/api/auth"
+import { useAuthStore } from "@/stores/useAuthStore"
 import { Outlet } from "react-router-dom"
-import { Spinner } from "../components/ui/Spinner"
+import { Spinner } from "@/components/ui/Spinner"
 import { useEffect, useRef } from "react"
-import { pageSpinnerClassName } from "../utils"
+import { pageSpinnerClassName } from "@/utils"
 
 export const PersistLogin = () => {
     const queryClient = useQueryClient()

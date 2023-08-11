@@ -1,11 +1,11 @@
 import { Navigate, Route, Routes } from "react-router-dom"
-import { PersistLogin } from "./wrappers/PersistLogin"
-import { RequireAuth } from "./wrappers/RequireAuth"
-import { Dashboard } from "./pages/Dashboard"
-import { Layout } from "./layout/Layout"
-import { Invoice } from "./pages/Invoice"
-import { Login } from "./pages/Login"
-import { SignUp } from "./pages/SignUp"
+import { RequireAuth } from "@/wrappers/RequireAuth"
+import { Dashboard } from "@/pages/Dashboard"
+import { Layout } from "@/layout/Layout"
+import { Invoice } from "@/pages/Invoice"
+import { Login } from "@/pages/Login"
+import { SignUp } from "@/pages/SignUp"
+import { PersistLogin } from "@/wrappers/PersistLogin"
 
 function App() {
     return (

@@ -13,7 +13,11 @@ interface Toast extends ToastPayload {
 }
 
 interface StoreState {
-    modals: Record<string, boolean>
+    modals: {
+        createInvoice: boolean
+        confirmDeletion: boolean
+        editInvoice: boolean
+    } & Record<string, boolean>
     toast: Toast
     onBackdropClick: () => void
     openModal: (modal: string) => void

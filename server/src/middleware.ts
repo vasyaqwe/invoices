@@ -52,16 +52,16 @@ export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
 
     if (
         !authHeader ||
-        (Array.isArray(authHeader) && !authHeader[0].startsWith("Bearer "))
+        (Array.isArray(authHeader) && !authHeader[0]?.startsWith("Bearer "))
     ) {
         return res.status(401).json({ message: "Unauthorized" })
     }
 
     const token = (
         Array.isArray(authHeader) ? authHeader[0] : authHeader
-    ).split(" ")[1]
+    )?.split(" ")[1]
 
-    jwt.verify(token, accessTokenSecret, (err: jwt.VerifyErrors | null) => {
+    jwt.verify(token!, accessTokenSecret, (err: jwt.VerifyErrors | null) => {
         if (err) {
             return res.status(403).json({ message: "Forbidden" })
         }

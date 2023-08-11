@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom"
-import logo from "../assets/logo.svg"
-import { useErrorToast } from "../hooks/useErrorToast"
+import logo from "@/assets/logo.svg"
+import { useErrorToast } from "@/hooks/useErrorToast"
 import { useMutation, useQueryClient } from "react-query"
-import { logout } from "../api/auth"
-import { Spinner } from "../components/ui/Spinner"
-import { useAuthStore } from "../stores/useAuthStore"
+import { logout } from "@/api/auth"
+import { Spinner } from "@/components/ui/Spinner"
+import { useAuthStore } from "@/stores/useAuthStore"
 
 export const Sidebar = () => {
     const navigate = useNavigate()

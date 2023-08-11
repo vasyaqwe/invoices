@@ -1,4 +1,4 @@
-import { InvoiceItem } from "./types"
+import { InvoiceItem } from "@/types"
 
 const CURRENCY_FORMATTER = new Intl.NumberFormat(undefined, {
     currency: "USD",

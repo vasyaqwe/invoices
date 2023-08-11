@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { ReactNode } from "react"
-import { useStore } from "../stores/useStore"
+import { useStore } from "@/stores/useStore"
 
 export const ModalWrapper = ({
     children,

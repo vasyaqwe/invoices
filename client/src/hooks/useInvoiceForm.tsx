@@ -1,8 +1,8 @@
-import { Invoice, InvoiceItem } from "../types"
+import { Invoice, InvoiceItem } from "@/types"
 import { nanoid } from "nanoid"
 import { useFormValidation } from "./useFormValidation"
-import { OnChangeEvent } from "../components/forms/InvoiceForm"
-import { SelectOption } from "../components/ui/Select"
+import { OnChangeEvent } from "@/components/forms/InvoiceForm"
+import { SelectOption } from "@/components/ui/Select"
 import { RefObject, SetStateAction } from "react"
 
 type useInvoiceFormProps = {
@@ -60,15 +60,20 @@ export const useInvoiceForm = ({
         const { name, value } = e.target
         if (name.includes(":")) {
             const newName = name.split(":")
-            const firstName = newName[0]
+            const firstName = newName[0]!
             const secondName = newName[1]
-            setFormData((prev) => ({
-                ...prev,
-                [firstName]: {
-                    ...prev[firstName],
-                    [secondName]: value,
-                },
-            }))
+            if (firstName && secondName) {
+                setFormData((prev) => ({
+                    ...prev,
+                    [firstName]: {
+                        ...(prev[firstName as keyof Invoice] as Record<
+                            string,
+                            string
+                        >),
+                        [secondName]: value,
+                    },
+                }))
+            }
         } else {
             setFormData((prev) => ({ ...prev, [name]: value }))
         }

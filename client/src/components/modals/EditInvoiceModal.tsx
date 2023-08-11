@@ -1,21 +1,30 @@
 import { useRef, useState } from "react"
-import { Invoice } from "../../types"
-import { updateInvoice } from "../../api/invoices"
+import { Invoice } from "@/types"
+import { updateInvoice } from "@/api/invoices"
 import { useMutation, useQueryClient } from "react-query"
 import { motion } from "framer-motion"
-import { useStore } from "../../stores/useStore"
-import { useErrorToast } from "../../hooks/useErrorToast"
+import { useStore } from "@/stores/useStore"
+import { useErrorToast } from "@/hooks/useErrorToast"
 import { Button } from "../ui/Button"
 import { InvoiceForm } from "../forms/InvoiceForm"
-import { useInvoiceForm } from "../../hooks/useInvoiceForm"
+import { useInvoiceForm } from "@/hooks/useInvoiceForm"
 
 export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
-    const { billFrom, billTo, items, date, status, paymentTerms, description } =
-        invoice
+    const {
+        id,
+        billFrom,
+        billTo,
+        items,
+        date,
+        status,
+        paymentTerms,
+        description,
+    } = invoice
 
     const { closeModal, openToast } = useStore()
 
     const [formData, setFormData] = useState<Invoice>({
+        id,
         billFrom: billFrom,
         billTo: billTo,
         date: new Date(date),
@@ -26,7 +35,6 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
     })
 
     const formRef = useRef<HTMLFormElement>(null)
-    const itemsRef = useRef<HTMLDivElement>(null)
 
     const queryClient = useQueryClient()
 
@@ -34,7 +42,7 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
         isLoading,
         error,
         mutate: onSave,
-    } = useMutation(() => updateInvoice(invoice.id, formData), {
+    } = useMutation(() => updateInvoice(invoice?.id ?? "", formData), {
         onSuccess: () => {
             queryClient.invalidateQueries(["invoices", invoice.id])
             closeModal("editInvoice")

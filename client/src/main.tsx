@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client"
-import App from "./App"
-import "./index.css"
+import App from "@/App"
+import "@/index.css"
 import { BrowserRouter as Router } from "react-router-dom"
 import { QueryClient, QueryClientProvider } from "react-query"
 import { GoogleOAuthProvider } from "@react-oauth/google"

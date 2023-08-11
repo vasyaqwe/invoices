@@ -1,5 +1,5 @@
+import { useStore } from "@/stores/useStore"
 import { useEffect } from "react"
-import { useStore } from "../stores/useStore"
 
 export const useErrorToast = (error: unknown) => {
     const { openToast } = useStore()

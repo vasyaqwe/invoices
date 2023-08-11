@@ -1,11 +1,11 @@
 import { RefObject } from "react"
 import { FloatingLabel } from "../ui/FloatingLabel"
-import { Input } from "../ui/Input"
-import { emailPattern, labelClassName } from "../../utils"
+import { emailPattern, labelClassName } from "@/utils"
 import { DatePicker } from "../ui/DatePicker"
 import { Select, SelectOption } from "../ui/Select"
 import { ItemList } from "../ItemList"
-import { Invoice, PaymentTerms } from "../../types"
+import { Invoice, PaymentTerms } from "@/types"
+import { Input } from "../ui/Input"
 
 export type OnChangeEvent = React.ChangeEvent<
     HTMLInputElement | HTMLSelectElement

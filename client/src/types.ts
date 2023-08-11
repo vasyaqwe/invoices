@@ -7,6 +7,7 @@ export type PaginatedInvoiceReturn = Promise<{
 export type InvoiceReturn = Promise<Invoice>
 
 export type Invoice = {
+    id?: string
     billFrom: {
         streetAddress: string
         city: string
@@ -26,7 +27,7 @@ export type Invoice = {
     description: string
     paymentTerms: PaymentTerms
     items: InvoiceItem[]
-} & Record<string, any>
+}
 
 export enum PaymentTerms {
     OneDay = "Net 1 day",

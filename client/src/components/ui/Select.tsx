@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { ReactComponent as Chevron } from "../../assets/chevron.svg"
+import { ReactComponent as Chevron } from "@/assets/chevron.svg"
 
 export type SelectOption = string
 
@@ -49,7 +49,7 @@ export const Select = ({
                 case "Enter":
                 case "Space":
                     setOpen((prev) => !prev)
-                    if (open) onSelect(options[highlightedIdx])
+                    if (open) onSelect(options[highlightedIdx]!)
                     break
                 case "ArrowUp":
                 case "ArrowDown": {

@@ -1,4 +1,4 @@
-import { User } from "../types"
+import { User } from "@/types"
 import { axiosPrivate } from "./config"
 import axios from "axios"
 

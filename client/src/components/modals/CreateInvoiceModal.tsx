@@ -1,14 +1,14 @@
 import { useRef, useState } from "react"
-import { Invoice, PaymentTerms, Status } from "../../types"
-import { createInvoice, createInvoiceDraft } from "../../api/invoices"
+import { Invoice, PaymentTerms, Status } from "@/types"
+import { createInvoice, createInvoiceDraft } from "@/api/invoices"
 import { useMutation, useQueryClient } from "react-query"
 import { motion } from "framer-motion"
-import { useErrorToast } from "../../hooks/useErrorToast"
-import { useStore } from "../../stores/useStore"
+import { useErrorToast } from "@/hooks/useErrorToast"
+import { useStore } from "@/stores/useStore"
 import { nanoid } from "nanoid"
 import { Button } from "../ui/Button"
 import { InvoiceForm } from "../forms/InvoiceForm"
-import { useInvoiceForm } from "../../hooks/useInvoiceForm"
+import { useInvoiceForm } from "@/hooks/useInvoiceForm"
 
 export const CreateInvoiceModal = () => {
     const { closeModal, openToast } = useStore()
