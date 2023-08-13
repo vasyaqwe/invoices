@@ -10,21 +10,12 @@ import { InvoiceForm } from "../forms/InvoiceForm"
 import { useInvoiceForm } from "@/hooks/useInvoiceForm"
 
 export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
-    const {
-        id,
-        billFrom,
-        billTo,
-        items,
-        date,
-        status,
-        paymentTerms,
-        description,
-    } = invoice
+    const { billFrom, billTo, items, date, status, paymentTerms, description } =
+        invoice
 
     const { closeModal, openToast } = useStore()
 
     const [formData, setFormData] = useState<Invoice>({
-        id,
         billFrom: billFrom,
         billTo: billTo,
         date: new Date(date),

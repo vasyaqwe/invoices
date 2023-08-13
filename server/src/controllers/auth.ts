@@ -108,7 +108,8 @@ export const googleLogin = async (req: Request, res: Response) => {
         if (user) {
             const accessToken = jwt.sign(
                 { userId: user._id, username: user.username },
-                accessTokenSecret
+                accessTokenSecret,
+                { expiresIn: accessTokenExpiresIn }
             )
 
             const refreshToken = jwt.sign(

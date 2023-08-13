@@ -17,7 +17,7 @@ export const ConfirmDeletionModal = ({ invoice }: { invoice: Invoice }) => {
         isLoading,
         error,
         mutate: onDelete,
-    } = useMutation(() => deleteInvoice(invoice.id), {
+    } = useMutation(() => deleteInvoice(invoice?.id ?? ""), {
         onSuccess: () => {
             queryClient.invalidateQueries(["invoices"])
             queryClient.invalidateQueries(["invoices", invoice.id])
@@ -42,7 +42,7 @@ export const ConfirmDeletionModal = ({ invoice }: { invoice: Invoice }) => {
             </h2>
             <p className="text-neutral-400">
                 Are you sure you want to delete invoice #
-                {invoice.id.toUpperCase()}? This action cannot be undone.
+                {invoice?.id?.toUpperCase()}? This action cannot be undone.
             </p>
             <div className="flex items-center gap-2 mt-3 justify-end">
                 <Button
