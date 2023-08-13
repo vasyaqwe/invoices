@@ -5,10 +5,8 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
-    password: {
-        type: String,
-        required: true,
-    },
+    password: String,
+    googleId: String,
 })
 
 const User = model("User", UserSchema)

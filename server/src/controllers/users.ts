@@ -22,7 +22,12 @@ export const getUsers = async (_req: Request, res: Response) => {
 export const createUser = async (req: Request, res: Response) => {
     const { username, password } = req.body
 
-    const duplicate = await User.findOne({ username }).lean().exec()
+    const duplicate = await User.findOne({
+        username,
+        googleId: { $exists: false },
+    })
+        .lean()
+        .exec()
 
     if (duplicate) {
         res.status(409).json({ message: "User already exists!" })

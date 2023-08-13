@@ -84,8 +84,7 @@ export const useFormValidation = (formRef: RefObject<HTMLFormElement>) => {
                 }
             })
         }
-
-        if (passwordInputs) {
+        if (passwordInputs && passwordInputs.length > 1) {
             passwordInputs.forEach((input: HTMLInputElement) => {
                 input.addEventListener("input", makeInputValid)
             })

@@ -8,7 +8,6 @@ import {
     accessTokenExpiresIn,
     accessTokenSecret,
     cookieConfig,
-    generateRandPassword,
     rawCookieConfig,
     refreshTokenExpiresIn,
     refreshTokenSecret,
@@ -23,7 +22,10 @@ const oAuth2Client = new OAuth2Client(
 export const login = async (req: Request, res: Response) => {
     const { username, password } = req.body
 
-    const foundUser = await User.findOne({ username })
+    const foundUser = await User.findOne({
+        username,
+        googleId: { $exists: false },
+    })
 
     if (!foundUser) {
         res.status(401).json({ message: "This username is not registered" })
@@ -83,20 +85,25 @@ export const googleLogin = async (req: Request, res: Response) => {
 
     const username = payload.given_name
 
-    const foundUser = await User.findOne({ username })
+    const foundUser = await User.findOne({
+        username,
+        googleId: { $exists: true },
+    })
 
     if (!foundUser) {
-        const duplicate = await User.findOne({ username }).lean().exec()
+        const duplicate = await User.findOne({
+            username,
+            googleId: { $exists: true },
+        })
+            .lean()
+            .exec()
 
         if (duplicate) {
             res.status(409).json({ message: "User already exists!" })
             return
         }
 
-        const password = generateRandPassword()
-        const hashedPwd = await bcrypt.hash(password, 10)
-
-        const user = await User.create({ username, password: hashedPwd })
+        const user = await User.create({ username, googleId: payload.sub })
 
         if (user) {
             const accessToken = jwt.sign(
@@ -119,6 +126,16 @@ export const googleLogin = async (req: Request, res: Response) => {
         } else {
             res.status(400).json({ message: `Invalid user data received!` })
         }
+        return
+    }
+
+    const match = payload.sub === foundUser.googleId
+
+    if (!match) {
+        res.status(401).json({
+            message:
+                "Google credentials mismatch. This might be a security breach.",
+        })
         return
     }
 

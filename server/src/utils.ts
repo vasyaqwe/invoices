@@ -1,6 +1,5 @@
 import { CookieOptions } from "express"
 import { Secret } from "jsonwebtoken"
-import crypto from "crypto"
 
 export const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET as Secret
 export const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET as Secret
@@ -19,5 +18,3 @@ export const cookieConfig: CookieOptions = {
     ...rawCookieConfig,
     maxAge: cookieMaxAge,
 }
-
-export const generateRandPassword = () => crypto.randomBytes(64).toString("hex")
