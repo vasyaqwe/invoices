@@ -122,7 +122,7 @@ export const DatePicker = ({
                             key={day.toString()}
                             className={classNames(
                                 dayIdx === 0
-                                    ? colStartClasses[getDay(day)]
+                                    ? colStartClasses[getDay(day)]!
                                     : "",
                                 "py-1.5"
                             )}
