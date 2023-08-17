@@ -85,7 +85,7 @@ export const Select = ({
             className="cursor-pointer min-h-[42px] w-full flex items-center justify-between border text-white border-primary-600
          focus:outline-none focus:border-accent-400 bg-primary-800 relative
     rounded-md py-2 px-3"
-            aria-expanded={false}
+            aria-expanded={open}
             ref={ref}
             onClick={() => setOpen((prev) => !prev)}
             onBlur={() => setOpen(false)}

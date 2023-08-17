@@ -11,6 +11,7 @@ import { ErrorMessage } from "@/components/ui/ErrorMessage"
 import { Button } from "@/components/ui/Button"
 import { useIntersection } from "@mantine/hooks"
 import { pageSpinnerClassName } from "@/utils"
+import { CreateInvoiceModal } from "@/components/modals/CreateInvoiceModal"
 
 export const Dashboard = () => {
     const { openModal } = useStore()
@@ -66,6 +67,7 @@ export const Dashboard = () => {
 
     return (
         <>
+            <CreateInvoiceModal />
             {error ? (
                 <ErrorMessage
                     message={

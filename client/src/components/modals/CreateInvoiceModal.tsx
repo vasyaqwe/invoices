@@ -9,9 +9,10 @@ import { nanoid } from "nanoid"
 import { Button } from "../ui/Button"
 import { InvoiceForm } from "../forms/InvoiceForm"
 import { useInvoiceForm } from "@/hooks/useInvoiceForm"
+import { ModalWrapper } from "@/wrappers/ModalWrapper"
 
 export const CreateInvoiceModal = () => {
-    const { closeModal, openToast } = useStore()
+    const { closeModal, openToast, modals } = useStore()
 
     const [draft, setDraft] = useState(false)
 
@@ -84,67 +85,69 @@ export const CreateInvoiceModal = () => {
     useErrorToast(error)
 
     return (
-        <motion.dialog
-            open
-            className="sheet modal modal--screen"
-            animate={{ opacity: 1 }}
-            initial={{ opacity: 0 }}
-            exit={{ opacity: 0 }}
-        >
-            <div
-                className="grid grid-rows-[min-content,1fr,min-content] h-[calc(100vh-80px)] md:h-full
-            p-7 md:p-12"
+        <ModalWrapper open={modals["createInvoice"]}>
+            <motion.dialog
+                open
+                className="sheet modal modal--screen"
+                animate={{ opacity: 1 }}
+                initial={{ opacity: 0 }}
+                exit={{ opacity: 0 }}
             >
-                <h2 className="mb-4 text-4xl font-bold text-white">
-                    Create Invoice
-                </h2>
-                <InvoiceForm
-                    draft={draft}
-                    formData={formData}
-                    onSubmit={onSubmit}
-                    errors={errors}
-                    formRef={formRef}
-                    onSelectedDayChange={onSelectedDayChange}
-                    onSelectChange={onSelectChange}
-                    onChange={onChange}
-                    onItemChange={onItemChange}
-                    onAddItem={onAddItem}
-                    onDeleteItem={onDeleteItem}
-                />
+                <div
+                    className="grid grid-rows-[min-content,1fr,min-content] h-[calc(100vh-80px)] md:h-full
+            p-7 md:p-12"
+                >
+                    <h2 className="mb-4 text-4xl font-bold text-white">
+                        Create Invoice
+                    </h2>
+                    <InvoiceForm
+                        draft={draft}
+                        formData={formData}
+                        onSubmit={onSubmit}
+                        errors={errors}
+                        formRef={formRef}
+                        onSelectedDayChange={onSelectedDayChange}
+                        onSelectChange={onSelectChange}
+                        onChange={onChange}
+                        onItemChange={onItemChange}
+                        onAddItem={onAddItem}
+                        onDeleteItem={onDeleteItem}
+                    />
 
-                <div className="flex flex-wrap items-center justify-between gap-3 py-6">
-                    <Button
-                        type="button"
-                        onClick={() => closeModal("createInvoice")}
-                        variant="faded"
-                    >
-                        Discard
-                    </Button>
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-wrap items-center justify-between gap-3 py-6">
                         <Button
                             type="button"
-                            onClick={() => {
-                                setDraft(true)
-                                onSaveAsDraft()
-                                closeModal("createInvoice")
-                                openToast({ text: "Draft saved!" })
-                            }}
-                            variant="neutral"
+                            onClick={() => closeModal("createInvoice")}
+                            variant="faded"
                         >
-                            Save as Draft
+                            Discard
                         </Button>
+                        <div className="flex items-center gap-3">
+                            <Button
+                                type="button"
+                                onClick={() => {
+                                    setDraft(true)
+                                    onSaveAsDraft()
+                                    closeModal("createInvoice")
+                                    openToast({ text: "Draft saved!" })
+                                }}
+                                variant="neutral"
+                            >
+                                Save as Draft
+                            </Button>
 
-                        <Button
-                            form="invoice-form"
-                            onClick={validateInputs}
-                            disabled={isLoading}
-                            isLoading={isLoading}
-                        >
-                            Save & Send
-                        </Button>
+                            <Button
+                                form="invoice-form"
+                                onClick={validateInputs}
+                                disabled={isLoading}
+                                isLoading={isLoading}
+                            >
+                                Save & Send
+                            </Button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </motion.dialog>
+            </motion.dialog>
+        </ModalWrapper>
     )
 }

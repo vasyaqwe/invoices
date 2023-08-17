@@ -6,9 +6,10 @@ import { useNavigate } from "react-router-dom"
 import { useErrorToast } from "@/hooks/useErrorToast"
 import { Button } from "../ui/Button"
 import { Invoice } from "@/types"
+import { ModalWrapper } from "@/wrappers/ModalWrapper"
 
 export const ConfirmDeletionModal = ({ invoice }: { invoice: Invoice }) => {
-    const { closeModal, openToast } = useStore()
+    const { closeModal, openToast, modals } = useStore()
 
     const navigate = useNavigate()
     const queryClient = useQueryClient()
@@ -30,36 +31,38 @@ export const ConfirmDeletionModal = ({ invoice }: { invoice: Invoice }) => {
     useErrorToast(error)
 
     return (
-        <motion.dialog
-            open
-            className="bg-primary-700 inset-0 m-auto p-12 w-full max-w-lg modal"
-            animate={{ opacity: 1 }}
-            initial={{ opacity: 0 }}
-            exit={{ opacity: 0 }}
-        >
-            <h2 className="text-white text-4xl font-bold mb-4">
-                Confirm deletion
-            </h2>
-            <p className="text-neutral-400">
-                Are you sure you want to delete invoice #
-                {invoice?.id?.toUpperCase()}? This action cannot be undone.
-            </p>
-            <div className="flex items-center gap-2 mt-3 justify-end">
-                <Button
-                    variant="neutral"
-                    onClick={() => closeModal("confirmDeletion")}
-                >
-                    Cancel
-                </Button>
-                <Button
-                    disabled={isLoading}
-                    isLoading={isLoading}
-                    variant={`danger`}
-                    onClick={() => onDelete()}
-                >
-                    Delete
-                </Button>
-            </div>
-        </motion.dialog>
+        <ModalWrapper open={modals["confirmDeletion"]}>
+            <motion.dialog
+                open
+                className="bg-primary-700 inset-0 m-auto p-12 w-full max-w-lg modal"
+                animate={{ opacity: 1 }}
+                initial={{ opacity: 0 }}
+                exit={{ opacity: 0 }}
+            >
+                <h2 className="text-white text-4xl font-bold mb-4">
+                    Confirm deletion
+                </h2>
+                <p className="text-neutral-400">
+                    Are you sure you want to delete invoice #
+                    {invoice?.id?.toUpperCase()}? This action cannot be undone.
+                </p>
+                <div className="flex items-center gap-2 mt-3 justify-end">
+                    <Button
+                        variant="neutral"
+                        onClick={() => closeModal("confirmDeletion")}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        disabled={isLoading}
+                        isLoading={isLoading}
+                        variant={`danger`}
+                        onClick={() => onDelete()}
+                    >
+                        Delete
+                    </Button>
+                </div>
+            </motion.dialog>
+        </ModalWrapper>
     )
 }

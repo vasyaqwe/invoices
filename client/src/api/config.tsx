@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, { AxiosResponse } from "axios"
 
 export const API_URL =
     import.meta.env.MODE === "development"
@@ -10,7 +10,22 @@ import { refresh } from "./auth"
 
 const getCurrentAccessToken = () => useAuthStore.getState().token
 
-export default axios.create({ baseURL: API_URL })
+export const defaultAxios = axios.create({ baseURL: API_URL })
+
+export const axiosRequest = async <T,>(
+    requestFunction: () => Promise<AxiosResponse<T>>
+): Promise<T> => {
+    try {
+        const res = await requestFunction()
+        return res.data
+    } catch (e) {
+        if (axios.isAxiosError(e)) {
+            throw new Error(e.response?.data.message)
+        } else {
+            throw new Error("Unknown Error")
+        }
+    }
+}
 
 export const axiosPrivate = axios.create({
     baseURL: API_URL,

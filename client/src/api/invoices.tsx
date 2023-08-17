@@ -1,80 +1,20 @@
 import { Invoice, InvoiceReturn, PaginatedInvoiceReturn } from "@/types"
-import { axiosPrivate } from "./config"
-import axios from "axios"
+import { axiosPrivate, axiosRequest } from "./config"
 
-export const getInvoices = async (page: number): PaginatedInvoiceReturn => {
-    try {
-        const res = await axiosPrivate.get(`/invoices?page=${page}`)
-        return res.data
-    } catch (e) {
-        if (axios.isAxiosError(e)) {
-            throw new Error(e.response?.data.message)
-        } else {
-            throw new Error("Unknown Error")
-        }
-    }
-}
-export const getInvoice = async (id: string): InvoiceReturn => {
-    try {
-        const res = await axiosPrivate.get(`/invoices/${id}`)
-        return res.data
-    } catch (e) {
-        if (axios.isAxiosError(e)) {
-            throw new Error(e.response?.data.message)
-        } else {
-            throw new Error("Unknown Error")
-        }
-    }
-}
+export const getInvoices = async (page: number): PaginatedInvoiceReturn =>
+    axiosRequest(() => axiosPrivate.get(`/invoices?page=${page}`))
 
-export const createInvoice = async (data: Invoice) => {
-    try {
-        const res = await axiosPrivate.post(`/invoices/`, data)
-        return res.data
-    } catch (e) {
-        if (axios.isAxiosError(e)) {
-            throw new Error(e.response?.data.message)
-        } else {
-            throw new Error("Unknown Error")
-        }
-    }
-}
+export const getInvoice = async (id: string): InvoiceReturn =>
+    axiosRequest(() => axiosPrivate.get(`/invoices/${id}`))
 
-export const createInvoiceDraft = async (data: Invoice) => {
-    try {
-        const res = await axiosPrivate.post(`/invoices/draft`, data)
-        return res.data
-    } catch (e) {
-        if (axios.isAxiosError(e)) {
-            throw new Error(e.response?.data.message)
-        } else {
-            throw new Error("Unknown Error")
-        }
-    }
-}
+export const createInvoice = async (data: Invoice) =>
+    axiosRequest(() => axiosPrivate.post(`/invoices/`, data))
 
-export const updateInvoice = async (id: string, data: Invoice) => {
-    try {
-        const res = await axiosPrivate.patch(`/invoices/${id}`, data)
-        return res.data
-    } catch (e) {
-        if (axios.isAxiosError(e)) {
-            throw new Error(e.response?.data.message)
-        } else {
-            throw new Error("Unknown Error")
-        }
-    }
-}
+export const createInvoiceDraft = async (data: Invoice) =>
+    axiosRequest(() => axiosPrivate.post(`/invoices/draft`, data))
 
-export const deleteInvoice = async (id: string) => {
-    try {
-        const res = await axiosPrivate.delete(`/invoices/${id}`)
-        return res.data
-    } catch (e) {
-        if (axios.isAxiosError(e)) {
-            throw new Error(e.response?.data.message)
-        } else {
-            throw new Error("Unknown Error")
-        }
-    }
-}
+export const updateInvoice = async (id: string, data: Invoice) =>
+    axiosRequest(() => axiosPrivate.patch(`/invoices/${id}`, data))
+
+export const deleteInvoice = async (id: string) =>
+    axiosRequest(() => axiosPrivate.delete(`/invoices/${id}`))

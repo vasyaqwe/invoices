@@ -5,7 +5,6 @@ import { getInvoice } from "@/api/invoices"
 import { formatCurrency, formatDate, pageSpinnerClassName } from "@/utils"
 import { ReactComponent as Chevron } from "@/assets/chevron.svg"
 import { useStore } from "@/stores/useStore"
-import { ModalWrapper } from "@/wrappers/ModalWrapper"
 import { Spinner } from "@/components/ui/Spinner"
 import { useErrorToast } from "@/hooks/useErrorToast"
 import { Button } from "@/components/ui/Button"
@@ -49,13 +48,9 @@ export const Invoice = () => {
 
     return (
         <>
-            <ModalWrapper open={modals.confirmDeletion}>
-                <ConfirmDeletionModal invoice={invoice} />
-            </ModalWrapper>
+            <ConfirmDeletionModal invoice={invoice} />
 
-            <ModalWrapper open={modals.editInvoice}>
-                <EditInvoiceModal invoice={invoice} />
-            </ModalWrapper>
+            <EditInvoiceModal invoice={invoice} />
 
             <Link
                 className="flex items-center gap-3"

@@ -1,58 +1,34 @@
 import { User } from "@/types"
-import myAxios, { axiosPrivate } from "./config"
-import axios from "axios"
+import { defaultAxios, axiosPrivate, axiosRequest } from "./config"
 
-export const refresh = async () => {
-    const res = await axiosPrivate.get(`/auth/refresh`, {
-        withCredentials: true,
-    })
-    return res.data
-}
+export const refresh = async () =>
+    axiosRequest(() =>
+        axiosPrivate.get(`/auth/refresh`, {
+            withCredentials: true,
+        })
+    )
 
-export const googleLogin = async (code: string) => {
-    try {
-        const res = await myAxios.post(
+export const googleLogin = async (code: string) =>
+    axiosRequest(() =>
+        defaultAxios.post(
             `/auth/google-login`,
             { code },
             {
                 withCredentials: true,
             }
         )
-        return res.data
-    } catch (e) {
-        if (axios.isAxiosError(e)) {
-            throw new Error(e.response?.data.message)
-        } else {
-            throw new Error("Unknown Error")
-        }
-    }
-}
+    )
 
-export const login = async (credentials: User) => {
-    try {
-        const res = await myAxios.post(`/auth`, credentials, {
+export const login = async (credentials: User) =>
+    axiosRequest(() =>
+        defaultAxios.post(`/auth`, credentials, {
             withCredentials: true,
         })
-        return res.data
-    } catch (e) {
-        if (axios.isAxiosError(e)) {
-            throw new Error(e.response?.data.message)
-        } else {
-            throw new Error("Unknown Error")
-        }
-    }
-}
+    )
 
-export const logout = async () => {
-    try {
-        return await axiosPrivate.post(`/auth/logout`, {
+export const logout = async () =>
+    axiosRequest(() =>
+        axiosPrivate.post(`/auth/logout`, {
             withCredentials: true,
         })
-    } catch (e) {
-        if (axios.isAxiosError(e)) {
-            throw new Error(e.response?.data.message)
-        } else {
-            throw new Error("Unknown Error")
-        }
-    }
-}
+    )
