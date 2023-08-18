@@ -1,36 +1,34 @@
-import { useEffect, useRef, useState } from "react"
+import { ReactNode, useEffect, useRef, useState } from "react"
 import { ReactComponent as Chevron } from "@/assets/chevron.svg"
 
-export type SelectOption = string
-
-type MultipleSelectProps = {
+type MultipleSelectProps<TOption> = {
     multiple: true
-    currOption: SelectOption[]
-    onChange: (currOption: SelectOption[]) => void
+    currOption: TOption[]
+    onChange: (currOption: TOption[]) => void
 }
 
-type SingleSelectProps = {
+type SingleSelectProps<TOption> = {
     multiple?: false
-    currOption?: SelectOption
-    onChange: (currOption: SelectOption) => void
+    currOption?: TOption
+    onChange: (currOption: TOption) => void
 }
 
-type SelectProps = {
-    options: SelectOption[]
-} & (SingleSelectProps | MultipleSelectProps)
+type SelectProps<TOption> = {
+    options: TOption[]
+} & (SingleSelectProps<TOption> | MultipleSelectProps<TOption>)
 
-export const Select = ({
+export const Select = <TOption extends ReactNode>({
     multiple,
     currOption,
     onChange,
     options,
-}: SelectProps) => {
+}: SelectProps<TOption>) => {
     const [open, setOpen] = useState(false)
     const [highlightedIdx, setHighlightedIdx] = useState(0)
 
     const ref = useRef<HTMLDivElement>(null)
 
-    const onSelect = (option: SelectOption) => {
+    const onSelect = (option: TOption) => {
         if (multiple) {
             if (currOption?.includes(option)) {
                 onChange(currOption.filter((o) => o !== option))
@@ -76,7 +74,7 @@ export const Select = ({
         return () => ref.current?.removeEventListener("keydown", handler)
     }, [open, highlightedIdx, options])
 
-    const optionSelected = (option: SelectOption) =>
+    const optionSelected = (option: TOption) =>
         multiple ? currOption?.includes(option) : option === currOption
 
     return (

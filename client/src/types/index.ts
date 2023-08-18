@@ -1,3 +1,11 @@
+import {
+    invoiceItemSchema,
+    paymentTermsSchema,
+    statusSchema,
+} from "@/lib/validations/invoice"
+import { userSchema } from "@/lib/validations/user"
+import * as z from "zod"
+
 export type PaginatedInvoiceReturn = Promise<{
     totalPages: number
     page: number
@@ -29,28 +37,12 @@ export type Invoice = {
     items: InvoiceItem[]
 }
 
-export enum PaymentTerms {
-    OneDay = "Net 1 day",
-    SevenDays = "Net 7 days",
-    FourteenDays = "Net 14 days",
-    ThirtyDays = "Net 30 days",
-}
+export type PaymentTerms = z.infer<typeof paymentTermsSchema>
 
-export enum Status {
-    Paid = "Paid",
-    Pending = "Pending",
-    Draft = "Draft",
-}
+export type Status = z.infer<typeof statusSchema>
 
-export type InvoiceItem = {
-    id: string
-    name: string
-    quantity: number
-    price: number
-}
+export type InvoiceItem = z.infer<typeof invoiceItemSchema>
 
-export type User = {
-    username: string
-    password: string
-}
+export type User = z.infer<typeof userSchema>
+
 export type UserFormData = User & { confirmPassword: string }

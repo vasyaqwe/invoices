@@ -34,8 +34,8 @@ export const CreateInvoiceModal = () => {
             country: "",
         },
         date: new Date(today),
-        status: Status.Pending,
-        paymentTerms: PaymentTerms.OneDay,
+        status: "Pending",
+        paymentTerms: "Net 1 day",
         description: "",
         items: [{ name: "", price: 0, quantity: 0, id: nanoid() }],
     })
@@ -68,7 +68,7 @@ export const CreateInvoiceModal = () => {
     })
 
     const { mutate: onSaveAsDraft } = useMutation(
-        () => createInvoiceDraft({ ...formData, status: Status.Draft }),
+        () => createInvoiceDraft({ ...formData, status: "Draft" }),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries(["invoices"])
@@ -79,7 +79,7 @@ export const CreateInvoiceModal = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        onSave()
+        // onSave()
     }
 
     useErrorToast(error)

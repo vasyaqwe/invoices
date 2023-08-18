@@ -1,6 +1,14 @@
+import { invoiceSchema } from "@/lib/validations/invoice"
 import { RefObject, useEffect, useState } from "react"
+import { ZodIssueBase } from "zod"
 
-export const useFormValidation = (formRef: RefObject<HTMLFormElement>) => {
+export const useFormValidation = <TFormData,>({
+    formRef,
+    formData,
+}: {
+    formRef: RefObject<HTMLFormElement>
+    formData: TFormData
+}) => {
     const [errors, setErrors] = useState<string[]>([])
     const [passwordsMatch, setPasswordsMatch] = useState(true)
 
@@ -25,24 +33,37 @@ export const useFormValidation = (formRef: RefObject<HTMLFormElement>) => {
         }
     }
 
-    const makeValidOnDeleteItem = (name: string) =>
-        setErrors((prev) => prev.filter((errName) => errName !== name))
+    const makeValidOnDeleteItem = (inputId: string) =>
+        setErrors((prev) => prev.filter((errId) => errId !== inputId))
 
     const validateInputs = () => {
         if (formRef.current) {
-            const inputs =
-                formRef.current.querySelectorAll<HTMLInputElement>(".input")
+            try {
+                invoiceSchema.parse(formData)
+            } catch (e: any) {
+                e.errors.forEach((e: ZodIssueBase) => {
+                    let inputName = ""
 
-            inputs.forEach((input: HTMLInputElement) => {
-                if (!input.checkValidity() || input.value.length === 0) {
-                    setErrors((prev) => [...prev, input.id])
-                    setErrors((prev) => [...new Set(prev)])
-                } else if (input.checkValidity() && input.value.length !== 0) {
-                    setErrors((prev) => [
-                        ...new Set(prev.filter((id) => id !== input.id)),
-                    ])
-                }
-            })
+                    if (e.path && e.path.length > 0) {
+                        if (e.path.length === 2) {
+                            inputName = e.path.join(":")
+                        } else if (e.path.length === 3) {
+                            inputName = e.path
+                                .slice(1, e.path.length)
+                                .reverse()
+                                .join("")
+                        } else {
+                            inputName =
+                                typeof e.path[0] === "string" ? e.path[0] : ""
+                        }
+                    }
+
+                    if (inputName) {
+                        setErrors((prev) => [...prev, inputName.toString()])
+                        setErrors((prev) => [...new Set(prev)])
+                    }
+                })
+            }
         }
     }
 

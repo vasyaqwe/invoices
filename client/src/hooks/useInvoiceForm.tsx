@@ -2,7 +2,6 @@ import { Invoice, InvoiceItem } from "@/types"
 import { nanoid } from "nanoid"
 import { useFormValidation } from "./useFormValidation"
 import { OnChangeEvent } from "@/components/forms/InvoiceForm"
-import { SelectOption } from "@/components/ui/Select"
 import { RefObject, SetStateAction } from "react"
 
 type useInvoiceFormProps = {
@@ -16,7 +15,7 @@ export const useInvoiceForm = ({
     setFormData,
 }: useInvoiceFormProps) => {
     const { validateInputs, makeValidOnDeleteItem, errors } =
-        useFormValidation(formRef)
+        useFormValidation<Invoice>({ formRef, formData })
 
     const onAddItem = () => {
         const newItem: InvoiceItem = {
@@ -75,7 +74,10 @@ export const useInvoiceForm = ({
                 }))
             }
         } else {
-            setFormData((prev) => ({ ...prev, [name]: value }))
+            setFormData((prev) => ({
+                ...prev,
+                [name]: value,
+            }))
         }
     }
 
@@ -83,16 +85,21 @@ export const useInvoiceForm = ({
         e: React.ChangeEvent<HTMLInputElement>,
         id: string
     ) => {
-        const { name, value } = e.target
+        const { name, value, type } = e.target
         setFormData((prev) => ({
             ...prev,
             items: prev.items.map((item) =>
-                item.id === id ? { ...item, [name]: value } : item
+                item.id === id
+                    ? {
+                          ...item,
+                          [name]: type === "number" ? +value : value,
+                      }
+                    : item
             ),
         }))
     }
 
-    const onSelectChange = (name: string, option: SelectOption) => {
+    const onSelectChange = (name: string, option: string) => {
         setFormData((prev) => ({ ...prev, [name]: option }))
     }
 

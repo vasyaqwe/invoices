@@ -1,9 +1,17 @@
 import { ComponentProps } from "react"
 import { Spinner } from "./Spinner"
 
+const variantLookup = {
+    default: "bg-accent-700 focus-visible:outline-white",
+    outline: "border border-accent-400 focus-visible:outline-white",
+    danger: "bg-danger-400",
+    neutral: "bg-neutral-700",
+    faded: "bg-primary-600",
+}
+
 type ButtonProps = ComponentProps<"button"> & {
     isLoading?: boolean
-    variant?: "default" | "outline" | "danger" | "neutral" | "faded"
+    variant?: keyof typeof variantLookup
 }
 
 export const Button = ({
@@ -13,14 +21,6 @@ export const Button = ({
     isLoading = false,
     ...rest
 }: ButtonProps) => {
-    const variantLookup: { [key: string]: string } = {
-        default: "bg-accent-700 focus-visible:outline-white",
-        outline: "border border-accent-400 focus-visible:outline-white",
-        danger: "bg-danger-400",
-        neutral: "bg-neutral-700",
-        faded: "bg-primary-600",
-    }
-
     return (
         <button
             {...rest}

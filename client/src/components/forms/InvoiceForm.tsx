@@ -2,10 +2,11 @@ import { RefObject } from "react"
 import { FloatingLabel } from "../ui/FloatingLabel"
 import { emailPattern, labelClassName } from "@/utils"
 import { DatePicker } from "../ui/DatePicker"
-import { Select, SelectOption } from "../ui/Select"
+import { Select } from "../ui/Select"
 import { ItemList } from "../ItemList"
 import { Invoice, PaymentTerms } from "@/types"
 import { Input } from "../ui/Input"
+import { invoiceSchema } from "@/lib/validations/invoice"
 
 export type OnChangeEvent = React.ChangeEvent<
     HTMLInputElement | HTMLSelectElement
@@ -16,7 +17,7 @@ type InvoiceFormProps = {
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
     errors: string[]
     onSelectedDayChange: (day: Date) => void
-    onSelectChange: (name: string, option: SelectOption) => void
+    onSelectChange: (name: string, option: string) => void
     onChange: (e: OnChangeEvent) => void
     onItemChange: (e: React.ChangeEvent<HTMLInputElement>, id: string) => void
     onDeleteItem: (id: string) => void
@@ -237,7 +238,12 @@ export const InvoiceForm = ({
                         </label>
                         <Select
                             currOption={formData.paymentTerms}
-                            options={Object.values(PaymentTerms)}
+                            options={[
+                                "Net 1 day",
+                                "Net 7 days",
+                                "Net 14 days",
+                                "Net 30 days",
+                            ]}
                             onChange={(o) => onSelectChange("paymentTerms", o)}
                         />
                     </div>

@@ -1,3 +1,4 @@
+import { zParse } from "./../middleware"
 import express from "express"
 const router = express.Router({ mergeParams: true })
 import {
@@ -8,18 +9,19 @@ import {
     deleteInvoice,
     createInvoiceDraft,
 } from "../controllers/invoices"
-import { validateInvoice, isLoggedIn } from "../middleware"
+import { isLoggedIn } from "../middleware"
+import { invoiceSchema } from "../lib/validations/invoice"
 
 router.use(isLoggedIn)
 
-router.route("/").get(getInvoices).post(validateInvoice, createInvoice)
+router.route("/").get(getInvoices).post(zParse(invoiceSchema), createInvoice)
 
 router.route("/draft").post(createInvoiceDraft)
 
 router
     .route("/:id")
     .get(getInvoice)
-    .patch(validateInvoice, updateInvoice)
+    .patch(zParse(invoiceSchema), updateInvoice)
     .delete(deleteInvoice)
 
 export default router

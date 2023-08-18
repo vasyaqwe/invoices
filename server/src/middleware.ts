@@ -1,9 +1,9 @@
-import { userSchema, authSchema, invoiceSchema } from "./joiSchemas"
 import rateLimit from "express-rate-limit"
 import jwt from "jsonwebtoken"
 import { Request, Response, NextFunction } from "express"
 import { DecodedToken } from "./types/types"
 import { accessTokenSecret, refreshTokenSecret } from "./utils"
+import { AnyZodObject, ZodError } from "zod"
 
 export const loginLimiter = rateLimit({
     windowMs: 60 * 1000, // 1 minute
@@ -12,7 +12,7 @@ export const loginLimiter = rateLimit({
         message:
             "Too many login attempts from this IP, please try again after a 60 second pause",
     },
-    handler: (req, res, next, options) => {
+    handler: (req, res, _next, options) => {
         console.log(
             `Too Many Requests: ${options.message.message}\t${req.method}\t${req.url}\t${req.headers.origin}`,
             "errLog.log"
@@ -33,19 +33,17 @@ export const errorHandler = (
     res.status(status)
     res.json({ message: err.message })
 }
-export const validateAuth = (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
-    const { error } = authSchema.validate(req.body)
-    if (error) {
-        const msg = error.details.map((el) => el.message).join(",")
-        res.status(400).json({ message: msg })
-    } else {
-        next()
+
+export const zParse =
+    (schema: AnyZodObject) =>
+    (req: Request, res: Response, next: NextFunction) => {
+        try {
+            schema.parse(req.body)
+            next()
+        } catch (e: any) {
+            return res.status(400).send(e.errors)
+        }
     }
-}
 
 export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization || req.headers.Authorization
@@ -73,32 +71,4 @@ export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
 
         next()
     })
-}
-
-export const validateUser = (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
-    const { error } = userSchema.validate(req.body)
-    if (error) {
-        const msg = error.details.map((el) => el.message).join(",")
-        res.status(400).json({ message: msg })
-    } else {
-        next()
-    }
-}
-
-export const validateInvoice = (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
-    const { error } = invoiceSchema.validate(req.body)
-    if (error) {
-        const msg = error.details.map((el) => el.message).join(",")
-        res.status(400).json({ message: msg })
-    } else {
-        next()
-    }
 }
