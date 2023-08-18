@@ -2,8 +2,8 @@ import rateLimit from "express-rate-limit"
 import jwt from "jsonwebtoken"
 import { Request, Response, NextFunction } from "express"
 import { DecodedToken } from "./types/types"
-import { accessTokenSecret, refreshTokenSecret } from "./utils"
-import { AnyZodObject, ZodError } from "zod"
+import { accessTokenSecret, refreshTokenSecret } from "./lib/utils"
+import { AnyZodObject } from "zod"
 
 export const loginLimiter = rateLimit({
     windowMs: 60 * 1000, // 1 minute

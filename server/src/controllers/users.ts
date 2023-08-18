@@ -6,7 +6,7 @@ import {
     cookieConfig,
     refreshTokenExpiresIn,
     refreshTokenSecret,
-} from "../utils"
+} from "../lib/utils"
 
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET as Secret
 

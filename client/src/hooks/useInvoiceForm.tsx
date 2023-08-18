@@ -3,6 +3,7 @@ import { nanoid } from "nanoid"
 import { useFormValidation } from "./useFormValidation"
 import { OnChangeEvent } from "@/components/forms/InvoiceForm"
 import { RefObject, SetStateAction } from "react"
+import { invoiceSchema } from "@/lib/validations/invoice"
 
 type useInvoiceFormProps = {
     formData: Invoice
@@ -15,7 +16,11 @@ export const useInvoiceForm = ({
     setFormData,
 }: useInvoiceFormProps) => {
     const { validateInputs, makeValidOnDeleteItem, errors } =
-        useFormValidation<Invoice>({ formRef, formData })
+        useFormValidation<Invoice>({
+            formRef,
+            formData,
+            zodSchema: invoiceSchema,
+        })
 
     const onAddItem = () => {
         const newItem: InvoiceItem = {

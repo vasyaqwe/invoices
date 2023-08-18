@@ -10,18 +10,24 @@ import { Checkbox } from "@/components/ui/Checkbox"
 import { useFormValidation } from "@/hooks/useFormValidation"
 import { Button } from "@/components/ui/Button"
 import { GoogleLoginButton } from "@/components/ui/GoogleLoginButton"
+import { userSchema } from "@/lib/validations/user"
+import { User } from "@/types"
 
 export const Login = () => {
     const queryClient = useQueryClient()
     const { setToken, setPersist, persist } = useAuthStore()
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<User>({
         username: "",
         password: "",
     })
 
     const formRef = useRef<HTMLFormElement>(null)
-    const { validateInputs, errors } = useFormValidation(formRef)
+    const { validateInputs, errors } = useFormValidation<User>({
+        formRef,
+        formData,
+        zodSchema: userSchema,
+    })
 
     const navigate = useNavigate()
 

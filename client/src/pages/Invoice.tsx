@@ -13,7 +13,7 @@ import { ConfirmDeletionModal } from "@/components/modals/ConfirmDeletionModal"
 import { EditInvoiceModal } from "@/components/modals/EditInvoiceModal"
 
 export const Invoice = () => {
-    const { openModal, modals } = useStore()
+    const { openModal } = useStore()
     const { id } = useParams()
 
     const { isLoading, error, data } = useQuery(

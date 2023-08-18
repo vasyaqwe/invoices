@@ -1,13 +1,14 @@
-import { invoiceSchema } from "@/lib/validations/invoice"
 import { RefObject, useEffect, useState } from "react"
-import { ZodIssueBase } from "zod"
+import { AnyZodObject, ZodIssueBase } from "zod"
 
 export const useFormValidation = <TFormData,>({
     formRef,
     formData,
+    zodSchema,
 }: {
     formRef: RefObject<HTMLFormElement>
     formData: TFormData
+    zodSchema: AnyZodObject
 }) => {
     const [errors, setErrors] = useState<string[]>([])
     const [passwordsMatch, setPasswordsMatch] = useState(true)
@@ -39,7 +40,7 @@ export const useFormValidation = <TFormData,>({
     const validateInputs = () => {
         if (formRef.current) {
             try {
-                invoiceSchema.parse(formData)
+                zodSchema.parse(formData)
             } catch (e: any) {
                 e.errors.forEach((e: ZodIssueBase) => {
                     let inputName = ""

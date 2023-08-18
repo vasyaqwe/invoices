@@ -11,6 +11,7 @@ import { ErrorMessage } from "@/components/ui/ErrorMessage"
 import { Button } from "@/components/ui/Button"
 import { GoogleLoginButton } from "@/components/ui/GoogleLoginButton"
 import { UserFormData } from "@/types"
+import { userSchema } from "@/lib/validations/user"
 
 export const SignUp = () => {
     const queryClient = useQueryClient()
@@ -25,7 +26,11 @@ export const SignUp = () => {
 
     const formRef = useRef<HTMLFormElement>(null)
     const { validateInputs, errors, validatePasswords, passwordsMatch } =
-        useFormValidation(formRef)
+        useFormValidation<UserFormData>({
+            formRef,
+            formData,
+            zodSchema: userSchema,
+        })
 
     const navigate = useNavigate()
 

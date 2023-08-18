@@ -11,7 +11,7 @@ import {
     rawCookieConfig,
     refreshTokenExpiresIn,
     refreshTokenSecret,
-} from "../utils"
+} from "../lib/utils"
 
 const oAuth2Client = new OAuth2Client(
     process.env.GOOGLE_CLIENT_ID,
