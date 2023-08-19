@@ -23,7 +23,7 @@ export const Login = () => {
     })
 
     const formRef = useRef<HTMLFormElement>(null)
-    const { validateInputs, errors } = useFormValidation<User>({
+    const { errors, canSubmit } = useFormValidation({
         formRef,
         formData,
         zodSchema: userSchema,
@@ -43,6 +43,7 @@ export const Login = () => {
             setFormData({ username: "", password: "" })
         },
     })
+
     useErrorToast(error)
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,36 +58,34 @@ export const Login = () => {
                 className="form flex flex-col gap-5 max-w-md mx-auto"
                 onSubmit={(e) => {
                     e.preventDefault()
-                    onSubmit()
+                    if (canSubmit) {
+                        onSubmit()
+                    }
                 }}
             >
                 <h1 className="text-4xl font-semibold">Login</h1>
                 <FloatingLabel
-                    invalid={errors.includes("username")}
+                    invalid={errors.username}
                     htmlFor="username"
                     text={"Username"}
                 >
                     <Input
-                        invalid={errors.includes("username")}
-                        required
+                        invalid={errors.username}
                         value={formData.username}
                         onChange={onChange}
                         id="username"
-                        minLength={3}
                         name="username"
                         type="username"
                     />
                 </FloatingLabel>
 
                 <FloatingLabel
-                    invalid={errors.includes("password")}
+                    invalid={errors.password}
                     htmlFor="password"
                     text={"Password"}
                 >
                     <Input
-                        invalid={errors.includes("password")}
-                        required
-                        minLength={3}
+                        invalid={errors.password}
                         value={formData.password}
                         onChange={onChange}
                         id="password"
@@ -104,7 +103,6 @@ export const Login = () => {
                     <Button
                         disabled={isLoading}
                         isLoading={isLoading}
-                        onClick={() => validateInputs()}
                         className={`self-start bg-accent-700`}
                     >
                         Login

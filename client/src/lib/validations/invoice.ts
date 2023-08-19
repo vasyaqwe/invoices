@@ -17,23 +17,24 @@ export const invoiceItemSchema = z.object({
 })
 
 export const invoiceSchema = z.object({
+    id: z.string().optional(),
     billFrom: z.object({
-        streetAddress: z.string().nonempty(),
-        city: z.string().nonempty(),
-        postCode: z.string().nonempty(),
-        country: z.string().nonempty(),
+        streetAddress: z.string().nonempty({ message: "Required" }),
+        city: z.string().nonempty({ message: "Required" }),
+        postCode: z.string().nonempty({ message: "Required" }),
+        country: z.string().nonempty({ message: "Required" }),
     }),
     billTo: z.object({
-        clientName: z.string().nonempty(),
+        clientName: z.string().nonempty({ message: "Required" }),
         clientEmail: z.string().email(),
-        streetAddress: z.string().nonempty(),
-        city: z.string().nonempty(),
-        postCode: z.string().nonempty(),
-        country: z.string().nonempty(),
+        streetAddress: z.string().nonempty({ message: "Required" }),
+        city: z.string().nonempty({ message: "Required" }),
+        postCode: z.string().nonempty({ message: "Required" }),
+        country: z.string().nonempty({ message: "Required" }),
     }),
     date: z.date(),
-    description: z.string().nonempty(),
+    description: z.string().nonempty({ message: "Required" }),
     status: statusSchema,
     paymentTerms: paymentTermsSchema,
-    items: z.array(invoiceItemSchema).nonempty(),
+    items: z.array(invoiceItemSchema),
 })

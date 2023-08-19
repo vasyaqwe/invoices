@@ -5,12 +5,17 @@ import { useMutation, useQueryClient } from "react-query"
 import { useAuthStore } from "@/stores/useAuthStore"
 import { useErrorToast } from "@/hooks/useErrorToast"
 import google from "@/assets/google.svg"
+import { useStore } from "@/stores/useStore"
 
 export const GoogleLoginButton = () => {
     const { setToken } = useAuthStore()
 
+    const { openToast } = useStore()
+
     const { pathname } = useLocation()
+
     const navigate = useNavigate()
+
     const queryClient = useQueryClient()
 
     const { error, mutate: onSubmit } = useMutation(
@@ -18,6 +23,7 @@ export const GoogleLoginButton = () => {
         {
             onSuccess: ({ accessToken }) => {
                 queryClient.invalidateQueries(["auth"])
+                openToast({ text: "Welcome!" })
                 setToken(accessToken)
                 navigate("/")
             },

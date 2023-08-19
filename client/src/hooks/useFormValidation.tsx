@@ -1,5 +1,8 @@
+import { useStore } from "@/stores/useStore"
 import { RefObject, useEffect, useState } from "react"
 import { AnyZodObject, ZodEffects, ZodIssueBase } from "zod"
+
+export type ValidationErrors = Record<string, string>
 
 export const useFormValidation = <TFormData,>({
     formRef,
@@ -8,34 +11,25 @@ export const useFormValidation = <TFormData,>({
 }: {
     formRef: RefObject<HTMLFormElement>
     formData: TFormData
-    zodSchema: ZodEffects<AnyZodObject> | AnyZodObject
+    zodSchema: ZodEffects<any> | AnyZodObject
 }) => {
-    const [errors, setErrors] = useState<string[]>([])
-    const [passwordsMatch, setPasswordsMatch] = useState(true)
+    const { modals } = useStore()
+    const [errors, setErrors] = useState<ValidationErrors>({})
+    const [formSubmitted, setFormSubmitted] = useState(false)
 
-    const validatePasswords = () => {
-        if (formRef.current) {
-            const password =
-                formRef.current.querySelector<HTMLInputElement>(
-                    '[name="password"]'
-                )
-            const confirmPassword =
-                formRef.current.querySelector<HTMLInputElement>(
-                    '[name="confirmPassword"]'
-                )
+    useEffect(() => {
+        const onSubmit = () => setFormSubmitted(true)
 
-            if (password && confirmPassword) {
-                if (password.value !== confirmPassword.value) {
-                    setPasswordsMatch(false)
-                } else {
-                    setPasswordsMatch(true)
-                }
-            }
+        formRef.current?.addEventListener("submit", onSubmit)
+
+        return () => {
+            formRef.current?.removeEventListener("submit", onSubmit)
         }
-    }
+    }, [modals])
 
-    const makeValidOnDeleteItem = (inputId: string) =>
-        setErrors((prev) => prev.filter((errId) => errId !== inputId))
+    useEffect(() => {
+        validate(formData)
+    }, [formData])
 
     const getInputIdFromErrors = (e: ZodIssueBase) => {
         let inputId = ""
@@ -51,88 +45,30 @@ export const useFormValidation = <TFormData,>({
         return inputId
     }
 
-    const validateInputs = () => {
-        if (formRef.current) {
-            try {
-                zodSchema.parse(formData)
-            } catch (e: any) {
-                e.errors.forEach((e: ZodIssueBase) => {
-                    const inputId = getInputIdFromErrors(e)
-                    if (inputId) {
-                        setErrors((prev) => [...prev, inputId.toString()])
-                        setErrors((prev) => [...new Set(prev)])
+    const validate = (formData: TFormData) => {
+        const res = zodSchema.safeParse(formData)
+        if (!res.success) {
+            const errorsArr = JSON.parse(res.error.message)
+
+            const transformedObject = errorsArr.reduce(
+                (result: Record<string, string>, e: ZodIssueBase) => {
+                    const key = getInputIdFromErrors(e)
+                    const message = e.message
+                    if (message) {
+                        result[key] = message
                     }
-                })
-            }
+                    return result
+                },
+                {}
+            )
+            setErrors(transformedObject)
+        } else {
+            setErrors({})
         }
     }
 
-    //remove from errors[] onChange
-    useEffect(() => {
-        const makeInputValid = (e: Event) => {
-            const { id } = e.target as HTMLInputElement
-            setErrors((prev) => prev.filter((errName) => errName !== id))
-        }
-
-        const makePasswordsValid = (e: Event) => {
-            const { id, value } = e.target as HTMLInputElement
-
-            if (formRef.current) {
-                if (id === "password") {
-                    if (value === formRef.current.confirmPassword.value) {
-                        setPasswordsMatch(true)
-                    } else {
-                        setPasswordsMatch(false)
-                    }
-                } else if (id === "confirmPassword") {
-                    if (value === formRef.current.password.value) {
-                        setPasswordsMatch(true)
-                    } else {
-                        setPasswordsMatch(false)
-                    }
-                }
-            }
-        }
-
-        const inputs =
-            formRef?.current?.querySelectorAll<HTMLInputElement>(".input")
-
-        const passwordInputs =
-            formRef?.current?.querySelectorAll<HTMLInputElement>(
-                "[type=password]"
-            )
-
-        if (inputs) {
-            inputs.forEach((input: HTMLInputElement) => {
-                input.addEventListener("input", makeInputValid)
-            })
-        }
-        if (passwordInputs && passwordInputs.length > 1) {
-            passwordInputs.forEach((input: HTMLInputElement) => {
-                input.addEventListener("input", makePasswordsValid)
-            })
-        }
-
-        return () => {
-            if (inputs) {
-                inputs.forEach((input: HTMLInputElement) =>
-                    input.removeEventListener("input", makeInputValid)
-                )
-            }
-
-            if (passwordInputs && passwordInputs.length > 1) {
-                passwordInputs.forEach((input: HTMLInputElement) =>
-                    input.removeEventListener("input", makePasswordsValid)
-                )
-            }
-        }
-    }, [formRef, errors])
-
     return {
-        errors,
-        validateInputs,
-        makeValidOnDeleteItem,
-        validatePasswords,
-        passwordsMatch,
+        errors: formSubmitted ? errors : {},
+        canSubmit: Object.keys(errors).length < 1,
     }
 }

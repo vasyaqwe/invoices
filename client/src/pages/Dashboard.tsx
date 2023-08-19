@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "react-query"
 import { useStore } from "@/stores/useStore"
 import { getInvoices } from "@/api/invoices"
-import { InvoiceItem } from "@/components/InvoiceItem"
+import { Invoice } from "@/components/Invoice"
 import { ReactComponent as Plus } from "@/assets/plus.svg"
 import { useEffect, useRef } from "react"
 import { Spinner } from "@/components/ui/Spinner"
@@ -118,13 +118,13 @@ export const Dashboard = () => {
                                             key={invoice.id}
                                             ref={ref}
                                         >
-                                            <InvoiceItem {...invoice} />
+                                            <Invoice {...invoice} />
                                         </li>
                                     )
                                 }
                                 return (
                                     <li key={invoice.id}>
-                                        <InvoiceItem {...invoice} />
+                                        <Invoice {...invoice} />
                                     </li>
                                 )
                             })

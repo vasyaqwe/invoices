@@ -5,24 +5,24 @@ import { AnimatePresence, motion } from "framer-motion"
 import { Button } from "./ui/Button"
 import { ChangeEvent } from "react"
 import { InvoiceItem } from "@/types"
+import { ValidationErrors } from "@/hooks/useFormValidation"
 
 type ItemListProps = {
     items: InvoiceItem[]
-    errors: string[]
+    errors: ValidationErrors
     onAddItem: () => void
     onDeleteItem: (id: string) => void
-    draft: boolean
     onChange: (e: ChangeEvent<HTMLInputElement>, id: string) => void
 }
 
-export const ItemList = ({
+export const InvoiceItemsList = ({
     items,
     errors,
     onChange,
     onAddItem,
     onDeleteItem,
-    draft,
 }: ItemListProps) => {
+    console.log(errors)
     return (
         <>
             <legend className="text-primary-500 text-2xl font-semibold">
@@ -66,7 +66,7 @@ export const ItemList = ({
                                 <div className="col-span-3 sm:col-span-1">
                                     <label
                                         className={`${labelClassName} ${
-                                            errors.includes("name" + idx)
+                                            errors["name" + idx]
                                                 ? "text-danger-400"
                                                 : "text-neutral-400"
                                         }`}
@@ -79,20 +79,19 @@ export const ItemList = ({
                                         onChange={(e) => onChange(e, item.id)}
                                         className={`${inputClassName} 
                                         ${
-                                            errors.includes("name" + idx)
+                                            errors["name" + idx]
                                                 ? "border-danger-400"
                                                 : "focus-within:border-accent-400 border-primary-600 "
                                         } input`}
                                         name="name"
                                         id={"name" + idx}
                                         type="text"
-                                        required={!draft}
                                     />
                                 </div>
                                 <div>
                                     <label
                                         className={`${labelClassName} ${
-                                            errors.includes("quantity" + idx)
+                                            errors["quantity" + idx]
                                                 ? "text-danger-400"
                                                 : "text-neutral-400"
                                         }`}
@@ -105,21 +104,19 @@ export const ItemList = ({
                                         onChange={(e) => onChange(e, item.id)}
                                         className={`${inputClassName} 
                                         ${
-                                            errors.includes("quantity" + idx)
+                                            errors["quantity" + idx]
                                                 ? "border-danger-400"
                                                 : "focus-within:border-accent-400 border-primary-600 "
                                         } input`}
                                         name="quantity"
-                                        min={1}
                                         id={"quantity" + idx}
                                         type="number"
-                                        required={!draft}
                                     />
                                 </div>
                                 <div>
                                     <label
                                         className={`${labelClassName} ${
-                                            errors.includes("price" + idx)
+                                            errors["price" + idx]
                                                 ? "text-danger-400"
                                                 : "text-neutral-400"
                                         }`}
@@ -132,15 +129,13 @@ export const ItemList = ({
                                         onChange={(e) => onChange(e, item.id)}
                                         className={`${inputClassName} 
                                         ${
-                                            errors.includes("price" + idx)
+                                            errors["price" + idx]
                                                 ? "border-danger-400"
                                                 : "focus-within:border-accent-400 border-primary-600 "
                                         } input`}
                                         name="price"
                                         id={"price" + idx}
-                                        min={1}
                                         type="number"
-                                        required={!draft}
                                     />
                                 </div>
                                 <div className="grid">

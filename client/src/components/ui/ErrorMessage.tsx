@@ -1,7 +1,19 @@
-export const ErrorMessage = ({ message }: { message: string }) => {
+import { ComponentProps } from "react"
+
+type ErrorMessageProps = ComponentProps<"p"> & {
+    message: string
+    className?: string
+}
+
+export const ErrorMessage = ({
+    message,
+    className,
+    ...rest
+}: ErrorMessageProps) => {
     return (
         <p
-            className=" bg-danger-900 border border-danger-400 text-danger-400 px-3 py-2 rounded-md"
+            {...rest}
+            className={` bg-danger-900 border border-danger-400 text-danger-400 px-3 py-2 rounded-md ${className}`}
             dangerouslySetInnerHTML={{ __html: message }}
         ></p>
     )

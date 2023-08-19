@@ -11,34 +11,36 @@ import { InvoiceForm } from "../forms/InvoiceForm"
 import { useInvoiceForm } from "@/hooks/useInvoiceForm"
 import { ModalWrapper } from "@/wrappers/ModalWrapper"
 
+const today = Date.now()
+
+const initialFormData = {
+    billFrom: {
+        streetAddress: "",
+        city: "",
+        postCode: "",
+        country: "",
+    },
+    billTo: {
+        clientName: "",
+        clientEmail: "",
+        streetAddress: "",
+        city: "",
+        postCode: "",
+        country: "",
+    },
+    date: new Date(today),
+    status: "Pending" as const,
+    paymentTerms: "Net 1 day" as const,
+    description: "",
+    items: [{ name: "", price: 0, quantity: 0, id: nanoid() }],
+}
+
 export const CreateInvoiceModal = () => {
     const { closeModal, openToast, modals } = useStore()
 
     const [draft, setDraft] = useState(false)
 
-    const today = Date.now()
-
-    const [formData, setFormData] = useState<Invoice>({
-        billFrom: {
-            streetAddress: "",
-            city: "",
-            postCode: "",
-            country: "",
-        },
-        billTo: {
-            clientName: "",
-            clientEmail: "",
-            streetAddress: "",
-            city: "",
-            postCode: "",
-            country: "",
-        },
-        date: new Date(today),
-        status: "Pending",
-        paymentTerms: "Net 1 day",
-        description: "",
-        items: [{ name: "", price: 0, quantity: 0, id: nanoid() }],
-    })
+    const [formData, setFormData] = useState<Invoice>(initialFormData)
 
     const formRef = useRef<HTMLFormElement>(null)
 
@@ -50,7 +52,7 @@ export const CreateInvoiceModal = () => {
         onSelectChange,
         onSelectedDayChange,
         errors,
-        validateInputs,
+        canSubmit,
     } = useInvoiceForm({ setFormData, formData, formRef })
 
     const queryClient = useQueryClient()
@@ -63,6 +65,7 @@ export const CreateInvoiceModal = () => {
         onSuccess: () => {
             queryClient.invalidateQueries(["invoices"])
             closeModal("createInvoice")
+            setFormData(initialFormData)
             openToast({ text: "Invoice created!" })
         },
     })
@@ -72,6 +75,7 @@ export const CreateInvoiceModal = () => {
         {
             onSuccess: () => {
                 queryClient.invalidateQueries(["invoices"])
+                setFormData(initialFormData)
                 closeModal("createInvoice")
             },
         }
@@ -79,7 +83,7 @@ export const CreateInvoiceModal = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        onSave()
+        if (canSubmit) onSave()
     }
 
     useErrorToast(error)
@@ -138,7 +142,6 @@ export const CreateInvoiceModal = () => {
 
                             <Button
                                 form="invoice-form"
-                                onClick={validateInputs}
                                 disabled={isLoading}
                                 isLoading={isLoading}
                             >

@@ -3,10 +3,10 @@ import { FloatingLabel } from "../ui/FloatingLabel"
 import { emailPattern, labelClassName } from "@/utils"
 import { DatePicker } from "../ui/DatePicker"
 import { Select } from "../ui/Select"
-import { ItemList } from "../ItemList"
-import { Invoice, PaymentTerms } from "@/types"
+import { InvoiceItemsList } from "../InvoiceItemsList"
+import { Invoice } from "@/types"
 import { Input } from "../ui/Input"
-import { invoiceSchema } from "@/lib/validations/invoice"
+import { ValidationErrors } from "@/hooks/useFormValidation"
 
 export type OnChangeEvent = React.ChangeEvent<
     HTMLInputElement | HTMLSelectElement
@@ -15,7 +15,7 @@ export type OnChangeEvent = React.ChangeEvent<
 type InvoiceFormProps = {
     formData: Invoice
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-    errors: string[]
+    errors: ValidationErrors
     onSelectedDayChange: (day: Date) => void
     onSelectChange: (name: string, option: string) => void
     onChange: (e: OnChangeEvent) => void
@@ -51,64 +51,60 @@ export const InvoiceForm = ({
             <legend className="font-semibold text-accent-700">Bill from</legend>
             <fieldset className="grid gap-5 mb-4 md:gap-6">
                 <FloatingLabel
-                    invalid={errors.includes("billFrom:streetAddress")}
+                    invalid={errors["billFrom:streetAddress"]}
                     htmlFor="billFrom:streetAddress"
                     text={"Street Address"}
                 >
                     <Input
-                        invalid={errors.includes("billFrom:streetAddress")}
+                        invalid={errors["billFrom:streetAddress"]}
                         value={formData.billFrom.streetAddress}
                         onChange={(e) => onChange(e)}
                         id="billFrom:streetAddress"
                         name="billFrom:streetAddress"
                         type="text"
-                        required={!draft}
                     />
                 </FloatingLabel>
                 <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-3 md:gap-6">
                     <FloatingLabel
-                        invalid={errors.includes("billFrom:city")}
+                        invalid={errors["billFrom:city"]}
                         htmlFor="billFrom:city"
                         text={"City"}
                     >
                         <Input
-                            invalid={errors.includes("billFrom:city")}
+                            invalid={errors["billFrom:city"]}
                             value={formData.billFrom.city}
                             onChange={onChange}
                             name="billFrom:city"
                             id="billFrom:city"
                             type="text"
-                            required={!draft}
                         />
                     </FloatingLabel>
                     <FloatingLabel
-                        invalid={errors.includes("billFrom:postCode")}
+                        invalid={errors["billFrom:postCode"]}
                         htmlFor="billFrom:postCode"
                         text={"Post Code"}
                     >
                         <Input
-                            invalid={errors.includes("billFrom:postCode")}
+                            invalid={errors["billFrom:postCode"]}
                             value={formData.billFrom.postCode}
                             onChange={onChange}
                             name="billFrom:postCode"
                             id="billFrom:postCode"
                             type="text"
-                            required={!draft}
                         />
                     </FloatingLabel>
                     <FloatingLabel
-                        invalid={errors.includes("billFrom:country")}
+                        invalid={errors["billFrom:country"]}
                         htmlFor="billFrom:country"
                         text={"Country"}
                     >
                         <Input
-                            invalid={errors.includes("billFrom:country")}
+                            invalid={errors["billFrom:country"]}
                             value={formData.billFrom.country}
                             onChange={onChange}
                             name="billFrom:country"
                             id="billFrom:country"
                             type="text"
-                            required={!draft}
                         />
                     </FloatingLabel>
                 </div>
@@ -118,96 +114,90 @@ export const InvoiceForm = ({
 
             <fieldset className="grid gap-5 md:gap-6">
                 <FloatingLabel
-                    invalid={errors.includes("billTo:clientName")}
+                    invalid={errors["billTo:clientName"]}
                     htmlFor="billTo:clientName"
                     text={"Client's Name"}
                 >
                     <Input
-                        invalid={errors.includes("billTo:clientName")}
+                        invalid={errors["billTo:clientName"]}
                         value={formData.billTo.clientName}
                         onChange={onChange}
                         name="billTo:clientName"
                         id="billTo:clientName"
                         type="text"
-                        required={!draft}
                     />
                 </FloatingLabel>
                 <FloatingLabel
-                    invalid={errors.includes("billTo:clientEmail")}
+                    invalid={errors["billTo:clientEmail"]}
                     htmlFor="billTo:clientEmail"
                     text={"Client's Email"}
                 >
                     <Input
-                        invalid={errors.includes("billTo:clientEmail")}
+                        invalid={errors["billTo:clientEmail"]}
                         pattern={emailPattern}
                         value={formData.billTo.clientEmail}
                         onChange={onChange}
                         name="billTo:clientEmail"
                         id="billTo:clientEmail"
                         type="email"
-                        required={!draft}
                     />
                 </FloatingLabel>
                 <FloatingLabel
-                    invalid={errors.includes("billTo:streetAddress")}
+                    invalid={errors["billTo:streetAddress"]}
                     htmlFor="billTo:streetAddress"
                     text={"Street Address"}
                 >
                     <Input
-                        invalid={errors.includes("billTo:streetAddress")}
+                        invalid={errors["billTo:streetAddress"]}
                         value={formData.billTo.streetAddress}
                         onChange={onChange}
                         name="billTo:streetAddress"
                         id="billTo:streetAddress"
                         type="text"
-                        required={!draft}
                     />
                 </FloatingLabel>
 
                 <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-3 md:gap-6">
                     <FloatingLabel
-                        invalid={errors.includes("billTo:city")}
+                        invalid={errors["billTo:city"]}
                         htmlFor="billTo:city"
                         text={"City"}
                     >
                         <Input
-                            invalid={errors.includes("billTo:city")}
+                            invalid={errors["billTo:city"]}
                             value={formData.billTo.city}
                             onChange={onChange}
                             name="billTo:city"
                             id="billTo:city"
                             type="text"
-                            required={!draft}
                         />
                     </FloatingLabel>
                     <FloatingLabel
-                        invalid={errors.includes("billTo:postCode")}
+                        invalid={errors["billTo:postCode"]}
                         htmlFor="billTo:postCode"
                         text={"Post Code"}
                     >
                         <Input
-                            invalid={errors.includes("billTo:postCode")}
+                            invalid={errors["billTo:postCode"]}
                             value={formData.billTo.postCode}
                             onChange={onChange}
                             name="billTo:postCode"
                             id="billTo:postCode"
                             type="text"
-                            required={!draft}
                         />
                     </FloatingLabel>
                     <FloatingLabel
-                        invalid={errors.includes("billTo:country")}
+                        invalid={errors["billTo:country"]}
                         htmlFor="billTo:country"
                         text={"Country"}
                     >
                         <Input
-                            invalid={errors.includes("billTo:country")}
+                            invalid={errors["billTo:country"]}
                             value={formData.billTo.country}
                             onChange={onChange}
                             name="billTo:country"
                             id="billTo:country"
                             type="text"
-                            required={!draft}
                         />
                     </FloatingLabel>
                 </div>
@@ -249,28 +239,26 @@ export const InvoiceForm = ({
                     </div>
                 </div>
                 <FloatingLabel
-                    invalid={errors.includes("description")}
+                    invalid={errors["description"]}
                     htmlFor="description"
                     text={"Description"}
                 >
                     <Input
-                        invalid={errors.includes("description")}
+                        invalid={errors["description"]}
                         value={formData.description}
                         onChange={onChange}
                         name="description"
                         id="description"
                         type="text"
-                        required={!draft}
                     />
                 </FloatingLabel>
             </fieldset>
 
             <div className="flex flex-col gap-3 md:gap-4">
-                <ItemList
+                <InvoiceItemsList
                     items={formData.items}
                     errors={errors}
                     onChange={onItemChange}
-                    draft={draft}
                     onDeleteItem={onDeleteItem}
                     onAddItem={onAddItem}
                 />

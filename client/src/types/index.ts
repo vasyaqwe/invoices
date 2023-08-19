@@ -1,5 +1,6 @@
 import {
     invoiceItemSchema,
+    invoiceSchema,
     paymentTermsSchema,
     statusSchema,
 } from "@/lib/validations/invoice"
@@ -14,34 +15,15 @@ export type PaginatedInvoiceReturn = Promise<{
 
 export type InvoiceReturn = Promise<Invoice>
 
-export type Invoice = {
-    id?: string
-    billFrom: {
-        streetAddress: string
-        city: string
-        postCode: string
-        country: string
-    }
-    status: Status
-    billTo: {
-        clientName: string
-        clientEmail: string
-        streetAddress: string
-        city: string
-        postCode: string
-        country: string
-    }
-    date: Date
-    description: string
-    paymentTerms: PaymentTerms
+export type InvoiceItem = z.infer<typeof invoiceItemSchema>
+
+export type Invoice = Omit<z.infer<typeof invoiceSchema>, "items"> & {
     items: InvoiceItem[]
 }
 
 export type PaymentTerms = z.infer<typeof paymentTermsSchema>
 
 export type Status = z.infer<typeof statusSchema>
-
-export type InvoiceItem = z.infer<typeof invoiceItemSchema>
 
 export type User = z.infer<typeof userSchema>
 

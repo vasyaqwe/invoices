@@ -16,7 +16,6 @@ import { signUpSchema } from "@/lib/validations/signUp"
 export const SignUp = () => {
     const queryClient = useQueryClient()
     const { openToast } = useStore()
-    const [submitted, setSubmitted] = useState(false)
 
     const [formData, setFormData] = useState<UserFormData>({
         username: "",
@@ -25,12 +24,11 @@ export const SignUp = () => {
     })
 
     const formRef = useRef<HTMLFormElement>(null)
-    const { validateInputs, errors, validatePasswords, passwordsMatch } =
-        useFormValidation<UserFormData>({
-            formRef,
-            formData,
-            zodSchema: signUpSchema,
-        })
+    const { errors, canSubmit } = useFormValidation<UserFormData>({
+        formRef,
+        formData,
+        zodSchema: signUpSchema,
+    })
 
     const navigate = useNavigate()
 
@@ -61,8 +59,6 @@ export const SignUp = () => {
         setFormData((prev) => ({ ...prev, [name]: value }))
     }
 
-    const passwordsDontMatch = !passwordsMatch && submitted
-
     return (
         <>
             <form
@@ -70,81 +66,59 @@ export const SignUp = () => {
                 className="form flex flex-col gap-5 max-w-md mx-auto"
                 onSubmit={(e) => {
                     e.preventDefault()
-                    if (passwordsMatch) onSubmit()
+                    if (canSubmit) onSubmit()
                 }}
             >
                 <h1 className="text-4xl font-semibold">Sign Up</h1>
                 <FloatingLabel
-                    invalid={errors.includes("username")}
+                    invalid={errors.username}
                     htmlFor="username"
                     text={"Username"}
                 >
                     <Input
-                        invalid={errors.includes("username")}
-                        required
+                        invalid={errors.username}
                         value={formData.username}
                         onChange={onChange}
                         id="username"
-                        minLength={3}
                         name="username"
                         type="username"
                     />
                 </FloatingLabel>
 
                 <FloatingLabel
-                    invalid={errors.includes("password") || passwordsDontMatch}
+                    invalid={errors.password}
                     htmlFor="password"
                     text={"Password"}
                 >
                     <Input
-                        invalid={
-                            errors.includes("password") || passwordsDontMatch
-                        }
-                        required
+                        invalid={errors.password}
                         value={formData.password}
                         onChange={onChange}
                         id="password"
-                        minLength={3}
                         name="password"
                         type="password"
                     />
                 </FloatingLabel>
 
                 <FloatingLabel
-                    invalid={
-                        errors.includes("confirmPassword") || passwordsDontMatch
-                    }
+                    invalid={errors.confirmPassword}
                     htmlFor="confirmPassword"
                     text={"Repeat password"}
                 >
                     <Input
-                        invalid={
-                            errors.includes("confirmPassword") ||
-                            passwordsDontMatch
-                        }
-                        required
+                        invalid={errors.confirmPassword}
                         value={formData.confirmPassword}
                         onChange={onChange}
                         id="confirmPassword"
-                        minLength={3}
                         name="confirmPassword"
                         type="password"
                     />
                 </FloatingLabel>
 
-                {passwordsDontMatch && (
-                    <ErrorMessage message="Passwords don't match" />
-                )}
-
                 <div className="flex items-center flex-wrap gap-6 justify-between">
                     <Button
                         isLoading={isLoading}
                         disabled={isLoading}
-                        onClick={() => {
-                            validateInputs()
-                            validatePasswords()
-                            setSubmitted(true)
-                        }}
                         className={` bg-accent-700`}
                     >
                         Sign Up

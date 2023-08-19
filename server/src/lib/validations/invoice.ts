@@ -10,10 +10,10 @@ export const paymentTermsSchema = z.enum([
 ])
 
 export const invoiceItemSchema = z.object({
-    id: z.string(),
-    name: z.string(),
-    quantity: z.number(),
-    price: z.number(),
+    id: z.string().nonempty(),
+    name: z.string().nonempty(),
+    quantity: z.number().min(1),
+    price: z.number().min(1),
 })
 
 export const invoiceSchema = z.object({

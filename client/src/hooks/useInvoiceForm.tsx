@@ -15,12 +15,11 @@ export const useInvoiceForm = ({
     formData,
     setFormData,
 }: useInvoiceFormProps) => {
-    const { validateInputs, makeValidOnDeleteItem, errors } =
-        useFormValidation<Invoice>({
-            formRef,
-            formData,
-            zodSchema: invoiceSchema,
-        })
+    const { canSubmit, errors } = useFormValidation<Invoice>({
+        formRef,
+        formData,
+        zodSchema: invoiceSchema,
+    })
 
     const onAddItem = () => {
         const newItem: InvoiceItem = {
@@ -51,13 +50,6 @@ export const useInvoiceForm = ({
             ...prev,
             items: prev.items.filter((item) => item.id !== id),
         }))
-        const removedRow = formData.items.find((t) => t.id === id)
-        if (removedRow) {
-            const removedRowIdx = formData.items.indexOf(removedRow)
-            makeValidOnDeleteItem("name" + removedRowIdx)
-            makeValidOnDeleteItem("quantity" + removedRowIdx)
-            makeValidOnDeleteItem("price" + removedRowIdx)
-        }
     }
 
     const onChange = (e: OnChangeEvent) => {
@@ -115,7 +107,7 @@ export const useInvoiceForm = ({
         onItemChange,
         onSelectChange,
         onSelectedDayChange,
-        validateInputs,
+        canSubmit,
         errors,
     }
 }
