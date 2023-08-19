@@ -31,7 +31,7 @@ export const invoiceSchema = z.object({
         postCode: z.string(),
         country: z.string(),
     }),
-    date: z.date(),
+    date: z.string(),
     description: z.string(),
     status: statusSchema,
     paymentTerms: paymentTermsSchema,

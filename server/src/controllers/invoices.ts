@@ -48,7 +48,7 @@ export const createInvoice = async (req: Request, res: Response) => {
 }
 
 export const createInvoiceDraft = async (req: Request, res: Response) => {
-    const invoice = await Invoice.create({ ...req.body })
+    const invoice = await Invoice.create({ ...req.body, user: req.user })
 
     if (invoice) {
         res.status(201).json({ message: `New invoice ${invoice.id} created` })

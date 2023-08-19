@@ -13,8 +13,10 @@ export const createInvoice = async (data: Invoice) =>
 export const createInvoiceDraft = async (data: Invoice) =>
     axiosRequest(() => axiosPrivate.post(`/invoices/draft`, data))
 
-export const updateInvoice = async (id: string, data: Invoice) =>
-    axiosRequest(() => axiosPrivate.patch(`/invoices/${id}`, data))
+export const updateInvoice = async (id: string, invoice: Invoice) => {
+    console.log(invoice)
+    axiosRequest(() => axiosPrivate.patch(`/invoices/${id}`, invoice))
+}
 
 export const deleteInvoice = async (id: string) =>
     axiosRequest(() => axiosPrivate.delete(`/invoices/${id}`))

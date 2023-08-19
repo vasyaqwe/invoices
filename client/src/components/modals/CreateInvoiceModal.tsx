@@ -79,7 +79,7 @@ export const CreateInvoiceModal = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        // onSave()
+        onSave()
     }
 
     useErrorToast(error)
