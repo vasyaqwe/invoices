@@ -72,6 +72,7 @@ export const Login = () => {
                         value={formData.username}
                         onChange={onChange}
                         id="username"
+                        minLength={3}
                         name="username"
                         type="username"
                     />
@@ -85,6 +86,7 @@ export const Login = () => {
                     <Input
                         invalid={errors.includes("password")}
                         required
+                        minLength={3}
                         value={formData.password}
                         onChange={onChange}
                         id="password"

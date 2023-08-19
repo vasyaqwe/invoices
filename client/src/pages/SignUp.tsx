@@ -11,7 +11,7 @@ import { ErrorMessage } from "@/components/ui/ErrorMessage"
 import { Button } from "@/components/ui/Button"
 import { GoogleLoginButton } from "@/components/ui/GoogleLoginButton"
 import { UserFormData } from "@/types"
-import { userSchema } from "@/lib/validations/user"
+import { signUpSchema } from "@/lib/validations/signUp"
 
 export const SignUp = () => {
     const queryClient = useQueryClient()
@@ -29,7 +29,7 @@ export const SignUp = () => {
         useFormValidation<UserFormData>({
             formRef,
             formData,
-            zodSchema: userSchema,
+            zodSchema: signUpSchema,
         })
 
     const navigate = useNavigate()
@@ -85,6 +85,7 @@ export const SignUp = () => {
                         value={formData.username}
                         onChange={onChange}
                         id="username"
+                        minLength={3}
                         name="username"
                         type="username"
                     />
@@ -103,6 +104,7 @@ export const SignUp = () => {
                         value={formData.password}
                         onChange={onChange}
                         id="password"
+                        minLength={3}
                         name="password"
                         type="password"
                     />
@@ -124,6 +126,7 @@ export const SignUp = () => {
                         value={formData.confirmPassword}
                         onChange={onChange}
                         id="confirmPassword"
+                        minLength={3}
                         name="confirmPassword"
                         type="password"
                     />

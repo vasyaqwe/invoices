@@ -1,5 +1,5 @@
 import { RefObject, useEffect, useState } from "react"
-import { AnyZodObject, ZodIssueBase } from "zod"
+import { AnyZodObject, ZodEffects, ZodIssueBase } from "zod"
 
 export const useFormValidation = <TFormData,>({
     formRef,
@@ -8,7 +8,7 @@ export const useFormValidation = <TFormData,>({
 }: {
     formRef: RefObject<HTMLFormElement>
     formData: TFormData
-    zodSchema: AnyZodObject
+    zodSchema: ZodEffects<AnyZodObject> | AnyZodObject
 }) => {
     const [errors, setErrors] = useState<string[]>([])
     const [passwordsMatch, setPasswordsMatch] = useState(true)
@@ -37,30 +37,29 @@ export const useFormValidation = <TFormData,>({
     const makeValidOnDeleteItem = (inputId: string) =>
         setErrors((prev) => prev.filter((errId) => errId !== inputId))
 
+    const getInputIdFromErrors = (e: ZodIssueBase) => {
+        let inputId = ""
+        if (e.path && e.path.length > 0) {
+            if (e.path.length === 2) {
+                inputId = e.path.join(":")
+            } else if (e.path.length === 3) {
+                inputId = e.path.slice(1, e.path.length).reverse().join("")
+            } else {
+                inputId = typeof e.path[0] === "string" ? e.path[0] : ""
+            }
+        }
+        return inputId
+    }
+
     const validateInputs = () => {
         if (formRef.current) {
             try {
                 zodSchema.parse(formData)
             } catch (e: any) {
                 e.errors.forEach((e: ZodIssueBase) => {
-                    let inputName = ""
-
-                    if (e.path && e.path.length > 0) {
-                        if (e.path.length === 2) {
-                            inputName = e.path.join(":")
-                        } else if (e.path.length === 3) {
-                            inputName = e.path
-                                .slice(1, e.path.length)
-                                .reverse()
-                                .join("")
-                        } else {
-                            inputName =
-                                typeof e.path[0] === "string" ? e.path[0] : ""
-                        }
-                    }
-
-                    if (inputName) {
-                        setErrors((prev) => [...prev, inputName.toString()])
+                    const inputId = getInputIdFromErrors(e)
+                    if (inputId) {
+                        setErrors((prev) => [...prev, inputId.toString()])
                         setErrors((prev) => [...new Set(prev)])
                     }
                 })
@@ -71,8 +70,12 @@ export const useFormValidation = <TFormData,>({
     //remove from errors[] onChange
     useEffect(() => {
         const makeInputValid = (e: Event) => {
-            const { id, value } = e.target as HTMLInputElement
+            const { id } = e.target as HTMLInputElement
             setErrors((prev) => prev.filter((errName) => errName !== id))
+        }
+
+        const makePasswordsValid = (e: Event) => {
+            const { id, value } = e.target as HTMLInputElement
 
             if (formRef.current) {
                 if (id === "password") {
@@ -101,14 +104,12 @@ export const useFormValidation = <TFormData,>({
 
         if (inputs) {
             inputs.forEach((input: HTMLInputElement) => {
-                if (errors.includes(input.id)) {
-                    input.addEventListener("input", makeInputValid)
-                }
+                input.addEventListener("input", makeInputValid)
             })
         }
         if (passwordInputs && passwordInputs.length > 1) {
             passwordInputs.forEach((input: HTMLInputElement) => {
-                input.addEventListener("input", makeInputValid)
+                input.addEventListener("input", makePasswordsValid)
             })
         }
 
@@ -119,9 +120,9 @@ export const useFormValidation = <TFormData,>({
                 )
             }
 
-            if (passwordInputs) {
+            if (passwordInputs && passwordInputs.length > 1) {
                 passwordInputs.forEach((input: HTMLInputElement) =>
-                    input.removeEventListener("input", makeInputValid)
+                    input.removeEventListener("input", makePasswordsValid)
                 )
             }
         }
