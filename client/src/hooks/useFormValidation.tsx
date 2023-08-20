@@ -15,17 +15,25 @@ export const useFormValidation = <TFormData,>({
 }) => {
     const { modals } = useStore()
     const [errors, setErrors] = useState<ValidationErrors>({})
-    const [formSubmitted, setFormSubmitted] = useState(false)
+    const [showErrors, setShowErrors] = useState(false)
+
+    const noErrors = Object.keys(errors).length < 1
 
     useEffect(() => {
-        const onSubmit = () => setFormSubmitted(true)
+        const onSubmit = () => {
+            if (noErrors) {
+                setShowErrors(false)
+            } else {
+                setShowErrors(true)
+            }
+        }
 
         formRef.current?.addEventListener("submit", onSubmit)
 
         return () => {
             formRef.current?.removeEventListener("submit", onSubmit)
         }
-    }, [modals])
+    }, [modals, errors])
 
     useEffect(() => {
         validate(formData)
@@ -68,7 +76,7 @@ export const useFormValidation = <TFormData,>({
     }
 
     return {
-        errors: formSubmitted ? errors : {},
-        canSubmit: Object.keys(errors).length < 1,
+        errors: showErrors ? errors : {},
+        canSubmit: noErrors,
     }
 }

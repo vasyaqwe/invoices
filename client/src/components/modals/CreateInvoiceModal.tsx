@@ -38,8 +38,6 @@ const initialFormData = {
 export const CreateInvoiceModal = () => {
     const { closeModal, openToast, modals } = useStore()
 
-    const [draft, setDraft] = useState(false)
-
     const [formData, setFormData] = useState<Invoice>(initialFormData)
 
     const formRef = useRef<HTMLFormElement>(null)
@@ -105,7 +103,6 @@ export const CreateInvoiceModal = () => {
                         Create Invoice
                     </h2>
                     <InvoiceForm
-                        draft={draft}
                         formData={formData}
                         onSubmit={onSubmit}
                         errors={errors}
@@ -130,7 +127,6 @@ export const CreateInvoiceModal = () => {
                             <Button
                                 type="button"
                                 onClick={() => {
-                                    setDraft(true)
                                     onSaveAsDraft()
                                     closeModal("createInvoice")
                                     openToast({ text: "Draft saved!" })

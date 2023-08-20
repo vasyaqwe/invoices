@@ -23,7 +23,6 @@ type InvoiceFormProps = {
     onDeleteItem: (id: string) => void
     onAddItem: () => void
     formRef: RefObject<HTMLFormElement>
-    draft?: boolean
 }
 
 export const InvoiceForm = ({
@@ -37,7 +36,6 @@ export const InvoiceForm = ({
     onAddItem,
     onSelectedDayChange,
     formRef,
-    draft = false,
 }: InvoiceFormProps) => {
     const selectedDay = new Date(formData.date)
 
