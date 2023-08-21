@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useQueryClient, useMutation } from "react-query"
 import { login } from "@/api/auth"
@@ -22,13 +22,6 @@ export const Login = () => {
         password: "",
     })
 
-    const formRef = useRef<HTMLFormElement>(null)
-    const { errors, canSubmit } = useFormValidation({
-        formRef,
-        formData,
-        zodSchema: userSchema,
-    })
-
     const navigate = useNavigate()
 
     const {
@@ -46,6 +39,12 @@ export const Login = () => {
 
     useErrorToast(error)
 
+    const { errors, safeOnSubmit } = useFormValidation({
+        onSubmit,
+        formData,
+        zodSchema: userSchema,
+    })
+
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
         setFormData((prev) => ({ ...prev, [name]: value }))
@@ -54,13 +53,10 @@ export const Login = () => {
     return (
         <>
             <form
-                ref={formRef}
                 className="form flex flex-col gap-5 max-w-md mx-auto"
                 onSubmit={(e) => {
                     e.preventDefault()
-                    if (canSubmit) {
-                        onSubmit()
-                    }
+                    safeOnSubmit()
                 }}
             >
                 <h1 className="text-4xl font-semibold">Login</h1>

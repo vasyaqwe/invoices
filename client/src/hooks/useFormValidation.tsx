@@ -1,51 +1,28 @@
-import { useStore } from "@/stores/useStore"
-import { RefObject, useEffect, useState } from "react"
-import { AnyZodObject, ZodEffects, ZodIssueBase } from "zod"
+import { useEffect, useState } from "react"
+import { ZodIssueBase } from "zod"
+import * as z from "zod"
 
 export type ValidationErrors = Record<string, string>
 
 export const useFormValidation = <TFormData,>({
-    formRef,
+    onSubmit,
     formData,
     zodSchema,
 }: {
-    formRef: RefObject<HTMLFormElement>
+    onSubmit: () => void
     formData: TFormData
-    zodSchema: ZodEffects<any> | AnyZodObject
+    zodSchema: z.Schema<TFormData>
 }) => {
-    const { modals } = useStore()
     const [errors, setErrors] = useState<ValidationErrors>({})
     const [showErrors, setShowErrors] = useState(false)
 
-    const noErrors = Object.keys(errors).length < 1
-
-    useEffect(() => {
-        const onSubmit = () => {
-            if (noErrors) {
-                setShowErrors(false)
-            } else {
-                setShowErrors(true)
-            }
-        }
-
-        formRef.current?.addEventListener("submit", onSubmit)
-
-        return () => {
-            formRef.current?.removeEventListener("submit", onSubmit)
-        }
-    }, [modals, errors])
-
-    useEffect(() => {
-        validate(formData)
-    }, [formData])
-
-    const getInputIdFromErrors = (e: ZodIssueBase) => {
+    const getFormDataKey = (e: ZodIssueBase) => {
         let inputId = ""
         if (e.path && e.path.length > 0) {
             if (e.path.length === 2) {
-                inputId = e.path.join(":")
+                inputId = e.path.join(":") // if key is nested one level deep
             } else if (e.path.length === 3) {
-                inputId = e.path.slice(1, e.path.length).reverse().join("")
+                inputId = e.path.slice(1, e.path.length).reverse().join("") // if key is an array of objects
             } else {
                 inputId = typeof e.path[0] === "string" ? e.path[0] : ""
             }
@@ -53,14 +30,15 @@ export const useFormValidation = <TFormData,>({
         return inputId
     }
 
-    const validate = (formData: TFormData) => {
+    const validate = () => {
         const res = zodSchema.safeParse(formData)
         if (!res.success) {
             const errorsArr = JSON.parse(res.error.message)
 
-            const transformedObject = errorsArr.reduce(
+            const errorsObject = errorsArr.reduce(
                 (result: Record<string, string>, e: ZodIssueBase) => {
-                    const key = getInputIdFromErrors(e)
+                    const key = getFormDataKey(e)
+                    console.log(e)
                     const message = e.message
                     if (message) {
                         result[key] = message
@@ -69,14 +47,28 @@ export const useFormValidation = <TFormData,>({
                 },
                 {}
             )
-            setErrors(transformedObject)
+
+            setErrors(errorsObject)
         } else {
             setErrors({})
         }
     }
 
+    useEffect(validate, [formData])
+
+    const safeOnSubmit = () => {
+        const noErrors = Object.keys(errors).length < 1
+
+        if (noErrors) {
+            setShowErrors(false)
+            onSubmit()
+        } else {
+            setShowErrors(true)
+        }
+    }
+
     return {
         errors: showErrors ? errors : {},
-        canSubmit: noErrors,
+        safeOnSubmit,
     }
 }

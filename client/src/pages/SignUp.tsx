@@ -7,7 +7,6 @@ import { useErrorToast } from "@/hooks/useErrorToast"
 import { useFormValidation } from "@/hooks/useFormValidation"
 import { createUser } from "@/api/users"
 import { useStore } from "@/stores/useStore"
-import { ErrorMessage } from "@/components/ui/ErrorMessage"
 import { Button } from "@/components/ui/Button"
 import { GoogleLoginButton } from "@/components/ui/GoogleLoginButton"
 import { UserFormData } from "@/types"
@@ -21,13 +20,6 @@ export const SignUp = () => {
         username: "",
         password: "",
         confirmPassword: "",
-    })
-
-    const formRef = useRef<HTMLFormElement>(null)
-    const { errors, canSubmit } = useFormValidation<UserFormData>({
-        formRef,
-        formData,
-        zodSchema: signUpSchema,
     })
 
     const navigate = useNavigate()
@@ -52,6 +44,12 @@ export const SignUp = () => {
         }
     )
 
+    const { errors, safeOnSubmit } = useFormValidation({
+        onSubmit,
+        formData,
+        zodSchema: signUpSchema,
+    })
+
     useErrorToast(error)
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,11 +60,10 @@ export const SignUp = () => {
     return (
         <>
             <form
-                ref={formRef}
                 className="form flex flex-col gap-5 max-w-md mx-auto"
                 onSubmit={(e) => {
                     e.preventDefault()
-                    if (canSubmit) onSubmit()
+                    safeOnSubmit()
                 }}
             >
                 <h1 className="text-4xl font-semibold">Sign Up</h1>

@@ -52,12 +52,12 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
         onSelectChange,
         errors,
         onSelectedDayChange,
-        canSubmit,
-    } = useInvoiceForm({ setFormData, formData, formRef })
+        safeOnSubmit,
+    } = useInvoiceForm({ setFormData, formData, formRef, onSubmit: onSave })
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        if (canSubmit) onSave()
+        safeOnSubmit()
     }
 
     return (

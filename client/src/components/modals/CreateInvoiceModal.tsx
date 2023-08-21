@@ -42,17 +42,6 @@ export const CreateInvoiceModal = () => {
 
     const formRef = useRef<HTMLFormElement>(null)
 
-    const {
-        onAddItem,
-        onDeleteItem,
-        onChange,
-        onItemChange,
-        onSelectChange,
-        onSelectedDayChange,
-        errors,
-        canSubmit,
-    } = useInvoiceForm({ setFormData, formData, formRef })
-
     const queryClient = useQueryClient()
 
     const {
@@ -68,6 +57,17 @@ export const CreateInvoiceModal = () => {
         },
     })
 
+    const {
+        onAddItem,
+        onDeleteItem,
+        onChange,
+        onItemChange,
+        onSelectChange,
+        onSelectedDayChange,
+        errors,
+        safeOnSubmit,
+    } = useInvoiceForm({ setFormData, formData, formRef, onSubmit: onSave })
+
     const { mutate: onSaveAsDraft } = useMutation(
         () => createInvoiceDraft({ ...formData, status: "Draft" }),
         {
@@ -81,7 +81,7 @@ export const CreateInvoiceModal = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        if (canSubmit) onSave()
+        safeOnSubmit()
     }
 
     useErrorToast(error)

@@ -1,6 +1,6 @@
 import { RefObject } from "react"
 import { FloatingLabel } from "../ui/FloatingLabel"
-import { emailPattern, labelClassName } from "@/utils"
+import { labelClassName } from "@/utils"
 import { DatePicker } from "../ui/DatePicker"
 import { Select } from "../ui/Select"
 import { InvoiceItemsList } from "../InvoiceItemsList"
@@ -132,12 +132,11 @@ export const InvoiceForm = ({
                 >
                     <Input
                         invalid={errors["billTo:clientEmail"]}
-                        pattern={emailPattern}
                         value={formData.billTo.clientEmail}
                         onChange={onChange}
                         name="billTo:clientEmail"
                         id="billTo:clientEmail"
-                        type="email"
+                        type="text"
                     />
                 </FloatingLabel>
                 <FloatingLabel

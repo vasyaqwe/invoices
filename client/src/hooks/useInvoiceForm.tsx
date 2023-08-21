@@ -9,14 +9,16 @@ type useInvoiceFormProps = {
     formData: Invoice
     setFormData: (func: SetStateAction<Invoice>) => void
     formRef: RefObject<HTMLFormElement>
+    onSubmit: () => void
 }
 export const useInvoiceForm = ({
     formRef,
     formData,
     setFormData,
+    onSubmit,
 }: useInvoiceFormProps) => {
-    const { canSubmit, errors } = useFormValidation<Invoice>({
-        formRef,
+    const { safeOnSubmit, errors } = useFormValidation({
+        onSubmit,
         formData,
         zodSchema: invoiceSchema,
     })
@@ -107,7 +109,7 @@ export const useInvoiceForm = ({
         onItemChange,
         onSelectChange,
         onSelectedDayChange,
-        canSubmit,
+        safeOnSubmit,
         errors,
     }
 }
