@@ -1,5 +1,5 @@
-Challenge by Frontend Mentor - https://www.frontendmentor.io
+Design was provided by Frontend mentor - https://www.frontendmentor.io
 
-Me - https://www.frontendmentor.io/profile/vasyaqwe
+Live demo - https://invoices-vasyaqwe.netlify.app/
 
-Live demo - https://invoices-vasyaqwe.onrender.com/
+You can find me here - https://www.upwork.com/freelancers/~015c1b113a62e11b13
