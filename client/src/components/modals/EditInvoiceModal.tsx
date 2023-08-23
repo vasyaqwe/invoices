@@ -73,7 +73,7 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
                     className="grid grid-rows-[min-content,1fr,min-content] h-[calc(100vh-80px)] md:h-full
             p-7 md:p-12"
                 >
-                    <h2 className="text-white text-4xl font-bold mb-4">
+                    <h2 className="mb-4 text-4xl font-bold text-white">
                         Edit Invoice
                     </h2>
 
@@ -90,7 +90,7 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
                         onDeleteItem={onDeleteItem}
                     />
 
-                    <div className="py-6 flex items-center justify-between flex-wrap gap-3">
+                    <div className="flex flex-wrap items-center justify-between gap-3 py-6">
                         <Button
                             type="button"
                             onClick={() => closeModal("editInvoice")}

@@ -3,7 +3,7 @@ import { refresh } from "@/api/auth"
 import { useAuthStore } from "@/stores/useAuthStore"
 import { Outlet } from "react-router-dom"
 import { Spinner } from "@/components/ui/Spinner"
-import { pageSpinnerClassName } from "@/utils"
+import { pageSpinnerClassName } from "@/lib/utils"
 
 export const PersistLogin = () => {
     const { setToken, token, persist } = useAuthStore()

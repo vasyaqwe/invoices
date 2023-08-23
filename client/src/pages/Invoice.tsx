@@ -2,7 +2,7 @@ import { useParams, Link, Navigate } from "react-router-dom"
 import { StatusBadge } from "@/components/ui/StatusBadge"
 import { useQuery } from "react-query"
 import { getInvoice } from "@/api/invoices"
-import { formatCurrency, formatDate, pageSpinnerClassName } from "@/utils"
+import { formatCurrency, formatDate, pageSpinnerClassName } from "@/lib/utils"
 import { ReactComponent as Chevron } from "@/assets/chevron.svg"
 import { useStore } from "@/stores/useStore"
 import { Spinner } from "@/components/ui/Spinner"
@@ -58,12 +58,12 @@ export const Invoice = () => {
             >
                 <Chevron /> Back
             </Link>
-            <div className="bg-primary-800 rounded-md flex items-center p-6 justify-between mt-8">
+            <div className="flex items-center justify-between p-6 mt-8 rounded-md bg-primary-800">
                 <div className="flex items-center justify-between flex-1 sm:justify-start">
                     <p className="mr-4">Status</p>
                     <StatusBadge status={invoice.status} />
                 </div>
-                <div className="hidden sm:flex items-center gap-3">
+                <div className="items-center hidden gap-3 sm:flex">
                     <Button
                         onClick={() => openModal("editInvoice")}
                         variant="neutral"
@@ -79,16 +79,16 @@ export const Invoice = () => {
                     </Button>
                 </div>
             </div>
-            <section className="mt-4 bg-primary-800 rounded-md p-6 text-neutral-400 font-thin grid gap-12 mb-32">
-                <div className="flex justify-between items-start gap-4">
+            <section className="grid gap-12 p-6 mt-4 mb-32 font-thin rounded-md bg-primary-800 text-neutral-400">
+                <div className="flex items-start justify-between gap-4">
                     <div>
-                        <p className="font-semibold text-xl">
+                        <p className="text-xl font-semibold">
                             <span className="text-neutral-500">#</span>
                             {id?.toUpperCase()}
                         </p>
                         <p className="leading-3">{invoice.description}</p>
                     </div>
-                    <address className="text-right leading-5">
+                    <address className="leading-5 text-right">
                         <p>{invoice.billFrom.streetAddress}</p>
                         <p>{invoice.billFrom.city}</p>
                         <p>{invoice.billFrom.postCode}</p>
@@ -125,19 +125,19 @@ export const Invoice = () => {
                         </p>
                     </div>
                 </div>
-                <table className="bg-primary-600 rounded-md overflow-hidden">
+                <table className="overflow-hidden rounded-md bg-primary-600">
                     <thead>
                         <tr>
-                            <th className="text-left pt-7 px-7 hidden sm:table-cell">
+                            <th className="hidden text-left pt-7 px-7 sm:table-cell">
                                 Item Name
                             </th>
-                            <th className="text-center pt-7 px-7 hidden sm:table-cell">
+                            <th className="hidden text-center pt-7 px-7 sm:table-cell">
                                 QTY.
                             </th>
-                            <th className="text-left pt-7 px-7 hidden sm:table-cell">
+                            <th className="hidden text-left pt-7 px-7 sm:table-cell">
                                 Price
                             </th>
-                            <th className="text-right pt-7 px-7 hidden sm:table-cell">
+                            <th className="hidden text-right pt-7 px-7 sm:table-cell">
                                 Total
                             </th>
                         </tr>
@@ -148,26 +148,26 @@ export const Invoice = () => {
                                 key={item.id}
                                 className="font-semibold text-white"
                             >
-                                <td className="sm:text-left py-5 px-7 sm:p-7 block sm:table-cell">
-                                    <span className="text-neutral-400 font-thin sm:hidden">
+                                <td className="block py-5 sm:text-left px-7 sm:p-7 sm:table-cell">
+                                    <span className="font-thin text-neutral-400 sm:hidden">
                                         Item Name:{" "}
                                     </span>
                                     {item.name}
                                 </td>
-                                <td className="sm:text-center py-5 px-7 sm:p-7 block sm:table-cell">
-                                    <span className="text-neutral-400 font-thin sm:hidden">
+                                <td className="block py-5 sm:text-center px-7 sm:p-7 sm:table-cell">
+                                    <span className="font-thin text-neutral-400 sm:hidden">
                                         QTY.:{" "}
                                     </span>
                                     {item.quantity}
                                 </td>
-                                <td className="sm:text-left py-5 px-7 sm:p-7 block sm:table-cell">
-                                    <span className="text-neutral-400 font-thin sm:hidden">
+                                <td className="block py-5 sm:text-left px-7 sm:p-7 sm:table-cell">
+                                    <span className="font-thin text-neutral-400 sm:hidden">
                                         Price:{" "}
                                     </span>
                                     {formatCurrency(item.price)}
                                 </td>
-                                <td className="sm:text-right py-5 px-7 sm:p-7 block sm:table-cell">
-                                    <span className="text-neutral-400 font-thin sm:hidden">
+                                <td className="block py-5 sm:text-right px-7 sm:p-7 sm:table-cell">
+                                    <span className="font-thin text-neutral-400 sm:hidden">
                                         Total:{" "}
                                     </span>
                                     {formatCurrency(itemsTotal(item))}
@@ -177,22 +177,22 @@ export const Invoice = () => {
                     </tbody>
                     <tfoot className="bg-black">
                         <tr className="font-semibold text-white">
-                            <td className="sm:text-left py-5 px-7 sm:p-7 ">
+                            <td className="py-5 sm:text-left px-7 sm:p-7 ">
                                 Amount Due
-                                <span className="sm:text-right py-5 px-7 sm:p-7 text-2xl sm:text-3xl sm:hidden">
+                                <span className="py-5 text-2xl sm:text-right px-7 sm:p-7 sm:text-3xl sm:hidden">
                                     {formatCurrency(allItemsTotal)}{" "}
                                 </span>
                             </td>
-                            <td className="sm:text-left py-5 px-7 sm:p-7 hidden sm:table-cell"></td>
-                            <td className="sm:text-left py-5 px-7 sm:p-7 hidden sm:table-cell"></td>
-                            <td className="sm:text-right py-5 px-7 sm:p-7 text-2xl sm:text-3xl hidden sm:block">
+                            <td className="hidden py-5 sm:text-left px-7 sm:p-7 sm:table-cell"></td>
+                            <td className="hidden py-5 sm:text-left px-7 sm:p-7 sm:table-cell"></td>
+                            <td className="hidden py-5 text-2xl sm:text-right px-7 sm:p-7 sm:text-3xl sm:block">
                                 {formatCurrency(allItemsTotal)}
                             </td>
                         </tr>
                     </tfoot>
                 </table>
             </section>
-            <div className="bg-primary-800 p-6 flex items-center justify-end gap-3 fixed bottom-0 left-0 w-full sm:hidden">
+            <div className="fixed bottom-0 left-0 flex items-center justify-end w-full gap-3 p-6 bg-primary-800 sm:hidden">
                 <Button
                     onClick={() => openModal("editInvoice")}
                     className="bg-neutral-700"

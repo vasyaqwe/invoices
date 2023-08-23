@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { StatusBadge } from "./ui/StatusBadge"
 import { ReactComponent as Chevron } from "@/assets/chevron.svg"
-import { formatCurrency, formatDate } from "@/utils"
+import { formatCurrency, formatDate } from "@/lib/utils"
 import { Invoice as InvoiceType, InvoiceItem as InvoiceItemType } from "@/types"
 
 export const Invoice = ({

@@ -87,9 +87,7 @@ export const FilterSelect = ({
     return (
         <div
             tabIndex={0}
-            className="cursor-pointer w-full flex items-center gap-2 justify-between border text-white border-primary-600
-         focus:outline-none focus-visible:outline-white bg-primary-800 relative
-    rounded-md py-2 px-3"
+            className="relative flex items-center justify-between w-full gap-2 px-3 py-2 text-white border rounded-md cursor-pointer border-primary-600 focus:outline-none focus-visible:outline-white bg-primary-800"
             aria-expanded={false}
             ref={ref}
             onClick={() => setOpen((open) => !open)}

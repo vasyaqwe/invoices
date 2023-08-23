@@ -34,19 +34,19 @@ export const ConfirmDeletionModal = ({ invoice }: { invoice: Invoice }) => {
         <ModalWrapper open={modals["confirmDeletion"]}>
             <motion.dialog
                 open
-                className="bg-primary-700 inset-0 m-auto p-12 w-full max-w-lg modal"
+                className="inset-0 w-full max-w-lg p-12 m-auto bg-primary-700 modal"
                 animate={{ opacity: 1 }}
                 initial={{ opacity: 0 }}
                 exit={{ opacity: 0 }}
             >
-                <h2 className="text-white text-4xl font-bold mb-4">
+                <h2 className="mb-4 text-4xl font-bold text-white">
                     Confirm deletion
                 </h2>
                 <p className="text-neutral-400">
                     Are you sure you want to delete invoice #
                     {invoice?.id?.toUpperCase()}? This action cannot be undone.
                 </p>
-                <div className="flex items-center gap-2 mt-3 justify-end">
+                <div className="flex items-center justify-end gap-2 mt-3">
                     <Button
                         variant="neutral"
                         onClick={() => closeModal("confirmDeletion")}

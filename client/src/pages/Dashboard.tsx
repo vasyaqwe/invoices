@@ -10,7 +10,7 @@ import { useSearchParams } from "react-router-dom"
 import { ErrorMessage } from "@/components/ui/ErrorMessage"
 import { Button } from "@/components/ui/Button"
 import { useIntersection } from "@mantine/hooks"
-import { pageSpinnerClassName } from "@/utils"
+import { pageSpinnerClassName } from "@/lib/utils"
 import { CreateInvoiceModal } from "@/components/modals/CreateInvoiceModal"
 
 export const Dashboard = () => {
@@ -86,7 +86,7 @@ export const Dashboard = () => {
                                 invoices.
                             </p>
                         </div>
-                        <div className="flex items-center gap-3 flex-wrap sm:flex-nowrap">
+                        <div className="flex flex-wrap items-center gap-3 sm:flex-nowrap">
                             <FilterSelect
                                 filterKey="status"
                                 setSearchParams={setSearchParams}
@@ -95,7 +95,7 @@ export const Dashboard = () => {
                             />
                             <Button
                                 onClick={() => openModal("createInvoice")}
-                                className="pb-2 pt-2 pr-3 pl-2 bg-accent-700 "
+                                className="pt-2 pb-2 pl-2 pr-3 bg-accent-700 "
                             >
                                 <span className="bg-white p-3 min-w-[35px] rounded-full inline-block">
                                     <Plus />
@@ -107,7 +107,7 @@ export const Dashboard = () => {
                             </Button>
                         </div>
                     </div>
-                    <ul className="mt-8 md:mt-12 pb-8 grid gap-3">
+                    <ul className="grid gap-3 pb-8 mt-8 md:mt-12">
                         {isLoading ? (
                             <Spinner className={pageSpinnerClassName} />
                         ) : (

@@ -10,7 +10,7 @@ import {
     parse,
     startOfToday,
 } from "date-fns"
-import { classNames, formatDate } from "../../utils"
+import { classNames, formatDate } from "../../lib/utils"
 import { useState, FocusEvent } from "react"
 import { ReactComponent as Chevron } from "../../assets/chevron.svg"
 import { ReactComponent as CalendarIcon } from "../../assets/calendar.svg"
@@ -64,7 +64,7 @@ export const DatePicker = ({
         <div
             tabIndex={0}
             onBlur={onBlur}
-            className="bg-primary-800 rounded-md relative focus:outline-none border  border-primary-600 focus:border-accent-400"
+            className="relative border rounded-md bg-primary-800 focus:outline-none border-primary-600 focus:border-accent-400"
         >
             <span
                 className=" rounded-md min-h-[42px] py-2 px-3 cursor-pointer text-white
@@ -81,13 +81,13 @@ export const DatePicker = ({
             text-white bg-primary-800 p-4 rounded-md border border-primary-600`}
             >
                 <div className="flex items-center justify-between">
-                    <h2 className="font-semibold text-lg">
+                    <h2 className="text-lg font-semibold">
                         {format(firstDayCurrentMonth, "MMMM yyyy")}
                     </h2>
                     <div className="flex items-center gap-4">
                         <button
                             type="button"
-                            className="grid chevron-button place-items-center hover:bg-accent-400 w-8 h-8 rounded-full"
+                            className="grid w-8 h-8 rounded-full chevron-button place-items-center hover:bg-accent-400"
                             onClick={(e) => {
                                 e.stopPropagation()
                                 previousMonth()
@@ -97,7 +97,7 @@ export const DatePicker = ({
                         </button>
                         <button
                             type="button"
-                            className="grid chevron-button  place-items-center hover:bg-accent-400 w-8 h-8 rounded-full"
+                            className="grid w-8 h-8 rounded-full chevron-button place-items-center hover:bg-accent-400"
                             onClick={(e) => {
                                 e.stopPropagation()
                                 nextMonth()

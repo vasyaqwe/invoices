@@ -1,6 +1,6 @@
 import { RefObject } from "react"
 import { FloatingLabel } from "../ui/FloatingLabel"
-import { labelClassName } from "@/utils"
+import { labelClassName } from "@/lib/utils"
 import { DatePicker } from "../ui/DatePicker"
 import { Select } from "../ui/Select"
 import { InvoiceItemsList } from "../InvoiceItemsList"

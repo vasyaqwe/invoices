@@ -1,6 +1,6 @@
 import { ReactComponent as Plus } from "@assets/plusNeutral.svg"
 import { ReactComponent as Delete } from "@assets/delete.svg"
-import { getTotalOfItem, inputClassName, labelClassName } from "@/utils"
+import { getTotalOfItem, inputClassName, labelClassName } from "@/lib/utils"
 import { AnimatePresence, motion } from "framer-motion"
 import { Button } from "./ui/Button"
 import { ChangeEvent } from "react"
@@ -25,7 +25,7 @@ export const InvoiceItemsList = ({
     console.log(errors)
     return (
         <>
-            <legend className="text-primary-500 text-2xl font-semibold">
+            <legend className="text-2xl font-semibold text-primary-500">
                 Item List
             </legend>
             {items.length > 0 && (
@@ -141,7 +141,7 @@ export const InvoiceItemsList = ({
                                 <div className="grid">
                                     <p className="text-neutral-400">Total</p>
                                     <div className="flex items-center justify-between">
-                                        <p className="text-neutral-500 font-semibold self-end">
+                                        <p className="self-end font-semibold text-neutral-500">
                                             {getTotalOfItem(item)}
                                         </p>
                                         <button
@@ -168,8 +168,7 @@ export const InvoiceItemsList = ({
             <Button
                 type="button"
                 onClick={onAddItem}
-                className="items-center justify-center
-                        bg-primary-600 w-full"
+                className="items-center justify-center w-full bg-primary-600"
             >
                 <Plus />
                 Add New Item

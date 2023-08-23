@@ -53,7 +53,7 @@ export const Login = () => {
     return (
         <>
             <form
-                className="form flex flex-col gap-5 max-w-md mx-auto"
+                className="flex flex-col max-w-md gap-5 mx-auto form"
                 onSubmit={(e) => {
                     e.preventDefault()
                     safeOnSubmit()
