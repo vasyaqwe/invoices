@@ -4,6 +4,8 @@ import { Request, Response } from "express"
 import jwt, { Secret } from "jsonwebtoken"
 import {
     cookieConfig,
+    generateAccessToken,
+    generateRefreshToken,
     refreshTokenExpiresIn,
     refreshTokenSecret,
 } from "../lib/utils"
@@ -41,19 +43,8 @@ export const createUser = async (req: Request, res: Response) => {
     const user = await User.create(userData)
 
     if (user) {
-        const accessToken = jwt.sign(
-            { userId: user._id, username: user.username },
-            accessTokenSecret
-        )
-
-        const refreshToken = jwt.sign(
-            {
-                userId: user._id,
-                username: user.username,
-            },
-            refreshTokenSecret,
-            { expiresIn: refreshTokenExpiresIn }
-        )
+        const accessToken = generateAccessToken(user)
+        const refreshToken = generateRefreshToken(user)
 
         res.cookie("jwt", refreshToken, cookieConfig)
 
@@ -61,5 +52,6 @@ export const createUser = async (req: Request, res: Response) => {
     } else {
         res.status(400).json({ message: `Invalid user data received!` })
     }
+
     return
 }

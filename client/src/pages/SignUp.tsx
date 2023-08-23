@@ -11,9 +11,11 @@ import { Button } from "@/components/ui/Button"
 import { GoogleLoginButton } from "@/components/ui/GoogleLoginButton"
 import { UserFormData } from "@/types"
 import { signUpSchema } from "@/lib/validations/signUp"
+import { useAuthStore } from "@/stores/useAuthStore"
 
 export const SignUp = () => {
     const queryClient = useQueryClient()
+    const { setToken } = useAuthStore()
     const { openToast } = useStore()
 
     const [formData, setFormData] = useState<UserFormData>({
@@ -35,11 +37,11 @@ export const SignUp = () => {
                 password: formData.password,
             }),
         {
-            onSuccess: () => {
+            onSuccess: ({ accessToken }) => {
                 queryClient.invalidateQueries(["auth"])
-                navigate("/login")
-                openToast({ text: "Sign up successful! Now, log in" })
-                setFormData({ username: "", password: "", confirmPassword: "" })
+                navigate("/")
+                setToken(accessToken)
+                openToast({ text: "Welcome!" })
             },
         }
     )

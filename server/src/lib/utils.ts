@@ -1,5 +1,8 @@
 import { CookieOptions } from "express"
 import { Secret } from "jsonwebtoken"
+import jwt from "jsonwebtoken"
+import { Document } from "mongoose"
+import { User } from "../models/User"
 
 export const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET as Secret
 export const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET as Secret
@@ -17,4 +20,26 @@ export const rawCookieConfig: CookieOptions = {
 export const cookieConfig: CookieOptions = {
     ...rawCookieConfig,
     maxAge: cookieMaxAge,
+}
+
+export const generateAccessToken = (user: User & Document) => {
+    const payload = {
+        userId: user._id,
+        username: user.username,
+    }
+
+    return jwt.sign(payload, accessTokenSecret, {
+        expiresIn: accessTokenExpiresIn,
+    })
+}
+
+export const generateRefreshToken = (user: User & Document) => {
+    const payload = {
+        userId: user._id,
+        username: user.username,
+    }
+
+    return jwt.sign(payload, refreshTokenSecret, {
+        expiresIn: refreshTokenExpiresIn,
+    })
 }

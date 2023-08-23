@@ -5,11 +5,10 @@ import { Request, Response } from "express"
 import { DecodedToken } from "../types/types"
 import { OAuth2Client } from "google-auth-library"
 import {
-    accessTokenExpiresIn,
-    accessTokenSecret,
     cookieConfig,
+    generateAccessToken,
+    generateRefreshToken,
     rawCookieConfig,
-    refreshTokenExpiresIn,
     refreshTokenSecret,
 } from "../lib/utils"
 
@@ -39,23 +38,8 @@ export const login = async (req: Request, res: Response) => {
         return
     }
 
-    const accessToken = jwt.sign(
-        {
-            userId: foundUser._id,
-            username: foundUser.username,
-        },
-        accessTokenSecret,
-        { expiresIn: accessTokenExpiresIn }
-    )
-
-    const refreshToken = jwt.sign(
-        {
-            userId: foundUser._id,
-            username: foundUser.username,
-        },
-        refreshTokenSecret,
-        { expiresIn: refreshTokenExpiresIn }
-    )
+    const accessToken = generateAccessToken(foundUser)
+    const refreshToken = generateRefreshToken(foundUser)
 
     res.cookie("jwt", refreshToken, cookieConfig)
 
@@ -106,20 +90,8 @@ export const googleLogin = async (req: Request, res: Response) => {
         const user = await User.create({ username, googleId: payload.sub })
 
         if (user) {
-            const accessToken = jwt.sign(
-                { userId: user._id, username: user.username },
-                accessTokenSecret,
-                { expiresIn: accessTokenExpiresIn }
-            )
-
-            const refreshToken = jwt.sign(
-                {
-                    userId: user._id,
-                    username: user.username,
-                },
-                refreshTokenSecret,
-                { expiresIn: refreshTokenExpiresIn }
-            )
+            const accessToken = generateAccessToken(user)
+            const refreshToken = generateRefreshToken(user)
 
             res.cookie("jwt", refreshToken, cookieConfig)
 
@@ -140,23 +112,8 @@ export const googleLogin = async (req: Request, res: Response) => {
         return
     }
 
-    const accessToken = jwt.sign(
-        {
-            userId: foundUser._id,
-            username: foundUser.username,
-        },
-        accessTokenSecret,
-        { expiresIn: accessTokenExpiresIn }
-    )
-
-    const refreshToken = jwt.sign(
-        {
-            userId: foundUser._id,
-            username: foundUser.username,
-        },
-        refreshTokenSecret,
-        { expiresIn: refreshTokenExpiresIn }
-    )
+    const accessToken = generateAccessToken(foundUser)
+    const refreshToken = generateRefreshToken(foundUser)
 
     res.cookie("jwt", refreshToken, cookieConfig)
 
@@ -184,14 +141,7 @@ export const refresh = async (req: Request, res: Response) => {
         return
     }
 
-    const accessToken = jwt.sign(
-        {
-            userId: foundUser._id,
-            username: foundUser.username,
-        },
-        accessTokenSecret,
-        { expiresIn: accessTokenExpiresIn }
-    )
+    const accessToken = generateAccessToken(foundUser)
 
     res.json({ accessToken })
 }

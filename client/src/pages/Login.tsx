@@ -33,7 +33,6 @@ export const Login = () => {
             queryClient.invalidateQueries(["auth"])
             setToken(accessToken)
             navigate("/")
-            setFormData({ username: "", password: "" })
         },
     })
 
