@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { useErrorToast } from "@/hooks/useErrorToast"
 import { Button } from "../ui/Button"
 import { Invoice } from "@/types"
-import { ModalWrapper } from "@/wrappers/ModalWrapper"
+import { ModalWrapper } from "./ModalWrapper"
 
 export const ConfirmDeletionModal = ({ invoice }: { invoice: Invoice }) => {
     const { closeModal, openToast, modals } = useStore()

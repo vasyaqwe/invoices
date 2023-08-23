@@ -11,7 +11,7 @@ export const Input = ({ invalid, ...rest }: InputProps) => {
         <>
             <input
                 placeholder=" "
-                className={`input block borderbg-primary-800 rounded-md py-3 px-3 text-white focus:outline-none peer ${invalidStyle}`}
+                className={` block border bg-primary-800 rounded-md py-3 px-3 text-white focus:outline-none peer ${invalidStyle}`}
                 {...rest}
             />
         </>

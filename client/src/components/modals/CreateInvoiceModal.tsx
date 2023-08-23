@@ -9,7 +9,7 @@ import { nanoid } from "nanoid"
 import { Button } from "../ui/Button"
 import { InvoiceForm } from "../forms/InvoiceForm"
 import { useInvoiceForm } from "@/hooks/useInvoiceForm"
-import { ModalWrapper } from "@/wrappers/ModalWrapper"
+import { ModalWrapper } from "./ModalWrapper"
 
 const today = Date.now()
 

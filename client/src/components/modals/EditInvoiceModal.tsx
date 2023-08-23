@@ -8,7 +8,7 @@ import { useErrorToast } from "@/hooks/useErrorToast"
 import { Button } from "../ui/Button"
 import { InvoiceForm } from "../forms/InvoiceForm"
 import { useInvoiceForm } from "@/hooks/useInvoiceForm"
-import { ModalWrapper } from "@/wrappers/ModalWrapper"
+import { ModalWrapper } from "./ModalWrapper"
 
 export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
     const { billFrom, billTo, items, date, status, paymentTerms, description } =

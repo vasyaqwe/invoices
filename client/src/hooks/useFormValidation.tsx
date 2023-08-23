@@ -38,11 +38,13 @@ export const useFormValidation = <TFormData,>({
             const errorsObject = errorsArr.reduce(
                 (result: Record<string, string>, e: ZodIssueBase) => {
                     const key = getFormDataKey(e)
-                    console.log(e)
+
                     const message = e.message
+
                     if (message) {
                         result[key] = message
                     }
+
                     return result
                 },
                 {}

@@ -22,7 +22,6 @@ export const InvoiceItemsList = ({
     onAddItem,
     onDeleteItem,
 }: ItemListProps) => {
-    console.log(errors)
     return (
         <>
             <legend className="text-2xl font-semibold text-primary-500">
