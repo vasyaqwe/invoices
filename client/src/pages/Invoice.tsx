@@ -64,12 +64,14 @@ export const Invoice = () => {
                     <StatusBadge status={invoice.status} />
                 </div>
                 <div className="items-center hidden gap-3 sm:flex">
-                    <Button
-                        onClick={() => openModal("editInvoice")}
-                        variant="neutral"
-                    >
-                        Edit
-                    </Button>
+                    {invoice.status !== "Paid" && (
+                        <Button
+                            onClick={() => openModal("editInvoice")}
+                            variant="neutral"
+                        >
+                            Edit
+                        </Button>
+                    )}
 
                     <Button
                         variant="danger"

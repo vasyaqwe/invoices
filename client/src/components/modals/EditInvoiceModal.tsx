@@ -34,13 +34,20 @@ export const EditInvoiceModal = ({ invoice }: { invoice: Invoice }) => {
         isLoading,
         error,
         mutate: onSave,
-    } = useMutation(() => updateInvoice(invoice?.id ?? "", formData), {
-        onSuccess: () => {
-            queryClient.invalidateQueries(["invoices", invoice.id])
-            closeModal("editInvoice")
-            openToast({ text: "Invoice updated!" })
-        },
-    })
+    } = useMutation(
+        () =>
+            updateInvoice(invoice?.id ?? "", {
+                ...formData,
+                status: "Pending",
+            }),
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries(["invoices", invoice.id])
+                closeModal("editInvoice")
+                openToast({ text: "Invoice updated!" })
+            },
+        }
+    )
 
     useErrorToast(error)
 
