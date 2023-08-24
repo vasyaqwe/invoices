@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { Invoice, PaymentTerms, Status } from "@/types"
+import { Invoice } from "@/types"
 import { createInvoice, createInvoiceDraft } from "@/api/invoices"
 import { useMutation, useQueryClient } from "react-query"
 import { motion } from "framer-motion"
