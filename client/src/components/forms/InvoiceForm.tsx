@@ -136,7 +136,7 @@ export const InvoiceForm = ({
                         onChange={onChange}
                         name="billTo:clientEmail"
                         id="billTo:clientEmail"
-                        type="text"
+                        type="email"
                     />
                 </FloatingLabel>
                 <FloatingLabel
