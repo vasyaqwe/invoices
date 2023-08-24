@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from "axios"
 export const API_URL =
     import.meta.env.MODE === "development"
         ? "http://localhost:3000"
-        : "https://invoices-api.vercel.com"
+        : "https://invoices-api-vasyaqwe.vercel.app"
 
 import { useAuthStore } from "@/stores/useAuthStore"
 import { refresh } from "./auth"

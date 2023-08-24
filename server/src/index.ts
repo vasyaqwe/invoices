@@ -16,7 +16,7 @@ const app = express()
 connectDB()
 
 const corsOptions = {
-    origin: ["http://localhost:5173", "https://invoices.vercel.app"],
+    origin: ["http://localhost:5173", "https://invoices-vasyaqwe.vercel.app"],
     credentials: true,
 }
 app.use(cors(corsOptions))
@@ -36,3 +36,5 @@ app.all("*", (req, res, next) => {
 })
 
 app.listen(3000, () => console.log(`LISTENING ON PORT 3000!`))
+
+export default app
