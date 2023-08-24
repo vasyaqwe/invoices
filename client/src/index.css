@@ -134,6 +134,6 @@ button {
     }
 
     .sheet {
-        @apply bg-primary-900 min-h-screen p-6 top-[80px] w-full max-w-2xl md:left-[100px] md:top-0;
+        @apply bg-primary-900 min-h-screen p-6 top-0 w-full max-w-2xl md:left-[100px];
     }
 }
