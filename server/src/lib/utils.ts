@@ -13,9 +13,10 @@ export const cookieMaxAge = 7 * 24 * 60 * 60 * 1000
 
 export const rawCookieConfig: CookieOptions = {
     httpOnly: true,
-    secure: true,
+    secure: false,
     sameSite: "none",
 }
+// safari doesn't allow third-party cookies, hence secure must be false to make it work
 
 export const cookieConfig: CookieOptions = {
     ...rawCookieConfig,
